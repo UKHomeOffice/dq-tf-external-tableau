@@ -20,7 +20,7 @@ class TestE2E(unittest.TestCase):
               
               acp_prod_ingress_cidr        = "10.5.0.0/16"
               dq_ops_ingress_cidr          = "10.2.0.0/16"
-              dq_apps_cidr                 = "10.1.0.0/16"
+              dq_external_dashboard_subnet                 = "10.1.14.0/24"
               greenplum_ip                 = "foo"
               apps_vpc_id                  = "foo"
             } 
@@ -53,7 +53,7 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.result["root_modules"]["aws_subnet.subnet"]["vpc_id"], "foo")
 
     def test_subnet_cidr(self):
-        self.assertEqual(self.result["root_modules"]["aws_subnet.subnet"]["cidr_block"], "10.1.0.0/16")
+        self.assertEqual(self.result["root_modules"]["aws_subnet.subnet"]["cidr_block"], "10.1.14.0/24")
 
     @unittest.skip
     def test_security_group_ingress(self):
