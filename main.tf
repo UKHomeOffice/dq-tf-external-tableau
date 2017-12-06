@@ -1,7 +1,8 @@
 module "instance" {
-  source    = "github.com/UKHomeOffice/connectivity-tester-tf"
-  user_data = "CHECK_self=127.0.0.1:80 CHECK_google=google.com:80 CHECK_googletls=google.com:443 LISTEN_http=0.0.0.0:80"
-  subnet_id = "${aws_subnet.subnet.id}"
+  source          = "github.com/UKHomeOffice/connectivity-tester-tf"
+  user_data       = "CHECK_self=127.0.0.1:80 CHECK_google=google.com:80 CHECK_googletls=google.com:443 LISTEN_http=0.0.0.0:80"
+  subnet_id       = "${aws_subnet.subnet.id}"
+  security_groups = ["${aws_security_group.sgrp.id}"]
 
   tags = {
     Name             = "instance-${var.service}-${var.environment}"
