@@ -2,6 +2,12 @@ module "instance" {
   source    = "github.com/UKHomeOffice/connectivity-tester-tf"
   user_data = "CHECK_self=127.0.0.1:80 CHECK_google=google.com:80 CHECK_googletls=google.com:443 LISTEN_http=0.0.0.0:80"
   subnet_id = "${aws_subnet.subnet.id}"
+  tags = {
+    Name             = "instance-${var.service}-${var.environment}"
+    Service          = "${var.service}"
+    Environment      = "${var.environment}"
+    EnvironmentGroup = "${var.environment_group}"
+  }
 }
 
 resource "aws_subnet" "subnet" {
