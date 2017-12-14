@@ -48,6 +48,11 @@ variable "dq_external_dashboard_subnet" {
   description = "DQ Apps CIDR as per IP Addresses and CIDR blocks document"
 }
 
+variable "dq_external_dashboard_instance_ip" {
+  description = "Mock IP address of EC2 instance"
+  default     = "10.1.14.11"
+}
+
 variable "service" {
   default     = "dq-dashboard-ext"
   description = "As per naming standards in AWS-DQ-Network-Routing 0.4 document"
