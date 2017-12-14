@@ -3,6 +3,7 @@ module "instance" {
   user_data       = "LISTEN_HTTP=0.0.0.0:443 LISTEN_HTTP=0.0.0.0:3389 CHECK_GP=${var.greenplum_ip}:5432"
   subnet_id       = "${aws_subnet.subnet.id}"
   security_groups = ["${aws_security_group.sgrp.id}"]
+  private_ip      = "${var.dq_external_dashboard_instance_ip}"
 
   tags = {
     Name             = "instance-${var.service}-${var.environment}"
