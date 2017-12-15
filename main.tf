@@ -1,6 +1,6 @@
 module "instance" {
   source          = "github.com/UKHomeOffice/connectivity-tester-tf"
-  user_data       = "LISTEN_HTTP=0.0.0.0:443 LISTEN_HTTP=0.0.0.0:3389 CHECK_GP=${var.greenplum_ip}:5432"
+  user_data       = "LISTEN_HTTPS=0.0.0.0:443 LISTEN_RDP=0.0.0.0:3389 CHECK_GP=${var.greenplum_ip}:5432"
   subnet_id       = "${aws_subnet.subnet.id}"
   security_groups = ["${aws_security_group.sgrp.id}"]
   private_ip      = "${var.dq_external_dashboard_instance_ip}"
