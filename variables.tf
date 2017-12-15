@@ -1,3 +1,8 @@
+variable "az" {
+  default     = "eu-west-2a"
+  description = "Default availability zone for the subnet."
+}
+
 variable "https_from_port" {
   default     = 443
   description = "From port for HTTPS traffic"
