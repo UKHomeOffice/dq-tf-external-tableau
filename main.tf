@@ -14,8 +14,9 @@ module "instance" {
 }
 
 resource "aws_subnet" "subnet" {
-  vpc_id     = "${var.apps_vpc_id}"
-  cidr_block = "${var.dq_external_dashboard_subnet}"
+  vpc_id            = "${var.apps_vpc_id}"
+  cidr_block        = "${var.dq_external_dashboard_subnet}"
+  availability_zone = "${var.az}"
 
   tags {
     Name             = "sn-tableau-external-${var.service}-${var.environment}-{az}"
