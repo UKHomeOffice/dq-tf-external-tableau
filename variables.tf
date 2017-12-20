@@ -43,6 +43,11 @@ variable "acp_prod_ingress_cidr" {
   description = "ACP Prod CIDR as per IP Addresses and CIDR blocks document"
 }
 
+variable "peering_cidr_block" {
+  default     = "10.3.0.0/16"
+  description = "DQ Peering CIDR as per IP Addresses and CIDR blocks document"
+}
+
 variable "dq_ops_ingress_cidr" {
   default     = "10.2.0.0/16"
   description = "DQ Ops CIDR as per IP Addresses and CIDR blocks document"
