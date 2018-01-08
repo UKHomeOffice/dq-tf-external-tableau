@@ -1,3 +1,8 @@
+variable "naming_suffix" {
+  default     = false
+  description = "Naming suffix for tags, value passed from dq-tf-apps"
+}
+
 variable "az" {
   default     = "eu-west-2a"
   description = "Default availability zone for the subnet."

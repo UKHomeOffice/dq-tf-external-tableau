@@ -1,3 +1,7 @@
+locals {
+  naming_suffix = "external-tableau-${var.naming_suffix}"
+}
+
 module "instance" {
   source          = "github.com/UKHomeOffice/connectivity-tester-tf"
   user_data       = "LISTEN_HTTPS=0.0.0.0:443 LISTEN_RDP=0.0.0.0:3389 CHECK_GP=${var.greenplum_ip}:5432"
