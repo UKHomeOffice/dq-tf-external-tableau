@@ -55,5 +55,11 @@ class TestE2E(unittest.TestCase):
             'Cidr_blocks': '0.0.0.0/0'
         }))
 
+    def test_subnet_tags(self):
+        self.assertEqual(self.result["root_modules"]["aws_subnet.subnet"]["tags.Name"], "subnet-external-tableau-apps-preprod-dq")
+
+    def test_security_group_tags(self):
+        self.assertEqual(self.result["root_modules"]["aws_security_group.sgrp"]["tags.Name"], "sg-external-tableau-apps-preprod-dq")
+
 if __name__ == '__main__':
     unittest.main()
