@@ -77,3 +77,7 @@ variable "route_table_id" {
   default     = false
   description = "Value obtained from Apps module"
 }
+
+variable "key_name" {
+  default = "test_instance"
+}
