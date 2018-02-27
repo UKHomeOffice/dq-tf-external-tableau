@@ -2,7 +2,7 @@ locals {
   naming_suffix = "external-tableau-${var.naming_suffix}"
 }
 
-resource "aws_instance" "dp_web" {
+resource "aws_instance" "ext_tableau" {
   key_name                    = "${var.key_name}"
   ami                         = "${data.aws_ami.ext_tableau.id}"
   instance_type               = "t2.xlarge"
