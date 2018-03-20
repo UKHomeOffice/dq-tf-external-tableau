@@ -26,6 +26,10 @@ EOF
   tags = {
     Name = "ec2-${local.naming_suffix}"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_subnet" "subnet" {
