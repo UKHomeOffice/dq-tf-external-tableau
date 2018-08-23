@@ -22,7 +22,7 @@ class TestE2E(unittest.TestCase):
               dq_ops_ingress_cidr          = "10.2.0.0/16"
               dq_external_dashboard_subnet = "10.1.14.0/24"
               peering_cidr_block           = "1.1.1.0/24"
-              apps_vpc_id                  = "foo"
+              apps_vpc_id                  = "vpc-12345"
               naming_suffix                = "apps-preprod-dq"
             }
 
