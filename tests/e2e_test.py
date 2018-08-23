@@ -30,7 +30,7 @@ class TestE2E(unittest.TestCase):
         self.result = Runner(self.snippet).result
 
     def test_subnet_vpc(self):
-        self.assertEqual(self.result["root_modules"]["aws_subnet.subnet"]["vpc_id"], "foo")
+        self.assertEqual(self.result["root_modules"]["aws_subnet.subnet"]["vpc_id"], "vpc-12345")
 
     def test_subnet_cidr(self):
         self.assertEqual(self.result["root_modules"]["aws_subnet.subnet"]["cidr_block"], "10.1.14.0/24")
