@@ -65,7 +65,7 @@ variable "dq_external_dashboard_instance_ip" {
 
 variable "dq_external_dashboard_instance_2018_vanilla_ip" {
   description = "Mock IP address of EC2 instance"
-  default     = "10.1.14.11"
+  default     = "10.1.14.12"
 }
 
 variable "apps_vpc_id" {
