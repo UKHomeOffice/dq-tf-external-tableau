@@ -1,5 +1,6 @@
 locals {
   naming_suffix = "external-tableau-${var.naming_suffix}"
+  naming_suffix_2018_vanilla = "ext_tableau_2018_02_vanilla-${var.naming_suffix}"
 }
 
 resource "aws_instance" "ext_tableau" {
@@ -25,6 +26,26 @@ EOF
 
   tags = {
     Name = "ec2-${local.naming_suffix}"
+  }
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "aws_instance" "ext_tableau_2018_02_vanilla" {
+  key_name                    = "${var.key_name}"
+  ami                         = "${data.aws_ami.ext_tableau_2018_02_vanilla.id}"
+  instance_type               = "r4.2xlarge"
+  iam_instance_profile        = "${aws_iam_instance_profile.ext_tableau.id}"
+  vpc_security_group_ids      = ["${aws_security_group.sgrp.id}"]
+  associate_public_ip_address = false
+  subnet_id                   = "${aws_subnet.subnet.id}"
+  private_ip                  = "${var.dq_external_dashboard_instance_2018_vanilla_ip}"
+  monitoring                  = true
+
+  tags = {
+    Name = "ec2-${local.naming_suffix_2018_vanilla}"
   }
 
   lifecycle {

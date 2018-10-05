@@ -63,6 +63,11 @@ variable "dq_external_dashboard_instance_ip" {
   default     = "10.1.14.11"
 }
 
+variable "dq_external_dashboard_instance_2018_vanilla_ip" {
+  description = "Mock IP address of EC2 instance"
+  default     = "10.1.14.11"
+}
+
 variable "apps_vpc_id" {
   default     = false
   description = "Value obtained from Apps module"
