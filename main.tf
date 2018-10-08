@@ -1,5 +1,5 @@
 locals {
-  naming_suffix = "external-tableau-${var.naming_suffix}"
+  naming_suffix              = "external-tableau-${var.naming_suffix}"
   naming_suffix_2018_vanilla = "ext_tableau_2018_02_vanilla-${var.naming_suffix}"
 }
 
