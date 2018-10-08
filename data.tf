@@ -25,7 +25,7 @@ data "aws_ami" "ext_tableau_2018_02_vanilla" {
     name = "name"
 
     values = [
-      "dq-ext-tableau-2018-02-vanilla",
+      "dq-ext-tableau-no1",
     ]
   }
 
