@@ -1,6 +1,6 @@
 locals {
   naming_suffix              = "external-tableau-${var.naming_suffix}"
-  naming_suffix_2018_vanilla = "ext_tableau_2018_02_vanilla-${var.naming_suffix}"
+  naming_suffix_2018_vanilla = "ext-tableau-2018-02-vanilla-${var.naming_suffix}"
 }
 
 resource "aws_instance" "ext_tableau" {
