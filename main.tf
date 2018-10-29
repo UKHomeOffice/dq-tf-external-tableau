@@ -53,6 +53,26 @@ resource "aws_instance" "ext_tableau_2018_02_vanilla" {
   }
 }
 
+resource "aws_instance" "ext_tableau_s3_backup_test" {
+  key_name                    = "${var.key_name}"
+  ami                         = "${data.aws_ami.ext_tableau_s3_backup_test}"
+  instance_type               = "r4.2xlarge"
+  iam_instance_profile        = "${aws_iam_instance_profile.ext_tableau.id}"
+  vpc_security_group_ids      = ["${aws_security_group.sgrp.id}"]
+  associate_public_ip_address = false
+  subnet_id                   = "${aws_subnet.subnet.id}"
+  private_ip                  = "${var.dq_external_dashboard_instance_s3_backup_test_ip}"
+  monitoring                  = true
+
+  tags = {
+    Name = "ec2-${local.naming_suffix_2018_vanilla}"
+  }
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
 resource "aws_subnet" "subnet" {
   vpc_id            = "${var.apps_vpc_id}"
   cidr_block        = "${var.dq_external_dashboard_subnet}"

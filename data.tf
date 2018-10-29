@@ -33,3 +33,19 @@ data "aws_ami" "ext_tableau_2018_02_vanilla" {
     "self",
   ]
 }
+
+data "aws_ami" "ext_tableau_s3_backup_test" {
+  most_recent = true
+
+  filter {
+    name = "name"
+
+    values = [
+      "dq-ext-tableau-70*",
+    ]
+  }
+
+  owners = [
+    "self",
+  ]
+}
