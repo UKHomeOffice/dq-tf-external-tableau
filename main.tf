@@ -1,6 +1,7 @@
 locals {
-  naming_suffix              = "external-tableau-${var.naming_suffix}"
-  naming_suffix_2018_vanilla = "ext-tableau-2018-02-vanilla-${var.naming_suffix}"
+  naming_suffix                = "external-tableau-${var.naming_suffix}"
+  naming_suffix_2018_vanilla   = "ext-tableau-2018-02-vanilla-${var.naming_suffix}"
+  naming_suffix_s3_backup_test = "external-tableau-s3-backup-test-${var.naming_suffix}"
 }
 
 resource "aws_instance" "ext_tableau" {
@@ -65,7 +66,7 @@ resource "aws_instance" "ext_tableau_s3_backup_test" {
   monitoring                  = true
 
   tags = {
-    Name = "ec2-${local.naming_suffix_2018_vanilla}"
+    Name = "ec2-${local.naming_suffix_s3_backup_test}"
   }
 
   lifecycle {
