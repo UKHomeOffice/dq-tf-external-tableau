@@ -18,7 +18,7 @@ data "aws_ami" "ext_tableau" {
   ]
 }
 
-data "aws_ami" "ext_tableau_2018_02_vanilla" {
+data "aws_ami" "ext_tableau_2018_vanilla" {
   most_recent = true
 
   filter {

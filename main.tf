@@ -1,6 +1,6 @@
 locals {
   naming_suffix                = "external-tableau-${var.naming_suffix}"
-  naming_suffix_2018_vanilla   = "ext-tableau-2018-02-vanilla-${var.naming_suffix}"
+  naming_suffix_2018_vanilla   = "ext-tableau-2018-vanilla-${var.naming_suffix}"
   naming_suffix_s3_backup_test = "external-tableau-s3-backup-test-${var.naming_suffix}"
 }
 
@@ -34,9 +34,9 @@ EOF
   }
 }
 
-resource "aws_instance" "ext_tableau_2018_02_vanilla" {
+resource "aws_instance" "ext_tableau_2018_vanilla" {
   key_name                    = "${var.key_name}"
-  ami                         = "${data.aws_ami.ext_tableau_2018_02_vanilla.id}"
+  ami                         = "${data.aws_ami.ext_tableau_2018_vanilla.id}"
   instance_type               = "r4.2xlarge"
   iam_instance_profile        = "${aws_iam_instance_profile.ext_tableau.id}"
   vpc_security_group_ids      = ["${aws_security_group.sgrp.id}"]
