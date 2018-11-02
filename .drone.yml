@@ -2,5 +2,4 @@ pipeline:
 
   testsuite:
     image: quay.io/ukhomeofficedigital/dq-tf-testsuite:latest
-    privileged: true
     commands: run
