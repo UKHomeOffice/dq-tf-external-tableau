@@ -2,6 +2,7 @@ locals {
   naming_suffix                = "external-tableau-${var.naming_suffix}"
   naming_suffix_2018_vanilla   = "ext-tableau-2018-vanilla-${var.naming_suffix}"
   naming_suffix_s3_backup_test = "external-tableau-s3-backup-test-${var.naming_suffix}"
+  s3_archive_bucket_sub_path   = "tableau-ext"
 }
 
 resource "aws_instance" "ext_tableau" {
@@ -73,6 +74,7 @@ resource "aws_instance" "ext_tableau_s3_backup_test" {
   $instanceID = aws --region eu-west-2 ssm get-parameter --name ext_tableau_hostname --query 'Parameter.Value' --output text --with-decryption
   Add-Computer -DomainName DQ.HOMEOFFICE.GOV.UK -OUPath "OU=Computers,OU=dq,DC=dq,DC=homeoffice,DC=gov,DC=uk" -NewName $instanceID -Credential $credential -Force -Restart
   $env::SetEnvironmentVariable("bucket_name","${var.s3_archive_bucket_name}","Machine")
+  $env::SetEnvironmentVariable("bucket_sub_path","${local.s3_archive_bucket_sub_path}","Machine")
   </powershell>
 EOF
 
