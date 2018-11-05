@@ -86,3 +86,11 @@ variable "route_table_id" {
 variable "key_name" {
   default = "test_instance"
 }
+
+variable "s3_archive_bucket" {
+  description = "S3 archive bucket name"
+}
+
+variable "s3_archive_bucket_key" {
+  description = "S3 archive bucket KMS key"
+}
