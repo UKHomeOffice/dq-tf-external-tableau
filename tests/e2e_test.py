@@ -26,6 +26,7 @@ class TestE2E(unittest.TestCase):
               naming_suffix                = "apps-preprod-dq"
               s3_archive_bucket            = "bucket-name"
               s3_archive_bucket_key        = "1234567890"
+              s3_archive_bucket_name       = "bucket-name"
             }
 
         """
