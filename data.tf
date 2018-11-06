@@ -41,7 +41,7 @@ data "aws_ami" "ext_tableau_s3_backup_test" {
     name = "name"
 
     values = [
-      "dq-ext-tableau-87*",
+      "dq-ext-tableau-88*",
     ]
   }
 
