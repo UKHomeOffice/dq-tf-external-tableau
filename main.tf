@@ -73,8 +73,8 @@ resource "aws_instance" "ext_tableau_s3_backup_test" {
   $credential = New-Object System.Management.Automation.PSCredential($username,$password)
   $instanceID = aws --region eu-west-2 ssm get-parameter --name ext_tableau_hostname --query 'Parameter.Value' --output text --with-decryption
   Add-Computer -DomainName DQ.HOMEOFFICE.GOV.UK -OUPath "OU=Computers,OU=dq,DC=dq,DC=homeoffice,DC=gov,DC=uk" -NewName $instanceID -Credential $credential -Force -Restart
-  [Environment]::SetEnvironmentVariable("bucket_name","${var.s3_archive_bucket_name}","Process")
-  [Environment]::SetEnvironmentVariable("bucket_sub_path","${local.s3_archive_bucket_sub_path}","Process")
+  [Environment]::SetEnvironmentVariable("bucket_name","${var.s3_archive_bucket_name}","Machine")
+  [Environment]::SetEnvironmentVariable("bucket_sub_path","${local.s3_archive_bucket_sub_path}","Machine")
   </powershell>
 EOF
 
