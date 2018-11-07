@@ -55,38 +55,6 @@ resource "aws_instance" "ext_tableau_2018_vanilla" {
   }
 }
 
-resource "aws_instance" "ext_tableau_s3_backup_test" {
-  key_name                    = "${var.key_name}"
-  ami                         = "${data.aws_ami.ext_tableau_s3_backup_test.id}"
-  instance_type               = "r4.2xlarge"
-  iam_instance_profile        = "${aws_iam_instance_profile.ext_tableau.id}"
-  vpc_security_group_ids      = ["${aws_security_group.sgrp.id}"]
-  associate_public_ip_address = false
-  subnet_id                   = "${aws_subnet.subnet.id}"
-  private_ip                  = "${var.dq_external_dashboard_instance_s3_backup_test_ip}"
-  monitoring                  = true
-
-  user_data = <<EOF
-  <powershell>
-  [Environment]::SetEnvironmentVariable("bucket_name","${var.s3_archive_bucket_name}","Machine")
-  [Environment]::SetEnvironmentVariable("bucket_sub_path","${local.s3_archive_bucket_sub_path}","Machine")
-  $password= aws --region eu-west-2 ssm get-parameter --name addomainjoin --query 'Parameter.Value' --output text --with-decryption
-  $username = "DQ\domain.join"
-  $credential = New-Object System.Management.Automation.PSCredential($username,$password)
-  $instanceID = aws --region eu-west-2 ssm get-parameter --name ext_tableau_hostname --query 'Parameter.Value' --output text --with-decryption
-  Add-Computer -DomainName DQ.HOMEOFFICE.GOV.UK -OUPath "OU=Computers,OU=dq,DC=dq,DC=homeoffice,DC=gov,DC=uk" -NewName $instanceID -Credential $credential -Force -Restart
-  </powershell>
-EOF
-
-  tags = {
-    Name = "ec2-${local.naming_suffix_s3_backup_test}"
-  }
-
-  lifecycle {
-    prevent_destroy = true
-  }
-}
-
 resource "aws_subnet" "subnet" {
   vpc_id            = "${var.apps_vpc_id}"
   cidr_block        = "${var.dq_external_dashboard_subnet}"
