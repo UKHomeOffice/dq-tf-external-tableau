@@ -18,7 +18,11 @@ resource "aws_instance" "ext_tableau" {
 
   user_data = <<EOF
   <powershell>
-  $password= aws --region eu-west-2 ssm get-parameter --name addomainjoin --query 'Parameter.Value' --output text --with-decryption
+  $tsm_user = aws --region eu-west-2 ssm get-parameter --name tableau_server_username --query 'Parameter.Value' --output text --with-decryption
+  [Environment]::SetEnvironmentVariable("tableau_tsm_user", $tsm_user, "Machine")
+  $tsm_password = aws --region eu-west-2 ssm get-parameter --name tableau_server_password --query 'Parameter.Value' --output text --with-decryption
+  [Environment]::SetEnvironmentVariable("tableau_tsm_password", $tsm_password, "Machine")
+  $password = aws --region eu-west-2 ssm get-parameter --name addomainjoin --query 'Parameter.Value' --output text --with-decryption
   $username = "DQ\domain.join"
   $credential = New-Object System.Management.Automation.PSCredential($username,$password)
   $instanceID = aws --region eu-west-2 ssm get-parameter --name ext_tableau_hostname --query 'Parameter.Value' --output text --with-decryption
@@ -32,6 +36,12 @@ EOF
 
   lifecycle {
     prevent_destroy = true
+
+    ignore_changes = [
+      "user_data",
+      "ami",
+      "instance_type",
+    ]
   }
 }
 
@@ -46,12 +56,32 @@ resource "aws_instance" "ext_tableau_2018_vanilla" {
   private_ip                  = "${var.dq_external_dashboard_instance_2018_vanilla_ip}"
   monitoring                  = true
 
+  user_data = <<EOF
+  <powershell>
+  $tsm_user = aws --region eu-west-2 ssm get-parameter --name tableau_server_username --query 'Parameter.Value' --output text --with-decryption
+  [Environment]::SetEnvironmentVariable("tableau_tsm_user", $tsm_user, "Machine")
+  $tsm_password = aws --region eu-west-2 ssm get-parameter --name tableau_server_password --query 'Parameter.Value' --output text --with-decryption
+  [Environment]::SetEnvironmentVariable("tableau_tsm_password", $tsm_password, "Machine")
+  $password = aws --region eu-west-2 ssm get-parameter --name addomainjoin --query 'Parameter.Value' --output text --with-decryption
+  $username = "DQ\domain.join"
+  $credential = New-Object System.Management.Automation.PSCredential($username,$password)
+  $instanceID = aws --region eu-west-2 ssm get-parameter --name ext_tableau_hostname --query 'Parameter.Value' --output text --with-decryption
+  Add-Computer -DomainName DQ.HOMEOFFICE.GOV.UK -OUPath "OU=Computers,OU=dq,DC=dq,DC=homeoffice,DC=gov,DC=uk" -NewName $instanceID -Credential $credential -Force -Restart
+  </powershell>
+EOF
+
   tags = {
     Name = "ec2-${local.naming_suffix_2018_vanilla}"
   }
 
   lifecycle {
     prevent_destroy = true
+
+    ignore_changes = [
+      "user_data",
+      "ami",
+      "instance_type",
+    ]
   }
 }
 

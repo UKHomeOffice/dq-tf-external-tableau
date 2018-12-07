@@ -30,7 +30,9 @@ resource "aws_iam_role_policy" "ext_tableau" {
       ],
       "Resource": [
         "arn:aws:ssm:eu-west-2:*:parameter/addomainjoin",
-        "arn:aws:ssm:eu-west-2:*:parameter/ext_tableau_hostname"
+        "arn:aws:ssm:eu-west-2:*:parameter/ext_tableau_hostname",
+        "arn:aws:ssm:eu-west-2:*:parameter/tableau_server_username",
+        "arn:aws:ssm:eu-west-2:*:parameter/tableau_server_password"
       ]
     }
   ]
