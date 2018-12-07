@@ -1,8 +1,6 @@
 locals {
   naming_suffix                = "external-tableau-${var.naming_suffix}"
   naming_suffix_2018_vanilla   = "ext-tableau-2018-vanilla-${var.naming_suffix}"
-  naming_suffix_s3_backup_test = "external-tableau-s3-backup-test-${var.naming_suffix}"
-  s3_archive_bucket_sub_path   = "tableau-ext"
 }
 
 resource "aws_instance" "ext_tableau" {
@@ -24,6 +22,8 @@ resource "aws_instance" "ext_tableau" {
   [Environment]::SetEnvironmentVariable("tableau_tsm_password", $tsm_password, "Machine")
   $s3_bucket_name = ${var.s3_archive_bucket_name}
   [Environment]::SetEnvironmentVariable("bucket_name", $s3_bucket_name, "Machine")
+  $s3_bucket_sub_path = aws --region eu-west-2 ssm get-parameter --name tableau_ext_s3_prefix --query 'Parameter.Value' --output text --with-decryption
+  [Environment]::SetEnvironmentVariable("bucket_sub_path", $s3_bucket_sub_path, "Machine")
   $password = aws --region eu-west-2 ssm get-parameter --name addomainjoin --query 'Parameter.Value' --output text --with-decryption
   $username = "DQ\domain.join"
   $credential = New-Object System.Management.Automation.PSCredential($username,$password)
@@ -64,8 +64,10 @@ resource "aws_instance" "ext_tableau_2018_vanilla" {
   [Environment]::SetEnvironmentVariable("tableau_tsm_user", $tsm_user, "Machine")
   $tsm_password = aws --region eu-west-2 ssm get-parameter --name tableau_server_password --query 'Parameter.Value' --output text --with-decryption
   [Environment]::SetEnvironmentVariable("tableau_tsm_password", $tsm_password, "Machine")
-  $s3_bucket_name = ${var.s3_archive_bucket_name}
+  $s3_bucket_name = "${var.s3_archive_bucket_name}"
   [Environment]::SetEnvironmentVariable("bucket_name", $s3_bucket_name, "Machine")
+  $s3_bucket_sub_path = aws --region eu-west-2 ssm get-parameter --name tableau_ext_s3_prefix --query 'Parameter.Value' --output text --with-decryption
+  [Environment]::SetEnvironmentVariable("bucket_sub_path", $s3_bucket_sub_path, "Machine")
   $password = aws --region eu-west-2 ssm get-parameter --name addomainjoin --query 'Parameter.Value' --output text --with-decryption
   $username = "DQ\domain.join"
   $credential = New-Object System.Management.Automation.PSCredential($username,$password)
