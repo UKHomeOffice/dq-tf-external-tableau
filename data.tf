@@ -9,23 +9,7 @@ data "aws_ami" "ext_tableau" {
     name = "name"
 
     values = [
-      "dq-tableau-7",
-    ]
-  }
-
-  owners = [
-    "self",
-  ]
-}
-
-data "aws_ami" "ext_tableau_2018_vanilla" {
-  most_recent = true
-
-  filter {
-    name = "name"
-
-    values = [
-      "dq-tableau-7",
+      "dq-tableau-7*",
     ]
   }
 

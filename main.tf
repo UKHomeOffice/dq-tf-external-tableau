@@ -49,7 +49,7 @@ EOF
 
 resource "aws_instance" "ext_tableau_2018_vanilla" {
   key_name                    = "${var.key_name}"
-  ami                         = "${data.aws_ami.ext_tableau_2018_vanilla.id}"
+  ami                         = "${data.aws_ami.ext_tableau.id}"
   instance_type               = "r4.2xlarge"
   iam_instance_profile        = "${aws_iam_instance_profile.ext_tableau.id}"
   vpc_security_group_ids      = ["${aws_security_group.sgrp.id}"]
