@@ -93,7 +93,7 @@ variable "dq_external_dashboard_instance_2018_vanilla_ip" {
   default     = "10.1.14.12"
 }
 
-variable "dq_internal_dashboard_linux_instance_ip" {
+variable "dq_external_dashboard_linux_instance_ip" {
   description = "IP address of EC2 instance"
   default     = "10.1.14.111"
 }
