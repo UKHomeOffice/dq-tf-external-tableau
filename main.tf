@@ -111,7 +111,7 @@ exec > >(tee /var/log/user-data.log|logger -t user-data ) 2>&1
 echo "#Pull values from Parameter Store and save to profile"
 touch /home/tableau_srv/env_vars.sh
 echo "
-export DATA_ARCHIVE_TAB_EXT_BACKUP_URL=`aws --region eu-west-2 ssm get-parameter --name data_archive_tab_ext_backup_url --query 'Parameter.Value' --output text`
+export DATA_ARCHIVE_TAB_BACKUP_URL=`aws --region eu-west-2 ssm get-parameter --name data_archive_tab_ext_backup_url --query 'Parameter.Value' --output text`
 export TAB_EXT_REPO_URL=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_url --query 'Parameter.Value' --output text`
 export TAB_EXT_REPO_HOST=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_host --query 'Parameter.Value' --output text`
 export TAB_EXT_REPO_PORT=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_port --query 'Parameter.Value' --output text`
