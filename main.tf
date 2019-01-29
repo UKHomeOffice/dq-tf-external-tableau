@@ -95,7 +95,7 @@ EOF
 resource "aws_instance" "ext_tableau_linux" {
   key_name                    = "${var.key_name}"
   ami                         = "${data.aws_ami.ext_tableau_linux.id}"
-  instance_type               = "r5.4xlarge"
+  instance_type               = "C5.4xlarge"
   iam_instance_profile        = "${aws_iam_instance_profile.ext_tableau.id}"
   vpc_security_group_ids      = ["${aws_security_group.sgrp.id}"]
   associate_public_ip_address = false
