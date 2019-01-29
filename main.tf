@@ -161,8 +161,8 @@ tsm initialize --start-server --request-timeout 1800
 echo "#TSMCMD - initial user"
 tabcmd initialuser --server 'localhost:80' --username $TAB_ADMIN_USER --password $TAB_ADMIN_PASSWORD
 echo "#Get most recent Tableau backup from S3"
-export LATEST_BACKUP_NAME=`aws s3 ls $DATA_ARCHIVE_TAB_EXT_BACKUP_URL | tail -1 | awk '{print $4}'`
-aws s3 cp $DATA_ARCHIVE_TAB_EXT_BACKUP_URL$LATEST_BACKUP_NAME /var/opt/tableau/tableau_server/data/tabsvc/files/backups/$LATEST_BACKUP_NAME
+export LATEST_BACKUP_NAME=`aws s3 ls $DATA_ARCHIVE_TAB_BACKUP_URL | tail -1 | awk '{print $4}'`
+aws s3 cp $DATA_ARCHIVE_TAB_BACKUP_URL$LATEST_BACKUP_NAME /var/opt/tableau/tableau_server/data/tabsvc/files/backups/$LATEST_BACKUP_NAME
 echo "#Restore latest backup to Tableau Server"
 tsm stop -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD && tsm maintenance restore --file $LATEST_BACKUP_NAME -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD && tsm start -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD
 ###Publish the *required* workbook(s)/DataSource(s) - specified somehow...?
