@@ -41,7 +41,11 @@ resource "aws_iam_role_policy" "ext_tableau" {
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_admin_username",
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_admin_password",
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_external_linux_ssh_private_key",
-        "arn:aws:ssm:eu-west-2:*:parameter/tableau_external_linux_ssh_public_key"
+        "arn:aws:ssm:eu-west-2:*:parameter/tableau_external_linux_ssh_public_key",
+        "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_openid_provider_client_id",
+        "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_openid_client_secret",
+        "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_openid_provider_config_url",
+        "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_openid_tableau_server_external_url"
       ]
     }
   ]
