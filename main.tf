@@ -154,25 +154,33 @@ export CLIENT_ID=`aws --region eu-west-2 ssm get-parameter --name tableau_ext_op
 export CLIENT_SECRET=`aws --region eu-west-2 ssm get-parameter --name tableau_ext_openid_client_secret --query 'Parameter.Value' --output text --with-decryption`
 export CONFIG_URL=`aws --region eu-west-2 ssm get-parameter --name tableau_ext_openid_provider_config_url --query 'Parameter.Value' --output text`
 export EXTERNAL_URL=`aws --region eu-west-2 ssm get-parameter --name tableau_ext_openid_tableau_server_external_url --query 'Parameter.Value' --output text`
-cat >/opt/tableau/tableau_server/packages/scripts.*/config.json <<EOL
+cat >/opt/tableau/tableau_server/packages/scripts.*/config-openid.json <<EOL
 {
   "configEntities": {
-    "identityStore": {
-      "_type": "identityStoreType",
-      "type": "local"
-    }
-  },
     "openIDSettings": {
-    "_type": "openIDSettingsType",
-    "enabled": true,
-    "clientId": "$CLIENT_ID",
-    "clientSecret": "$CLIENT_SECRET",
-    "configURL": "$CONFIG_URL",
-    "externalURL": "$EXTERNAL_URL"
+      "_type": "openIDSettingsType",
+      "enabled": true,
+      "clientId": "$CLIENT_ID",
+      "clientSecret": "$CLIENT_SECRET",
+      "configURL": "$CONFIG_URL",
+      "externalURL": "$EXTERNAL_URL"
     }
+  }
+}
+EOL
+cat >/opt/tableau/tableau_server/packages/scripts.*/config-trusted-auth.json <<EOL
+{
+  "configEntities": {
+    "trustedAuthenticationSettings": {
+      "_type": "trustedAuthenticationSettingsType",
+      "trustedHosts": [ "10.3.0.12" ]
+    }
+  }
 }
 EOL
 tsm settings import -f /opt/tableau/tableau_server/packages/scripts.*/config.json
+tsm settings import -f /opt/tableau/tableau_server/packages/scripts.*/config-openid.json
+tsm settings import -f /opt/tableau/tableau_server/packages/scripts.*/config-trusted-auth.json
 echo "#TSM apply pending changes"
 tsm pending-changes apply
 echo "#TSM initialise & start server"
