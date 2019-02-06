@@ -145,7 +145,7 @@ echo "#Initialise TSM (finishes off Tableau Server install/config)"
 /opt/tableau/tableau_server/packages/scripts.*/initialize-tsm --accepteula -f -a tableau_srv
 echo "#sourcing tableau server envs - because this script is run as root not tableau_srv"
 source /etc/profile.d/tableau_server.sh
-echo "#TSM active license (trial) as tableau_srv"
+echo "#TSM active license (1x Product Key) as tableau_srv"
 #tsm licenses activate --trial -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD
 tsm licenses activate --license-key $TAB_PRODUCT_KEY -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD
 echo "#TSM register user details"
