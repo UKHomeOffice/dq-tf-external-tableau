@@ -126,6 +126,11 @@ variable "dq_external_dashboard_subnet" {
   description = "DQ Apps CIDR as per IP Addresses and CIDR blocks document"
 }
 
+variable "dq_external_dashboard_subnet_az2" {
+  default     = "10.1.15.0/24"
+  description = "DQ Apps CIDR as per IP Addresses and CIDR blocks document"
+}
+
 variable "dq_external_dashboard_instance_ip" {
   description = "Mock IP address of EC2 instance"
   default     = "10.1.14.11"
