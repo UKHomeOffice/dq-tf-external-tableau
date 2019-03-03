@@ -18,6 +18,8 @@ class TestE2E(unittest.TestCase):
               source = "./mymodule"
               providers = {aws = "aws"}
 
+              appsvpc_id                   = "1234"
+              opssubnet_cidr_block         = "1.2.3.0/24"
               acp_prod_ingress_cidr        = "10.5.0.0/16"
               dq_ops_ingress_cidr          = "10.2.0.0/16"
               dq_external_dashboard_subnet = "10.1.14.0/24"
@@ -39,6 +41,16 @@ class TestE2E(unittest.TestCase):
     def test_subnet_cidr(self):
         self.assertEqual(self.result["root_modules"]["aws_subnet.subnet"]["cidr_block"], "10.1.14.0/24")
 
+    @unittest.skip
+    def test_security_group_ingress(self):
+        self.assertTrue(Runner.finder(self.result["root_modules"]["aws_security_group.sgrp"], ingress, {
+            'from_port': '80',
+            'to_port': '80',
+            'from_port': '3389',
+            'to_port': '3389',
+            'Protocol': 'tcp',
+            'Cidr_blocks': '0.0.0.0/0'
+        }))
     @unittest.skip
     def test_security_group_egress(self):
         self.assertTrue(Runner.finder(self.result["root_modules"]["aws_security_group.sgrp"], egress, {
