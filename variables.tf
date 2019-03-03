@@ -1,10 +1,28 @@
+variable "appsvpc_id" {}
+variable "opssubnet_cidr_block" {}
+
 variable "naming_suffix" {
   default     = false
   description = "Naming suffix for tags, value passed from dq-tf-apps"
 }
 
+variable "database_name" {
+  default     = "external_tableau"
+  description = "RDS Postgres database name"
+}
+
+variable "port" {
+  default     = "5432"
+  description = "RDS Postgres port access"
+}
+
 variable "az" {
   default     = "eu-west-2a"
+  description = "Default availability zone for the subnet."
+}
+
+variable "az2" {
+  default     = "eu-west-2b"
   description = "Default availability zone for the subnet."
 }
 
@@ -46,6 +64,46 @@ variable "TSM_from_port" {
 variable "TSM_to_port" {
   default     = 8850
   description = "To port for TSM traffic"
+}
+
+variable "RDP_from_port" {
+  default     = 3389
+  description = "From port for RDP traffic"
+}
+
+variable "rds_from_port" {
+  default     = 5432
+  description = "From port for Postgres traffic"
+}
+
+variable "rds_to_port" {
+  default     = 5432
+  description = "To port for Postgres traffic"
+}
+
+variable "rds_protocol" {
+  default     = "tcp"
+  description = "Protocol for Postgres traffic"
+}
+
+variable "dq_lambda_subnet_cidr" {
+  default     = "10.1.42.0/24"
+  description = "Dedicated subnet for Lambda ENIs"
+}
+
+variable "dq_lambda_subnet_cidr_az2" {
+  default     = "10.1.43.0/24"
+  description = "Dedicated subnet for Lambda ENIs"
+}
+
+variable "RDP_to_port" {
+  default     = 3389
+  description = "To port for RDP traffic"
+}
+
+variable "RDP_protocol" {
+  default     = "tcp"
+  description = "Protocol for RDP traffic"
 }
 
 variable "acp_prod_ingress_cidr" {
