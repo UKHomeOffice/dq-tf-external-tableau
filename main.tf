@@ -205,3 +205,28 @@ resource "aws_security_group" "sgrp" {
     Name = "sg-${local.naming_suffix}"
   }
 }
+
+resource "aws_security_group_rule" "allow_lambda" {
+  type            = "ingress"
+  description     = "Postgres from the Lambda subnet"
+  from_port       = "${var.rds_from_port}"
+  to_port         = "${var.rds_to_port}"
+  protocol        = "${var.rds_protocol}"
+  cidr_blocks = [
+    "${var.dq_lambda_subnet_cidr}",
+    "${var.dq_lambda_subnet_cidr_az2}",
+  ]
+
+  security_group_id = "${aws_security_group.sgrp.id}"
+}
+
+resource "aws_security_group_rule" "allow_out" {
+  type            = "egress"
+  from_port       = 0
+  to_port         = 0
+  protocol        = -1
+  cidr_blocks = ["0.0.0.0/0"]
+
+  security_group_id = "${aws_security_group.sgrp.id}"
+}
+
