@@ -18,8 +18,7 @@ class TestE2E(unittest.TestCase):
               source = "./mymodule"
               providers = {aws = "aws"}
 
-              appsvpc_id                   = "1234"
-              opssubnet_cidr_block         = "1.2.3.0/24"
+              apps_vpc_id                  = "1234"
               acp_prod_ingress_cidr        = "10.5.0.0/16"
               dq_ops_ingress_cidr          = "10.2.0.0/16"
               dq_external_dashboard_subnet = "10.1.14.0/24"

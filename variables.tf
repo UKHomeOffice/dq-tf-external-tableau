@@ -1,6 +1,3 @@
-variable "appsvpc_id" {}
-variable "opssubnet_cidr_block" {}
-
 variable "naming_suffix" {
   default     = false
   description = "Naming suffix for tags, value passed from dq-tf-apps"
