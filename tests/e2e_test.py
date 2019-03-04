@@ -42,7 +42,7 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.result["root_modules"]["aws_subnet.subnet"]["cidr_block"], "10.1.14.0/24")
 
     def test_security_group_ingress(self):
-        self.assertTrue(Runner.finder(self.result["root_modules"]["aws_security_group.sgrp"], ingress, {
+        self.assertTrue(Runner.finder(self.result["root_modules"]["aws_security_group.sgrp"], "ingress", {
             'from_port': '80',
             'to_port': '80',
             'from_port': '3389',
@@ -52,7 +52,7 @@ class TestE2E(unittest.TestCase):
         }))
 
     def test_security_group_egress(self):
-        self.assertTrue(Runner.finder(self.result["root_modules"]["aws_security_group.sgrp"], egress, {
+        self.assertTrue(Runner.finder(self.result["root_modules"]["aws_security_group.sgrp"], "egress", {
             'from_port': '0',
             'to_port': '0',
             'Protocol': '-1',
