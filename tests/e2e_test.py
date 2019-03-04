@@ -40,24 +40,6 @@ class TestE2E(unittest.TestCase):
     def test_subnet_cidr(self):
         self.assertEqual(self.result["root_modules"]["aws_subnet.subnet"]["cidr_block"], "10.1.14.0/24")
 
-    def test_security_group_ingress(self):
-        self.assertTrue(Runner.finder(self.result["root_modules"]["aws_security_group.sgrp"], "ingress", {
-            'from_port': '80',
-            'to_port': '80',
-            'from_port': '3389',
-            'to_port': '3389',
-            'Protocol': 'tcp',
-            'Cidr_blocks': '0.0.0.0/0'
-        }))
-
-    def test_security_group_egress(self):
-        self.assertTrue(Runner.finder(self.result["root_modules"]["aws_security_group.sgrp"], "egress", {
-            'from_port': '0',
-            'to_port': '0',
-            'Protocol': '-1',
-            'Cidr_blocks': '0.0.0.0/0'
-        }))
-
     def test_subnet_tags(self):
         self.assertEqual(self.result["root_modules"]["aws_subnet.subnet"]["tags.Name"], "subnet-external-tableau-apps-preprod-dq")
 
