@@ -12,7 +12,7 @@ resource "aws_db_subnet_group" "rds" {
 }
 
 resource "aws_subnet" "ext_tableau_az2" {
-  vpc_id                  = "${var.appsvpc_id}"
+  vpc_id                  = "${var.apps_vpc_id}"
   cidr_block              = "${var.dq_external_dashboard_subnet_az2}"
   map_public_ip_on_launch = false
   availability_zone       = "${var.az2}"
@@ -39,7 +39,7 @@ resource "random_string" "username" {
 }
 
 resource "aws_security_group" "ext_tableau_db" {
-  vpc_id = "${var.appsvpc_id}"
+  vpc_id = "${var.apps_vpc_id}"
 
   tags {
     Name = "sg-db-${local.naming_suffix}"
@@ -53,7 +53,7 @@ resource "aws_security_group_rule" "allow_bastion" {
   to_port         = "${var.rds_to_port}"
   protocol        = "${var.rds_protocol}"
   cidr_blocks = [
-    "${var.opssubnet_cidr_block}",
+    "${var.dq_ops_ingress_cidr}",
     "${var.peering_cidr_block}",
   ]
 
