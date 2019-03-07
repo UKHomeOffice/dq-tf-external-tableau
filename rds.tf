@@ -47,11 +47,12 @@ resource "aws_security_group" "ext_tableau_db" {
 }
 
 resource "aws_security_group_rule" "allow_bastion" {
-  type            = "ingress"
-  description     = "Postgres from the Bastion host"
-  from_port       = "${var.rds_from_port}"
-  to_port         = "${var.rds_to_port}"
-  protocol        = "${var.rds_protocol}"
+  type        = "ingress"
+  description = "Postgres from the Bastion host"
+  from_port   = "${var.rds_from_port}"
+  to_port     = "${var.rds_to_port}"
+  protocol    = "${var.rds_protocol}"
+
   cidr_blocks = [
     "${var.dq_ops_ingress_cidr}",
     "${var.peering_cidr_block}",
@@ -61,11 +62,12 @@ resource "aws_security_group_rule" "allow_bastion" {
 }
 
 resource "aws_security_group_rule" "allow_db_lambda" {
-  type            = "ingress"
-  description     = "Postgres from the Lambda subnet"
-  from_port       = "${var.rds_from_port}"
-  to_port         = "${var.rds_to_port}"
-  protocol        = "${var.rds_protocol}"
+  type        = "ingress"
+  description = "Postgres from the Lambda subnet"
+  from_port   = "${var.rds_from_port}"
+  to_port     = "${var.rds_to_port}"
+  protocol    = "${var.rds_protocol}"
+
   cidr_blocks = [
     "${var.dq_lambda_subnet_cidr}",
     "${var.dq_lambda_subnet_cidr_az2}",
@@ -75,10 +77,10 @@ resource "aws_security_group_rule" "allow_db_lambda" {
 }
 
 resource "aws_security_group_rule" "allow_db_out" {
-  type            = "egress"
-  from_port       = 0
-  to_port         = 0
-  protocol        = -1
+  type        = "egress"
+  from_port   = 0
+  to_port     = 0
+  protocol    = -1
   cidr_blocks = ["0.0.0.0/0"]
 
   security_group_id = "${aws_security_group.ext_tableau_db.id}"
@@ -86,7 +88,7 @@ resource "aws_security_group_rule" "allow_db_out" {
 
 resource "aws_db_instance" "postgres" {
   identifier              = "ext-tableau-postgres-${local.naming_suffix}"
-  allocated_storage       = 200 
+  allocated_storage       = 200
   storage_type            = "gp2"
   engine                  = "postgres"
   engine_version          = "10.4"
@@ -106,7 +108,7 @@ resource "aws_db_instance" "postgres" {
   vpc_security_group_ids = ["${aws_security_group.ext_tableau_db.id}"]
 
   lifecycle {
-    prevent_destroy = true 
+    prevent_destroy = true
   }
 
   tags {
@@ -124,4 +126,27 @@ resource "aws_ssm_parameter" "rds_external_tableau_password" {
   name  = "rds_external_tableau_password"
   type  = "SecureString"
   value = "${random_string.password.result}"
+}
+
+resource "random_string" "service_username" {
+  length  = 8
+  special = false
+  number  = false
+}
+
+resource "random_string" "service_password" {
+  length  = 16
+  special = false
+}
+
+resource "aws_ssm_parameter" "rds_external_tableau_service_username" {
+  name  = "rds_external_tableau_service_username"
+  type  = "SecureString"
+  value = "${random_string.service_username.result}"
+}
+
+resource "aws_ssm_parameter" "rds_external_tableau_service_password" {
+  name  = "rds_external_tableau_service_password"
+  type  = "SecureString"
+  value = "${random_string.service_password.result}"
 }
