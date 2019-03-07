@@ -46,5 +46,17 @@ class TestE2E(unittest.TestCase):
     def test_security_group_tags(self):
         self.assertEqual(self.result["root_modules"]["aws_security_group.sgrp"]["tags.Name"], "sg-external-tableau-apps-preprod-dq")
 
+    def test_ssm_service_username(self):
+        self.assertEqual(self.result["root_modules"]["aws_ssm_parameter.rds_external_tableau_service_username"]["name"], "rds_external_tableau_service_username")
+
+    def test_ssm_service_username_type(self):
+        self.assertEqual(self.result["root_modules"]["aws_ssm_parameter.rds_external_tableau_service_username"]["type"], "SecureString")
+
+    def test_ssm_service_password(self):
+        self.assertEqual(self.result["root_modules"]["aws_ssm_parameter.rds_external_tableau_service_password"]["name"], "rds_external_tableau_service_password")
+
+    def test_ssm_service_password_type(self):
+        self.assertEqual(self.result["root_modules"]["aws_ssm_parameter.rds_external_tableau_service_password"]["type"], "SecureString")
+
 if __name__ == '__main__':
     unittest.main()

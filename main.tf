@@ -207,11 +207,12 @@ resource "aws_security_group" "sgrp" {
 }
 
 resource "aws_security_group_rule" "allow_lambda" {
-  type            = "ingress"
-  description     = "Postgres from the Lambda subnet"
-  from_port       = "${var.rds_from_port}"
-  to_port         = "${var.rds_to_port}"
-  protocol        = "${var.rds_protocol}"
+  type        = "ingress"
+  description = "Postgres from the Lambda subnet"
+  from_port   = "${var.rds_from_port}"
+  to_port     = "${var.rds_to_port}"
+  protocol    = "${var.rds_protocol}"
+
   cidr_blocks = [
     "${var.dq_lambda_subnet_cidr}",
     "${var.dq_lambda_subnet_cidr_az2}",
