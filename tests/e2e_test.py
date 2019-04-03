@@ -58,5 +58,11 @@ class TestE2E(unittest.TestCase):
     def test_ssm_service_password_type(self):
         self.assertEqual(self.result["root_modules"]["aws_ssm_parameter.rds_external_tableau_service_password"]["type"], "SecureString")
 
+    def test_rds_deletion_protection(self):
+        self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["deletion_protection"], "true")
+
+    def test_rds_cw_log_shipping(self):
+        self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["enabled_cloudwatch_logs_exports"], ["postgresql", "upgrade"])
+
 if __name__ == '__main__':
     unittest.main()
