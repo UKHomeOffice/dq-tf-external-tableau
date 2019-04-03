@@ -87,22 +87,24 @@ resource "aws_security_group_rule" "allow_db_out" {
 }
 
 resource "aws_db_instance" "postgres" {
-  identifier              = "ext-tableau-postgres-${local.naming_suffix}"
-  allocated_storage       = 200
-  storage_type            = "gp2"
-  engine                  = "postgres"
-  engine_version          = "10.6"
-  instance_class          = "db.t3.small"
-  username                = "${random_string.username.result}"
-  password                = "${random_string.password.result}"
-  name                    = "${var.database_name}"
-  port                    = "${var.port}"
-  backup_window           = "00:00-01:00"
-  maintenance_window      = "mon:01:30-mon:02:30"
-  backup_retention_period = 14
-  storage_encrypted       = true
-  multi_az                = true
-  skip_final_snapshot     = true
+  identifier                      = "ext-tableau-postgres-${local.naming_suffix}"
+  allocated_storage               = 200
+  storage_type                    = "gp2"
+  engine                          = "postgres"
+  engine_version                  = "10.6"
+  instance_class                  = "db.t3.small"
+  enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
+  username                        = "${random_string.username.result}"
+  password                        = "${random_string.password.result}"
+  name                            = "${var.database_name}"
+  port                            = "${var.port}"
+  backup_window                   = "00:00-01:00"
+  maintenance_window              = "mon:01:30-mon:02:30"
+  backup_retention_period         = 14
+  deletion_protection             = true
+  storage_encrypted               = true
+  multi_az                        = true
+  skip_final_snapshot             = true
 
   db_subnet_group_name   = "${aws_db_subnet_group.rds.id}"
   vpc_security_group_ids = ["${aws_security_group.ext_tableau_db.id}"]
