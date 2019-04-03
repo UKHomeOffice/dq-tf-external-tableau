@@ -62,7 +62,7 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["deletion_protection"], "true")
 
     def test_rds_cw_log_shipping(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["enabled_cloudwatch_logs_exports"], "postgresql", "upgrade")
+        self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["enabled_cloudwatch_logs_exports"], "postgresql")
 
 if __name__ == '__main__':
     unittest.main()
