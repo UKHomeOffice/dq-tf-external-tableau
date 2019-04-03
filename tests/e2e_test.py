@@ -61,5 +61,8 @@ class TestE2E(unittest.TestCase):
     def test_rds_deletion_protection(self):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["deletion_protection"], "true")
 
+    def test_rds_cw_export(self):
+        self.assertCountEqual(self.result["root_modules"]["aws_db_instance.postgres"]["enabled_cloudwatch_logs_exports"], ["postgresql", "upgrade"])
+
 if __name__ == '__main__':
     unittest.main()
