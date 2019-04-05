@@ -37,6 +37,14 @@ export TAB_ADMIN_USER=`aws --region eu-west-2 ssm get-parameter --name tableau_a
 export TAB_ADMIN_PASSWORD=`aws --region eu-west-2 ssm get-parameter --name tableau_admin_password --query 'Parameter.Value' --output text --with-decryption`
 export TAB_PRODUCT_KEY=`aws --region eu-west-2 ssm get-parameter --name tableau_ext_product_key --query 'Parameter.Value' --output text --with-decryption`
 
+
+#confirm:
+#export TAB_DB_USER=`aws --region eu-west-2 ssm get-parameter --name rds_external_tableau_username --query 'Parameter.Value' --output text --with-decryption`
+#export TAB_DB_PASSWORD=`aws --region eu-west-2 ssm get-parameter --name rds_external_tableau_password --query 'Parameter.Value' --output text --with-decryption`
+#export TAB_DB_USER=`aws --region eu-west-2 ssm get-parameter --name rds_external_tableau_service_username --query 'Parameter.Value' --output text --with-decryption`
+#export TAB_DB_PASSWORD=`aws --region eu-west-2 ssm get-parameter --name rds_external_tableau_service_password --query 'Parameter.Value' --output text --with-decryption`
+
+
 #!!!
 #export DATASOURCES_TO_PUBLISH='`aws --region eu-west-2 ssm get-parameter --name tableau_ext_publish_datasources --query 'Parameter.Value' --output text`'
 #export WORKBOOKS_TO_PUBLISH='`aws --region eu-west-2 ssm get-parameter --name tableau_ext_publish_workbooks --query 'Parameter.Value' --output text`'
