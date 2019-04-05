@@ -118,6 +118,12 @@ resource "aws_db_instance" "postgres" {
   }
 }
 
+resoucrce "aws_ssm_parameter" "rds_external_tableau_postgres_endpoint" {
+  name  = "rds_external_tableau_postgres_endpoint"
+  type  = "SecureString"
+  value = "${aws_db_instance.postgres.endpoint}"
+}
+
 resource "aws_ssm_parameter" "rds_external_tableau_username" {
   name  = "rds_external_tableau_username"
   type  = "SecureString"
