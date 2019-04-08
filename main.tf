@@ -25,31 +25,26 @@ exec > >(tee /var/log/user-data.log|logger -t user-data ) 2>&1
 echo "#Pull values from Parameter Store and save to profile"
 touch /home/tableau_srv/env_vars.sh
 echo "
-#export DATA_ARCHIVE_TAB_BACKUP_URL=`aws --region eu-west-2 ssm get-parameter --name data_archive_tab_ext_backup_url --query 'Parameter.Value' --output text`$(curl http://169.254.169.254/latest/meta-data/instance-id)/
 export DATA_ARCHIVE_TAB_BACKUP_URL=`aws --region eu-west-2 ssm get-parameter --name data_archive_tab_ext_backup_url --query 'Parameter.Value' --output text``aws --region eu-west-2 ssm get-parameter --name data_archive_tab_ext_backup_sub_directory --query 'Parameter.Value' --output text`/
-export TAB_EXT_REPO_URL=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_url --query 'Parameter.Value' --output text`
+export TAB_EXT_REPO_PROTOCOL=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_protocol --query 'Parameter.Value' --output text`
+export TAB_EXT_REPO_USER=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_user --query 'Parameter.Value' --output text`
 export TAB_EXT_REPO_HOST=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_host --query 'Parameter.Value' --output text`
 export TAB_EXT_REPO_PORT=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_port --query 'Parameter.Value' --output text`
+export TAB_EXT_REPO_ORG=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_org --query 'Parameter.Value' --output text`
 export TAB_EXT_REPO_NAME=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_name --query 'Parameter.Value' --output text`
+export TAB_EXT_REPO_URL=\$TAB_EXT_REPO_PROTOCOL://\$TAB_EXT_REPO_USER@\$TAB_EXT_REPO_HOST:\$TAB_EXT_REPO_PORT/\$TAB_EXT_REPO_ORG/\$TAB_EXT_REPO_NAME.git
 export TAB_SRV_USER=`aws --region eu-west-2 ssm get-parameter --name tableau_server_username --query 'Parameter.Value' --output text`
 export TAB_SRV_PASSWORD=`aws --region eu-west-2 ssm get-parameter --name tableau_server_password --query 'Parameter.Value' --output text --with-decryption`
 export TAB_ADMIN_USER=`aws --region eu-west-2 ssm get-parameter --name tableau_admin_username --query 'Parameter.Value' --output text`
 export TAB_ADMIN_PASSWORD=`aws --region eu-west-2 ssm get-parameter --name tableau_admin_password --query 'Parameter.Value' --output text --with-decryption`
+export TAB_DB_USER=`aws --region eu-west-2 ssm get-parameter --name rds_external_tableau_username --query 'Parameter.Value' --output text --with-decryption`
+export TAB_DB_PASSWORD=`aws --region eu-west-2 ssm get-parameter --name rds_external_tableau_password --query 'Parameter.Value' --output text --with-decryption`
+export TAB_TABSVR_REPO_USER=`aws --region eu-west-2 ssm get-parameter --name tableau_server_repository_username --query 'Parameter.Value' --output text`
+export TAB_TABSVR_REPO_PASSWORD=`aws --region eu-west-2 ssm get-parameter --name tableau_server_repository_password --query 'Parameter.Value' --output text --with-decryption`
 export TAB_PRODUCT_KEY=`aws --region eu-west-2 ssm get-parameter --name tableau_ext_product_key --query 'Parameter.Value' --output text --with-decryption`
-
-
-#confirm:
-#export TAB_DB_USER=`aws --region eu-west-2 ssm get-parameter --name rds_external_tableau_username --query 'Parameter.Value' --output text --with-decryption`
-#export TAB_DB_PASSWORD=`aws --region eu-west-2 ssm get-parameter --name rds_external_tableau_password --query 'Parameter.Value' --output text --with-decryption`
-#export TAB_DB_USER=`aws --region eu-west-2 ssm get-parameter --name rds_external_tableau_service_username --query 'Parameter.Value' --output text --with-decryption`
-#export TAB_DB_PASSWORD=`aws --region eu-west-2 ssm get-parameter --name rds_external_tableau_service_password --query 'Parameter.Value' --output text --with-decryption`
-
-
-#!!!
-#export DATASOURCES_TO_PUBLISH='`aws --region eu-west-2 ssm get-parameter --name tableau_ext_publish_datasources --query 'Parameter.Value' --output text`'
-#export WORKBOOKS_TO_PUBLISH='`aws --region eu-west-2 ssm get-parameter --name tableau_ext_publish_workbooks --query 'Parameter.Value' --output text`'
-#export RDS_POSTGRES=`aws --region eu-west-2 ssm get-parameter --name rds_external_tableau_postgres_endpoint --query 'Parameter.Value' --output text`
-#!!!
+export DATASOURCES_TO_PUBLISH='`aws --region eu-west-2 ssm get-parameter --name tableau_ext_publish_datasources --query 'Parameter.Value' --output text`'
+export WORKBOOKS_TO_PUBLISH='`aws --region eu-west-2 ssm get-parameter --name tableau_ext_publish_workbooks --query 'Parameter.Value' --output text`'
+export RDS_POSTGRES=`aws --region eu-west-2 ssm get-parameter --name rds_external_tableau_postgres_endpoint --query 'Parameter.Value' --output text`
 
 " > /home/tableau_srv/env_vars.sh
 
@@ -146,8 +141,8 @@ aws s3 cp $DATA_ARCHIVE_TAB_BACKUP_URL$LATEST_BACKUP_NAME /var/opt/tableau/table
 echo "#Restore latest backup to Tableau Server"
 tsm stop -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD && tsm maintenance restore --file $LATEST_BACKUP_NAME -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD && tsm start -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD
 
-############## echo "#Publishing required DataSources and WorkBooks"
-############## su -c "/home/tableau_srv/scripts/tableau-pub.py /home/tableau_srv/$TAB_INT_REPO_NAME DQDashboardsE" - tableau_srv
+echo "#Publishing required DataSources and WorkBooks"
+su -c "/home/tableau_srv/scripts/tableau-pub.py /home/tableau_srv/$TAB_EXT_REPO_NAME DQDashboardsE" - tableau_srv
 
 echo "#Mount filesystem - /var/opt/tableau/"
 mkfs.xfs /dev/nvme2n1
@@ -169,7 +164,7 @@ umount /mnt/var/log/
 aws --region eu-west-2 ssm put-parameter --name data_archive_tab_ext_backup_sub_directory --overwrite --type "String" --value "$(curl http://169.254.169.254/latest/meta-data/instance-id)"
 sed -i '/DATA_ARCHIVE_TAB_BACKUP_URL/d' /home/tableau_srv/env_vars.sh
 echo "
-export DATA_ARCHIVE_TAB_BACKUP_URL=`aws --region eu-west-2 ssm get-parameter --name data_archive_tab_int_backup_url --query 'Parameter.Value' --output text``aws --region eu-west-2 ssm get-parameter --name data_archive_tab_int_backup_sub_directory --query 'Parameter.Value' --output text`/
+export DATA_ARCHIVE_TAB_BACKUP_URL=`aws --region eu-west-2 ssm get-parameter --name data_archive_tab_ext_backup_url --query 'Parameter.Value' --output text``aws --region eu-west-2 ssm get-parameter --name data_archive_tab_ext_backup_sub_directory --query 'Parameter.Value' --output text`/
 " >> /home/tableau_srv/env_vars.sh
 
 reboot
