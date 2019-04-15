@@ -59,8 +59,15 @@ resource "aws_iam_role_policy" "ext_tableau" {
 		  "arn:aws:ssm:eu-west-2:*:parameter/rds_external_tableau_postgres_endpoint",
 		  "arn:aws:ssm:eu-west-2:*:parameter/rds_external_tableau_username",
 		  "arn:aws:ssm:eu-west-2:*:parameter/rds_external_tableau_password"
-      ]
-    }
+      	]
+  	},
+  	{
+		"Effect": "Allow",
+		"Action": [
+			"ssm:PutParameter"
+		],
+		"Resource": "arn:aws:ssm:eu-west-2:*:parameter/data_archive_tab_int_backup_sub_directory"
+  	}
   ]
 }
 EOF
