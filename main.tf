@@ -140,8 +140,8 @@ aws s3 cp $DATA_ARCHIVE_TAB_BACKUP_URL$LATEST_BACKUP_NAME /var/opt/tableau/table
 echo "#Restore latest backup to Tableau Server"
 tsm stop -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD && tsm maintenance restore --file $LATEST_BACKUP_NAME -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD && tsm start -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD
 
-echo "#Publishing required DataSources and WorkBooks"
-su -c "/home/tableau_srv/scripts/tableau-pub.py /home/tableau_srv/$TAB_EXT_REPO_NAME DQDashboardsE" - tableau_srv
+#WIP: echo "#Publishing required DataSources and WorkBooks"
+#su -c "/home/tableau_srv/scripts/tableau-pub.py /home/tableau_srv/$TAB_EXT_REPO_NAME DQDashboardsE" - tableau_srv
 
 echo "#Mount filesystem - /var/opt/tableau/"
 mkfs.xfs /dev/nvme2n1
