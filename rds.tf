@@ -88,11 +88,11 @@ resource "aws_security_group_rule" "allow_db_out" {
 
 resource "aws_db_instance" "postgres" {
   identifier                      = "ext-tableau-postgres-${local.naming_suffix}"
-  allocated_storage               = 200
+  allocated_storage               = "${var.environment == "prod" ? "500" : "200"}"
   storage_type                    = "gp2"
   engine                          = "postgres"
   engine_version                  = "10.6"
-  instance_class                  = "db.t3.small"
+  instance_class                  = "${var.environment == "prod" ? "db.m5.2xlarge" : "db.t3.small"}"
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
   username                        = "${random_string.username.result}"
   password                        = "${random_string.password.result}"

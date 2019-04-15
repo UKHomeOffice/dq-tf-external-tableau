@@ -13,6 +13,11 @@ variable "port" {
   description = "RDS Postgres port access"
 }
 
+variable "environment" {
+  default     = "notprod"
+  description = "Switch between environments"
+}
+
 variable "az" {
   default     = "eu-west-2a"
   description = "Default availability zone for the subnet."
