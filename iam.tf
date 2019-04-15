@@ -66,7 +66,7 @@ resource "aws_iam_role_policy" "ext_tableau" {
 		"Action": [
 			"ssm:PutParameter"
 		],
-		"Resource": "arn:aws:ssm:eu-west-2:*:parameter/data_archive_tab_int_backup_sub_directory"
+		"Resource": "arn:aws:ssm:eu-west-2:*:parameter/data_archive_tab_ext_backup_sub_directory"
   	}
   ]
 }
