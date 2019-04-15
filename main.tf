@@ -60,8 +60,8 @@ echo "#Set password for tableau_srv"
 echo $TAB_SRV_PASSWORD | passwd tableau_srv --stdin
 
 echo "#Download SSH Key pair to allow us to log in to the GitLab repo"
-aws --region eu-west-2 ssm get-parameter --name tableau_external_linux_ssh_private_key --query 'Parameter.Value' --output text --with-decryption > /home/tableau_srv/.ssh/id_rsa
-aws --region eu-west-2 ssm get-parameter --name tableau_external_linux_ssh_public_key --query 'Parameter.Value' --output text --with-decryption > /home/tableau_srv/.ssh/id_rsa.pub
+aws --region eu-west-2 ssm get-parameter --name tableau_linux_ssh_private_key --query 'Parameter.Value' --output text --with-decryption > /home/tableau_srv/.ssh/id_rsa
+aws --region eu-west-2 ssm get-parameter --name tableau_linux_ssh_public_key --query 'Parameter.Value' --output text --with-decryption > /home/tableau_srv/.ssh/id_rsa.pub
 
 echo "#Add gitlab host to known_hosts"
 ssh-keyscan -t rsa -p $TAB_EXT_REPO_PORT $TAB_EXT_REPO_HOST >>  /home/tableau_srv/.ssh/known_hosts
