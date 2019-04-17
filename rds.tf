@@ -70,7 +70,6 @@ resource "aws_security_group_rule" "allow_tab_ext" {
 
   cidr_blocks = [
     "${var.dq_external_dashboard_subnet}",
-	"${var.dq_external_dashboard_subnet_az2}",
   ]
 
   security_group_id = "${aws_security_group.ext_tableau_db.id}"
