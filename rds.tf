@@ -61,6 +61,21 @@ resource "aws_security_group_rule" "allow_bastion" {
   security_group_id = "${aws_security_group.ext_tableau_db.id}"
 }
 
+resource "aws_security_group_rule" "allow_tab_ext" {
+  type        = "ingress"
+  description = "Postgres from the Tab Ext host"
+  from_port   = "${var.rds_from_port}"
+  to_port     = "${var.rds_to_port}"
+  protocol    = "${var.rds_protocol}"
+
+  cidr_blocks = [
+    "${var.dq_external_dashboard_subnet}",
+	"${var.dq_external_dashboard_subnet_az2}",
+  ]
+
+  security_group_id = "${aws_security_group.ext_tableau_db.id}"
+}
+
 resource "aws_security_group_rule" "allow_db_lambda" {
   type        = "ingress"
   description = "Postgres from the Lambda subnet"
