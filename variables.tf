@@ -133,19 +133,10 @@ variable "dq_external_dashboard_subnet_az2" {
   description = "DQ Apps CIDR as per IP Addresses and CIDR blocks document"
 }
 
-variable "dq_external_dashboard_instance_ip" {
-  description = "Mock IP address of EC2 instance"
-  default     = "10.1.14.11"
-}
-
-variable "dq_external_dashboard_instance_2018_vanilla_ip" {
-  description = "Mock IP address of EC2 instance"
-  default     = "10.1.14.12"
-}
-
 variable "dq_external_dashboard_linux_instance_ip" {
   description = "IP address of EC2 instance"
-  default     = "10.1.14.111"
+  type        = "list"
+  default     = ["10.1.14.111", "10.1.14.112", "10.1.14.113", "10.1.14.114"]
 }
 
 variable "apps_vpc_id" {
