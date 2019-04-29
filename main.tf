@@ -4,6 +4,7 @@ locals {
 }
 
 resource "aws_instance" "ext_tableau_linux" {
+  count                       = 2
   key_name                    = "${var.key_name}"
   ami                         = "${data.aws_ami.ext_tableau_linux.id}"
   instance_type               = "c5.4xlarge"
@@ -11,7 +12,7 @@ resource "aws_instance" "ext_tableau_linux" {
   vpc_security_group_ids      = ["${aws_security_group.sgrp.id}"]
   associate_public_ip_address = false
   subnet_id                   = "${aws_subnet.subnet.id}"
-  private_ip                  = "${var.dq_external_dashboard_linux_instance_ip}"
+  private_ip                  = "${element(var.dq_external_dashboard_linux_instance_ip, count.index)}"
   monitoring                  = true
 
   user_data = <<EOF
