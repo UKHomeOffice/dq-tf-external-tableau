@@ -170,9 +170,9 @@ variable "haproxy_private_ip2" {
 }
 
 variable "haproxy_config_bucket" {
-  description "HAPROXY config bucket ID"
+  description = "HAPROXY config bucket ID"
 }
 
 variable "haproxy_config_bucket_key" {
-  description "HAPROXY config bucket KMS key"
+  description = "HAPROXY config bucket KMS key"
 }
