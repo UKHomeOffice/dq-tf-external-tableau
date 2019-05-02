@@ -168,3 +168,11 @@ variable "s3_archive_bucket_name" {
 variable "haproxy_private_ip2" {
   description = "IP of HaProxy 2"
 }
+
+variable "haproxy_config_bucket" {
+  description "HAPROXY config bucket ID"
+}
+
+variable "haproxy_config_bucket_key" {
+  description "HAPROXY config bucket KMS key"
+}
