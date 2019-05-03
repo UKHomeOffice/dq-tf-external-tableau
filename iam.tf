@@ -91,7 +91,7 @@ resource "aws_iam_role_policy" "ext_tableau_s3" {
         "s3:PutObject",
         "s3:GetObject"
       ],
-      "Resource": "${var.s3_archive_bucket}/*"
+      "Resource": "arn:aws:s3:::${var.haproxy_config_bucket}/*"
     },
     {
       "Effect": "Allow",
@@ -102,7 +102,10 @@ resource "aws_iam_role_policy" "ext_tableau_s3" {
         "kms:GenerateDataKey*",
         "kms:DescribeKey"
         ],
-      "Resource": "${var.s3_archive_bucket_key}"
+      "Resource": [
+        "${var.s3_archive_bucket_key}",
+        "${var.haproxy_config_bucket_key}"
+        ]
     }
   ]
 }
