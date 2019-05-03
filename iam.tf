@@ -83,7 +83,18 @@ resource "aws_iam_role_policy" "ext_tableau_s3" {
     {
       "Effect": "Allow",
       "Action": ["s3:ListBucket"],
-      "Resource": "${var.s3_archive_bucket}"
+      "Resource": [
+        "${var.s3_archive_bucket}",
+        "arn:aws:s3:::${var.haproxy_config_bucket}"
+        ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject",
+        "s3:GetObject"
+      ],
+      "Resource": "${var.s3_archive_bucket}/*"
     },
     {
       "Effect": "Allow",
