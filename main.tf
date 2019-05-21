@@ -12,7 +12,7 @@ resource "aws_instance" "ext_tableau_linux" {
   vpc_security_group_ids      = ["${aws_security_group.sgrp.id}"]
   associate_public_ip_address = false
   subnet_id                   = "${aws_subnet.subnet.id}"
-  private_ip                  = "${var.environment == "prod" ? element(dq_external_dashboard_instance_ip_prod, count.index) : element(dq_external_dashboard_instance_ip_notprod, count.index)}"
+  private_ip                  = "${var.environment == "prod" ? element(var.dq_external_dashboard_instance_ip_prod, count.index) : element(var.dq_external_dashboard_instance_ip_notprod, count.index)}"
   monitoring                  = true
 
   user_data = <<EOF
