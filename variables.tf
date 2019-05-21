@@ -151,7 +151,6 @@ variable "dq_external_dashboard_instance_ip_notprod" {
   description = "IP address of EC2 instance"
   type        = "list"
   default     = [
-    "10.1.14.111",
     "10.1.14.112"
   ]
 }
