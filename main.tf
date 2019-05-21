@@ -4,7 +4,7 @@ locals {
 }
 
 resource "aws_instance" "ext_tableau_linux" {
-  count                       = 2
+  count                       = "${var.environment == "prod" ? "1" : "2"}" # Allow different instance count in prod and notprod
   key_name                    = "${var.key_name}"
   ami                         = "${data.aws_ami.ext_tableau_linux.id}"
   instance_type               = "c5.4xlarge"
@@ -12,7 +12,7 @@ resource "aws_instance" "ext_tableau_linux" {
   vpc_security_group_ids      = ["${aws_security_group.sgrp.id}"]
   associate_public_ip_address = false
   subnet_id                   = "${aws_subnet.subnet.id}"
-  private_ip                  = "${element(var.dq_external_dashboard_linux_instance_ip, count.index)}"
+  private_ip                  = "${var.environment == "prod" ? element(dq_external_dashboard_instance_ip_prod, count.index) : element(dq_external_dashboard_instance_ip_notprod, count.index)}"
   monitoring                  = true
 
   user_data = <<EOF
@@ -22,6 +22,12 @@ set -e
 
 #log output from this user_data script
 exec > >(tee /var/log/user-data.log|logger -t user-data ) 2>&1
+
+echo "#Mount filesystem - /var/opt/tableau/"
+mkfs.xfs /dev/nvme2n1
+mkdir -p /var/opt/tableau/
+mount /dev/nvme2n1 /var/opt/tableau
+echo '/dev/nvme2n1 /var/opt/tableau xfs defaults 0 0' >> /etc/fstab
 
 echo "#Pull values from Parameter Store and save to profile"
 touch /home/tableau_srv/env_vars.sh
@@ -148,14 +154,6 @@ tsm stop --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD" && tsm mainte
 
 #WIP: echo "#Publishing required DataSources and WorkBooks"
 #su -c "/home/tableau_srv/scripts/tableau-pub.py /home/tableau_srv/$TAB_EXT_REPO_NAME DQDashboardsE" - tableau_srv
-
-echo "#Mount filesystem - /var/opt/tableau/"
-mkfs.xfs /dev/nvme2n1
-mkdir -p /mnt/var/opt/tableau/
-mount /dev/nvme2n1 /mnt/var/opt/tableau
-rsync -a /var/opt/tableau/ /mnt/var/opt/tableau
-echo '/dev/nvme2n1 /var/opt/tableau xfs defaults 0 0' >> /etc/fstab
-umount /mnt/var/opt/tableau/
 
 echo "#Mount filesystem - /var/log/"
 mkfs.xfs /dev/nvme1n1
