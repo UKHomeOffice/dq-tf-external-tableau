@@ -140,15 +140,16 @@ variable "dq_external_dashboard_subnet_az2" {
 #  "10.1.14.114"
 # ]
 variable "dq_external_dashboard_instance_ip_prod" {
-  description = "IP address of EC2 instance"
+  description = "IP addresses of EC2 instances in Prod"
   type        = "list"
   default     = [
+    "10.1.14.111",
     "10.1.14.112"
   ]
 }
 
 variable "dq_external_dashboard_instance_ip_notprod" {
-  description = "IP address of EC2 instance"
+  description = "IP addresses of EC2 instances in NotProd"
   type        = "list"
   default     = [
     "10.1.14.112"
