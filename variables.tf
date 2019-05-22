@@ -133,27 +133,14 @@ variable "dq_external_dashboard_subnet_az2" {
   description = "DQ Apps CIDR as per IP Addresses and CIDR blocks document"
 }
 
-# canonical_list = [
-#  "10.1.14.111",
-#  "10.1.14.112",
-#  "10.1.14.113",
-#  "10.1.14.114"
-# ]
-variable "dq_external_dashboard_instance_ip_prod" {
+variable "dq_external_dashboard_instance_ip" {
   description = "IP addresses of EC2 instances in Prod"
   type        = "list"
   default     = [
     "10.1.14.111",
-    "10.1.14.112"
-  ]
-}
-
-variable "dq_external_dashboard_instance_ip_notprod" {
-  description = "IP addresses of EC2 instances in NotProd"
-  type        = "list"
-  default     = [
-    "10.1.14.111",
-    "10.1.14.112"
+    "10.1.14.112",
+    "10.1.14.113",
+    "10.1.14.114"
   ]
 }
 
