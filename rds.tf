@@ -148,19 +148,19 @@ module "rds_alarms" {
 resource "aws_ssm_parameter" "rds_external_tableau_postgres_endpoint" {
   name  = "rds_external_tableau_postgres_endpoint"
   type  = "SecureString"
-  value = "${aws_db_instance.postgres.endpoint}"
+  value = "${element(aws_db_instance.postgres.endpoint, count.index)}"
 }
 
 resource "aws_ssm_parameter" "rds_external_tableau_username" {
   name  = "rds_external_tableau_username"
   type  = "SecureString"
-  value = "${random_string.username.result}"
+  value = "${element(random_string.username.result, count.index)}"
 }
 
 resource "aws_ssm_parameter" "rds_external_tableau_password" {
   name  = "rds_external_tableau_password"
   type  = "SecureString"
-  value = "${random_string.password.result}"
+  value = "${element(random_string.password.result, count.index)}"
 }
 
 resource "random_string" "service_username" {
@@ -177,11 +177,11 @@ resource "random_string" "service_password" {
 resource "aws_ssm_parameter" "rds_external_tableau_service_username" {
   name  = "rds_external_tableau_service_username"
   type  = "SecureString"
-  value = "${random_string.service_username.result}"
+  value = "${element(random_string.service_username.result, count.index)}"
 }
 
 resource "aws_ssm_parameter" "rds_external_tableau_service_password" {
   name  = "rds_external_tableau_service_password"
   type  = "SecureString"
-  value = "${random_string.service_password.result}"
+  value = "${element(random_string.service_password.result, count.index)}"
 }
