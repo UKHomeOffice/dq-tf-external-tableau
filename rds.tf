@@ -101,8 +101,8 @@ resource "aws_security_group_rule" "allow_db_out" {
 }
 
 resource "aws_db_instance" "postgres" {
-  identifier                      = "ext-tableau-postgres-${local.naming_suffix}"
   count                           = "${var.environment == "prod" ? "1" : "0"}"
+  identifier                      = "ext-tableau-postgres-${local.naming_suffix}"
   allocated_storage               = "${var.environment == "prod" ? "500" : "200"}"
   storage_type                    = "gp2"
   engine                          = "postgres"
