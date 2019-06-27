@@ -184,7 +184,7 @@ EOF
 }
 
 resource "aws_instance" "ext_tableau_linux_test" {
-  count                       = "${var.environment == "prod" ? "1" : "0"}"                       # Allow different instance count in prod and notprod
+  count                       = "${var.environment == "prod" ? "1" : "0"}"   # Allow different instance count in prod and notprod
   key_name                    = "${var.key_name}"
   ami                         = "${data.aws_ami.ext_tableau_linux.id}"
   instance_type               = "c5.2xlarge"
@@ -192,7 +192,7 @@ resource "aws_instance" "ext_tableau_linux_test" {
   vpc_security_group_ids      = ["${aws_security_group.sgrp.id}"]
   associate_public_ip_address = false
   subnet_id                   = "${aws_subnet.subnet.id}"
-  private_ip                  = "${element(var.dq_external_dashboard_instance_ip, count.index)}"
+  private_ip                  = "10.1.14.116"
   monitoring                  = true
 
   user_data = <<EOF
