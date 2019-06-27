@@ -138,8 +138,8 @@ variable "dq_external_dashboard_instance_ip" {
   type        = "list"
 
   default = [
-    "10.1.14.111",
     "10.1.14.112",
+    "10.1.14.111",
     "10.1.14.113",
     "10.1.14.114",
   ]
