@@ -4,7 +4,7 @@ locals {
 }
 
 resource "aws_instance" "ext_tableau_linux" {
-  count                       = "${var.environment == "prod" ? "1" : "0"}"                       # Allow different instance count in prod and notprod
+  count                       = "${var.environment == "prod" ? "2" : "0"}"                       # Allow different instance count in prod and notprod
   key_name                    = "${var.key_name}"
   ami                         = "${data.aws_ami.ext_tableau_linux.id}"
   instance_type               = "${var.environment == "prod" ? "c5.4xlarge" : "c5.2xlarge"}"
