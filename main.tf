@@ -4,10 +4,10 @@ locals {
 }
 
 resource "aws_instance" "ext_tableau_linux" {
-  count                       = "${var.environment == "prod" ? "2" : "0"}"                       # Allow different instance count in prod and notprod
+  count                       = "${var.environment == "prod" ? "2" : "2"}"                       # Allow different instance count in prod and notprod
   key_name                    = "${var.key_name}"
   ami                         = "${data.aws_ami.ext_tableau_linux.id}"
-  instance_type               = "${var.environment == "prod" ? "c5.4xlarge" : "c5.2xlarge"}"
+  instance_type               = "${var.environment == "prod" ? "c5.2xlarge" : "c5.2xlarge"}"
   iam_instance_profile        = "${aws_iam_instance_profile.ext_tableau.id}"
   vpc_security_group_ids      = ["${aws_security_group.sgrp.id}"]
   associate_public_ip_address = false
