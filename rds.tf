@@ -117,7 +117,7 @@ resource "aws_db_instance" "postgres" {
   backup_retention_period         = 14
   deletion_protection             = true
   storage_encrypted               = true
-  multi_az                        = true
+  multi_az                        = false
   skip_final_snapshot             = true
 
   db_subnet_group_name   = "${aws_db_subnet_group.rds.id}"
