@@ -31,6 +31,7 @@ class TestE2E(unittest.TestCase):
               haproxy_private_ip2          = "1.2.3.3"
               haproxy_config_bucket        = "s3-bucket-name"
               haproxy_config_bucket_key    = "arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"
+              rds_enhanced_monitoring_role = "arn:aws:iam::123456789:role/rds-enhanced-monitoring-role"
             }
 
         """

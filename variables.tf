@@ -182,3 +182,7 @@ variable "haproxy_config_bucket" {
 variable "haproxy_config_bucket_key" {
   description = "HAPROXY config bucket KMS key"
 }
+
+variable "rds_enhanced_monitoring_role" {
+  description = "ARN of the RDS enhanced monitoring role"
+}
