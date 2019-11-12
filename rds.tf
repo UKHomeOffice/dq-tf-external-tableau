@@ -120,7 +120,10 @@ resource "aws_db_instance" "postgres" {
   multi_az                        = false
   skip_final_snapshot             = true
 
-  monitoring_interval  = "60"
+  performance_insights_enabled          = true
+  performance_insights_retention_period = "7"
+
+  monitoring_interval = "60"
   monitoring_role_arn = "${var.rds_enhanced_monitoring_role}"
 
   db_subnet_group_name   = "${aws_db_subnet_group.rds.id}"
@@ -142,9 +145,9 @@ module "rds_alarms" {
   environment                  = "${var.naming_suffix}"
   pipeline_name                = "external-tableau"
   db_instance_id               = "${aws_db_instance.postgres.id}"
-  free_storage_space_threshold = 100000000000                     # 100GB free space
-  read_latency_threshold       = 0.05                             # 50 milliseconds
-  write_latency_threshold      = 2.5                              # 2.5 seconds
+  free_storage_space_threshold = 100000000000 # 100GB free space
+  read_latency_threshold       = 0.05         # 50 milliseconds
+  write_latency_threshold      = 2.5          # 2.5 seconds
 }
 
 resource "aws_ssm_parameter" "rds_external_tableau_postgres_endpoint" {
