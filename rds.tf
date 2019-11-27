@@ -119,6 +119,7 @@ resource "aws_db_instance" "postgres" {
   storage_encrypted               = true
   multi_az                        = false
   skip_final_snapshot             = true
+  ca_cert_identifier              = "${var.environment == "prod" ? "rds-ca-2015" : "rds-ca-2019"}"
 
   performance_insights_enabled          = true
   performance_insights_retention_period = "7"
