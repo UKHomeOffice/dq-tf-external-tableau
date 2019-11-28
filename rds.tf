@@ -113,13 +113,13 @@ resource "aws_db_instance" "postgres" {
   name                            = "${var.database_name}"
   port                            = "${var.port}"
   backup_window                   = "00:00-01:00"
-  maintenance_window              = "mon:01:30-mon:02:30"
+  maintenance_window              = "mon:01:00-mon:02:00"
   backup_retention_period         = 14
   deletion_protection             = true
   storage_encrypted               = true
   multi_az                        = false
   skip_final_snapshot             = true
-  ca_cert_identifier              = "${var.environment == "prod" ? "rds-ca-2015" : "rds-ca-2019"}"
+  ca_cert_identifier              = "${var.environment == "prod" ? "rds-ca-2019" : "rds-ca-2019"}"
 
   performance_insights_enabled          = true
   performance_insights_retention_period = "7"
