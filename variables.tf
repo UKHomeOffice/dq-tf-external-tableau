@@ -145,6 +145,19 @@ variable "dq_external_dashboard_instance_ip" {
   ]
 }
 
+variable "dq_external_staging_dashboard_instance_ip" {
+  description = "IP addresses of EC2 instances in Prod"
+  type        = "list"
+
+  default = [
+    "10.1.14.115",
+    "10.1.14.116",
+    "10.1.14.117",
+    "10.1.14.118",
+  ]
+}
+
+
 variable "apps_vpc_id" {
   default     = false
   description = "Value obtained from Apps module"
