@@ -209,11 +209,9 @@ resource "aws_ssm_parameter" "rds_external_tableau_postgres_endpoint" {
 }
 
 resource "aws_ssm_parameter" "rds_external_tableau_postgres_staging_endpoint" {
-  name = "rds_external_tableau_postgres_staging_endpoint"
-  type = "SecureString"
-  value = [
-    "${join("", aws_db_instance.external_reporting_snapshot_stg.*.address)}"
-  ]
+  name  = "rds_external_tableau_postgres_staging_endpoint"
+  type  = "SecureString"
+  value = "${join("", aws_db_instance.external_reporting_snapshot_stg.*.address)}"
 }
 
 resource "aws_ssm_parameter" "rds_external_tableau_username" {
