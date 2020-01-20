@@ -139,6 +139,54 @@ resource "aws_db_instance" "postgres" {
   }
 }
 
+resource "aws_db_instance" "external_reporting_snapshot_stg" {
+  count                               = "${local.external_reporting_stg_count}"
+  identifier                          = "stg-postgres-${local.naming_suffix}"
+  snapshot_identifier                 = "rds:ext-tableau-postgres-external-tableau-apps-prod-dq-2020-01-20-00-08"
+  auto_minor_version_upgrade          = "true"
+  allocated_storage                   = "${var.environment == "prod" ? "500" : "200"}"
+  storage_type                        = "gp2"
+  engine                              = "postgres"
+  engine_version                      = "10.6"
+  instance_class                      = "${var.environment == "prod" ? "db.m5.2xlarge" : "db.t3.small"}"
+  iops                                = "0"
+  kms_key_id                          = "${data.aws_kms_key.rds_kms_key.arn}"
+  license_model                       = "postgresql-license"
+  enabled_cloudwatch_logs_exports     = ["postgresql", "upgrade"]
+  iam_database_authentication_enabled = "false"
+  username                            = "${random_string.username.result}"
+  password                            = "${random_string.password.result}"
+  name                                = "${var.database_name}"
+  port                                = "${var.port}"
+  publicly_accessible                 = "false"
+  backup_window                       = "00:00-01:00"
+  copy_tags_to_snapshot               = "false"
+  maintenance_window                  = "mon:01:00-mon:02:00"
+  backup_retention_period             = 14
+  deletion_protection                 = true
+  storage_encrypted                   = true
+  multi_az                            = false
+  skip_final_snapshot                 = true
+  ca_cert_identifier                  = "${var.environment == "prod" ? "rds-ca-2019" : "rds-ca-2019"}"
+
+  performance_insights_enabled          = true
+  performance_insights_retention_period = "7"
+
+  monitoring_interval = "60"
+  monitoring_role_arn = "${var.rds_enhanced_monitoring_role}"
+
+  db_subnet_group_name   = "${aws_db_subnet_group.rds.id}"
+  vpc_security_group_ids = ["${aws_security_group.ext_tableau_db.id}"]
+
+  lifecycle {
+    prevent_destroy = true
+  }
+
+  tags {
+    Name = "ext_tableau-postgres-${local.naming_suffix}"
+  }
+}
+
 module "rds_alarms" {
   source = "github.com/UKHomeOffice/dq-tf-cloudwatch-rds"
 
@@ -155,6 +203,14 @@ resource "aws_ssm_parameter" "rds_external_tableau_postgres_endpoint" {
   name  = "rds_external_tableau_postgres_endpoint"
   type  = "SecureString"
   value = "${aws_db_instance.postgres.endpoint}"
+}
+
+resource "aws_ssm_parameter" "rds_external_tableau_postgres_staging_endpoint" {
+  name = "rds_external_tableau_postgres_staging_endpoint"
+  type = "SecureString"
+  value = [
+    "${join("", aws_db_instance.external_reporting_snapshot_stg.*.address)}"
+  ]
 }
 
 resource "aws_ssm_parameter" "rds_external_tableau_username" {
