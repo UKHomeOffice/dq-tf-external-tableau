@@ -150,7 +150,6 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
   engine_version                      = "10.6"
   instance_class                      = "${var.environment == "prod" ? "db.m5.2xlarge" : "db.t3.small"}"
   iops                                = "0"
-  kms_key_id                          = "${data.aws_kms_key.rds_kms_key.arn}"
   license_model                       = "postgresql-license"
   enabled_cloudwatch_logs_exports     = ["postgresql", "upgrade"]
   iam_database_authentication_enabled = "false"
