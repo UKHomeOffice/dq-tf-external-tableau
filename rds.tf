@@ -1,3 +1,7 @@
+locals {
+  external_reporting_stg_count = "${var.environment == "prod" ? "1" : "1"}"
+}
+
 resource "aws_db_subnet_group" "rds" {
   name = "ext_tableau_rds_group"
 
