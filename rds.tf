@@ -148,7 +148,7 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
   identifier                          = "stg-postgres-${local.naming_suffix}"
   snapshot_identifier                 = "${var.environment == "prod" ? "rds:postgres-internal-tableau-apps-prod-dq-2020-01-21-00-07" : "rds:postgres-internal-tableau-apps-notprod-dq-2019-11-25-12-43"}"
   auto_minor_version_upgrade          = "true"
-  allocated_storage                   = "${var.environment == "prod" ? "500" : "200"}"
+  allocated_storage                   = "${var.environment == "prod" ? "500" : "300"}"
   storage_type                        = "gp2"
   engine                              = "postgres"
   engine_version                      = "10.6"
