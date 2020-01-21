@@ -157,8 +157,6 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
   license_model                       = "postgresql-license"
   enabled_cloudwatch_logs_exports     = ["postgresql", "upgrade"]
   iam_database_authentication_enabled = "false"
-  username                            = "${random_string.username.result}"
-  password                            = "${random_string.password.result}"
   name                                = "${var.database_name}"
   port                                = "${var.port}"
   publicly_accessible                 = "false"
