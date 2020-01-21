@@ -146,7 +146,7 @@ resource "aws_db_instance" "postgres" {
 resource "aws_db_instance" "external_reporting_snapshot_stg" {
   count                               = "${local.external_reporting_stg_count}"
   identifier                          = "stg-postgres-${local.naming_suffix}"
-  snapshot_identifier                 = "rds:ext-tableau-postgres-external-tableau-apps-prod-dq-2020-01-20-00-08"
+  snapshot_identifier                 = "rds:postgres-internal-tableau-apps-prod-dq-2020-01-21-00-07"
   auto_minor_version_upgrade          = "true"
   allocated_storage                   = "${var.environment == "prod" ? "500" : "200"}"
   storage_type                        = "gp2"
