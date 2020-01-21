@@ -192,7 +192,7 @@ resource "aws_instance" "ext_tableau_linux_staging" {
   vpc_security_group_ids      = ["${aws_security_group.sgrp.id}"]
   associate_public_ip_address = false
   subnet_id                   = "${aws_subnet.subnet.id}"
-  private_ip                  = "${var.dq_external_staging_dashboard_instance_ip}
+  private_ip                  = "${var.dq_external_staging_dashboard_instance_ip}"
   monitoring                  = true
 
   user_data = <<EOF
