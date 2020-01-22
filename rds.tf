@@ -116,8 +116,8 @@ resource "aws_db_instance" "postgres" {
   password                        = "${random_string.password.result}"
   name                            = "${var.database_name}"
   port                            = "${var.port}"
-  backup_window                   = "00:00-01:00"
-  maintenance_window              = "mon:01:00-mon:02:00"
+  backup_window                   = "${var.environment == "prod" ? "00:00-01:00" : "07:00-08:00"}"
+  maintenance_window              = "${var.environment == "prod" ? "mon:01:00-mon:02:00" : "mon:08:00-mon:09:00"}"
   backup_retention_period         = 14
   deletion_protection             = true
   storage_encrypted               = true
@@ -159,9 +159,9 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
   iam_database_authentication_enabled = "false"
   port                                = "${var.port}"
   publicly_accessible                 = "false"
-  backup_window                       = "00:00-01:00"
   copy_tags_to_snapshot               = "false"
-  maintenance_window                  = "mon:01:00-mon:02:00"
+  backup_window                       = "${var.environment == "prod" ? "00:00-01:00" : "07:00-08:00"}"
+  maintenance_window                  = "${var.environment == "prod" ? "mon:01:00-mon:02:00" : "mon:08:00-mon:09:00"}"
   backup_retention_period             = "14"
   deletion_protection                 = false
   storage_encrypted                   = true
