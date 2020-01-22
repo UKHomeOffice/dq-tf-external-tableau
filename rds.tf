@@ -164,7 +164,7 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
   copy_tags_to_snapshot               = "false"
   maintenance_window                  = "mon:01:00-mon:02:00"
   backup_retention_period             = "14"
-  deletion_protection                 = true
+  deletion_protection                 = false
   storage_encrypted                   = true
   multi_az                            = false
   skip_final_snapshot                 = true
@@ -180,7 +180,10 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
     prevent_destroy = true
 
     ignore_changes = [
-      "name"
+      "name",
+      "port",
+      "snapshot_identifier",
+      "instance_class",
     ]
   }
 
