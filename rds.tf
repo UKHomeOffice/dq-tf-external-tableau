@@ -139,7 +139,7 @@ resource "aws_db_instance" "postgres" {
   }
 
   tags {
-    Name = "ext_tableau-postgres-${local.naming_suffix}"
+    Name = "postgres-${local.naming_suffix}"
   }
 }
 
@@ -180,7 +180,7 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
   }
 
   tags {
-    Name = "ext-tableau-postgres-${local.naming_suffix}"
+    Name = "stg-${local.naming_suffix}"
   }
 }
 
