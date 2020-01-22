@@ -157,7 +157,6 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
   license_model                       = "postgresql-license"
   enabled_cloudwatch_logs_exports     = ["postgresql", "upgrade"]
   iam_database_authentication_enabled = "false"
-  name                                = "${var.database_name}"
   port                                = "${var.port}"
   publicly_accessible                 = "false"
   backup_window                       = "00:00-01:00"
@@ -178,13 +177,6 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
 
   lifecycle {
     prevent_destroy = true
-
-    ignore_changes = [
-      "name",
-      "port",
-      "snapshot_identifier",
-      "instance_class",
-    ]
   }
 
   tags {
