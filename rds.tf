@@ -178,6 +178,10 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
 
   lifecycle {
     prevent_destroy = true
+
+    ignore_changes = [
+      "name"
+    ]
   }
 
   tags {
