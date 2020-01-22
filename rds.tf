@@ -163,15 +163,12 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
   backup_window                       = "00:00-01:00"
   copy_tags_to_snapshot               = "false"
   maintenance_window                  = "mon:01:00-mon:02:00"
-  backup_retention_period             = 14
+  backup_retention_period             = "14"
   deletion_protection                 = true
   storage_encrypted                   = true
   multi_az                            = false
   skip_final_snapshot                 = true
   ca_cert_identifier                  = "${var.environment == "prod" ? "rds-ca-2019" : "rds-ca-2019"}"
-
-  performance_insights_enabled          = true
-  performance_insights_retention_period = "7"
 
   monitoring_interval = "60"
   monitoring_role_arn = "${var.rds_enhanced_monitoring_role}"
@@ -184,7 +181,7 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
   }
 
   tags {
-    Name = "ext_tableau-postgres-${local.naming_suffix}"
+    Name = "ext-tableau-postgres-${local.naming_suffix}"
   }
 }
 
@@ -200,6 +197,18 @@ module "rds_alarms" {
   write_latency_threshold      = 2.5          # 2.5 seconds
 }
 
+module "rds_alarms_stg" {
+  source = "github.com/UKHomeOffice/dq-tf-cloudwatch-rds"
+
+  naming_suffix                = "${local.naming_suffix}"
+  environment                  = "${var.naming_suffix}"
+  pipeline_name                = "external-tableau-stg"
+  db_instance_id               = "${aws_db_instance.external_reporting_snapshot_stg.id}"
+  free_storage_space_threshold = 100000000000 # 100GB free space
+  read_latency_threshold       = 0.05         # 50 milliseconds
+  write_latency_threshold      = 2.5          # 2.5 seconds
+}
+
 resource "aws_ssm_parameter" "rds_external_tableau_postgres_endpoint" {
   name  = "rds_external_tableau_postgres_endpoint"
   type  = "SecureString"
@@ -209,7 +218,7 @@ resource "aws_ssm_parameter" "rds_external_tableau_postgres_endpoint" {
 resource "aws_ssm_parameter" "rds_external_tableau_postgres_staging_endpoint" {
   name  = "rds_external_tableau_postgres_staging_endpoint"
   type  = "SecureString"
-  value = "${join("", aws_db_instance.external_reporting_snapshot_stg.*.address)}"
+  value = "${aws_db_instance.external_reporting_snapshot_stg.endpoint}"
 }
 
 resource "aws_ssm_parameter" "rds_external_tableau_username" {

@@ -64,5 +64,11 @@ class TestE2E(unittest.TestCase):
     def test_rds_deletion_protection(self):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["deletion_protection"], "true")
 
+    def test_rds_stg_identifier(self):
+        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["identifier"], "stg-postgres-external-tableau-apps-preprod-dq")
+
+    def test_ssm_service_username(self):
+        self.assertEqual(self.result["root_modules"]["aws_ssm_parameter.rds_external_tableau_postgres_staging_endpoint"]["name"], "rds_external_tableau_postgres_staging_endpoint")
+
 if __name__ == '__main__':
     unittest.main()
