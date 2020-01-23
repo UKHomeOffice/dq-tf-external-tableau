@@ -105,7 +105,7 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["backup_window"], "00:00-01:00")
 
     def test_rds_postgres_stg_maintenance_window(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["maintenance_window"], "thu:13:30-thu:14:30")
+        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["maintenance_window"], "thu:15:10-thu:14:30")
 
     def test_rds_postgres_stg_ca_cert_identifier(self):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["ca_cert_identifier"], "rds-ca-2019")
