@@ -214,7 +214,7 @@ touch /home/tableau_srv/env_vars.sh
 echo "
 export TABLEAU_ENVIRONMENT=staging
 export S3_HAPROXY_CONFIG_BUCKET=${var.haproxy_config_bucket}
-export DATA_ARCHIVE_TAB_BACKUP_URL=`aws --region eu-west-2 ssm get-parameter --name data_archive_tab_ext_backup_url --query 'Parameter.Value' --output text`
+export DATA_ARCHIVE_TAB_BACKUP_URL=`aws --region eu-west-2 ssm get-parameter --name data_archive_tab_ext_staging_backup_url --query 'Parameter.Value' --output text`
 export TAB_EXT_REPO_PROTOCOL=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_protocol --query 'Parameter.Value' --output text`
 export TAB_EXT_REPO_USER=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_user --query 'Parameter.Value' --output text`
 export TAB_EXT_REPO_HOST=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_host --query 'Parameter.Value' --output text`
@@ -230,10 +230,13 @@ export TAB_DB_USER=`aws --region eu-west-2 ssm get-parameter --name rds_external
 export TAB_DB_PASSWORD=`aws --region eu-west-2 ssm get-parameter --name rds_external_tableau_password --query 'Parameter.Value' --output text --with-decryption`
 export TAB_TABSVR_REPO_USER=`aws --region eu-west-2 ssm get-parameter --name tableau_server_repository_username --query 'Parameter.Value' --output text`
 export TAB_TABSVR_REPO_PASSWORD=`aws --region eu-west-2 ssm get-parameter --name tableau_server_repository_password --query 'Parameter.Value' --output text --with-decryption`
-export TAB_PRODUCT_KEY=`aws --region eu-west-2 ssm get-parameter --name tableau_ext_product_key --query 'Parameter.Value' --output text --with-decryption`
-export DATASOURCES_TO_PUBLISH='`aws --region eu-west-2 ssm get-parameter --name tableau_ext_publish_datasources --query 'Parameter.Value' --output text`'
-export WORKBOOKS_TO_PUBLISH='`aws --region eu-west-2 ssm get-parameter --name tableau_ext_publish_workbooks --query 'Parameter.Value' --output text`'
-export RDS_POSTGRES=`aws --region eu-west-2 ssm get-parameter --name rds_external_tableau_postgres_endpoint --query 'Parameter.Value' --output text --with-decryption`
+export TAB_PRODUCT_KEY_1=`aws --region eu-west-2 ssm get-parameter --name tableau_int_product_key_1 --query 'Parameter.Value' --output text --with-decryption`
+export TAB_PRODUCT_KEY_2=`aws --region eu-west-2 ssm get-parameter --name tableau_int_product_key_2 --query 'Parameter.Value' --output text --with-decryption`
+export TAB_PRODUCT_KEY_3=`aws --region eu-west-2 ssm get-parameter --name tableau_int_product_key_3 --query 'Parameter.Value' --output text --with-decryption`
+export TAB_PRODUCT_KEY_4=`aws --region eu-west-2 ssm get-parameter --name tableau_int_product_key_4 --query 'Parameter.Value' --output text --with-decryption`
+export DATASOURCES_TO_PUBLISH='`aws --region eu-west-2 ssm get-parameter --name tableau_int_publish_datasources --query 'Parameter.Value' --output text`'
+export WORKBOOKS_TO_PUBLISH='`aws --region eu-west-2 ssm get-parameter --name tableau_int_publish_workbooks --query 'Parameter.Value' --output text`'
+export RDS_POSTGRES=`aws --region eu-west-2 ssm get-parameter --name rds_staging_external_tableau_postgres_endpoint --query 'Parameter.Value' --output text --with-decryption`
 
 " > /home/tableau_srv/env_vars.sh
 
@@ -277,10 +280,10 @@ echo "#TSM register user details"
 tsm register --file /tmp/install/tab_reg_file.json -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD
 
 echo "#TSM settings (add default)"
-export CLIENT_ID=`aws --region eu-west-2 ssm get-parameter --name tableau_ext_staging_openid_provider_client_id --query 'Parameter.Value' --output text`
-export CLIENT_SECRET=`aws --region eu-west-2 ssm get-parameter --name tableau_ext_staging_openid_client_secret --query 'Parameter.Value' --output text --with-decryption`
-export CONFIG_URL=`aws --region eu-west-2 ssm get-parameter --name tableau_ext_staging_openid_provider_config_url --query 'Parameter.Value' --output text`
-export EXTERNAL_URL=`aws --region eu-west-2 ssm get-parameter --name tableau_ext_staging_openid_tableau_server_external_url --query 'Parameter.Value' --output text`
+export CLIENT_ID=`aws --region eu-west-2 ssm get-parameter --name tableau_int_staging_openid_provider_client_id --query 'Parameter.Value' --output text`
+export CLIENT_SECRET=`aws --region eu-west-2 ssm get-parameter --name tableau_int_staging_openid_client_secret --query 'Parameter.Value' --output text --with-decryption`
+export CONFIG_URL=`aws --region eu-west-2 ssm get-parameter --name tableau_int_staging_openid_provider_config_url --query 'Parameter.Value' --output text`
+export EXTERNAL_URL=`aws --region eu-west-2 ssm get-parameter --name tableau_int_staging_openid_tableau_server_external_url --query 'Parameter.Value' --output text`
 export TAB_VERSION_NUMBER=`echo $PATH | awk -F customer '{print $2}' | cut -d \. -f2- | awk -F : '{print $1}'`
 cat >/opt/tableau/tableau_server/packages/scripts.$TAB_VERSION_NUMBER/config-openid.json <<EOL
 {
