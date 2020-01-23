@@ -152,7 +152,7 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
   storage_type                        = "gp2"
   engine                              = "postgres"
   engine_version                      = "10.6"
-  instance_class                      = "${var.environment == "prod" ? "db.m5.2xlarge" : "db.t3.small"}"
+  instance_class                      = "${var.environment == "prod" ? "db.m5.4xlarge" : "db.m5.2xlarge"}"
   iops                                = "0"
   license_model                       = "postgresql-license"
   enabled_cloudwatch_logs_exports     = ["postgresql", "upgrade"]
@@ -161,7 +161,7 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
   publicly_accessible                 = "false"
   copy_tags_to_snapshot               = "false"
   backup_window                       = "${var.environment == "prod" ? "00:00-01:00" : "07:00-08:00"}"
-  maintenance_window                  = "${var.environment == "prod" ? "mon:01:00-mon:02:00" : "mon:08:00-mon:09:00"}"
+  maintenance_window                  = "${var.environment == "prod" ? "thu:13:30-thu:14:30" : "thu:13:30-thu:14:30"}"
   backup_retention_period             = "14"
   deletion_protection                 = false
   storage_encrypted                   = true
