@@ -161,7 +161,7 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
   publicly_accessible                 = "false"
   copy_tags_to_snapshot               = "false"
   backup_window                       = "${var.environment == "prod" ? "00:00-01:00" : "07:00-08:00"}"
-  maintenance_window                  = "${var.environment == "prod" ? "thu:15:10-thu:14:30" : "thu:13:30-thu:14:30"}"
+  maintenance_window                  = "${var.environment == "prod" ? "thu:15:30-thu:16:00" : "thu:13:30-thu:14:30"}"
   backup_retention_period             = "14"
   deletion_protection                 = false
   storage_encrypted                   = true
