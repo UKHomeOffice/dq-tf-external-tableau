@@ -105,34 +105,32 @@ resource "aws_security_group_rule" "allow_db_out" {
 }
 
 resource "aws_db_instance" "postgres" {
-  identifier                      = "ext-tableau-postgres-${local.naming_suffix}"
-  allocated_storage               = "${var.environment == "prod" ? "500" : "200"}"
-  storage_type                    = "gp2"
-  engine                          = "postgres"
-  engine_version                  = "10.6"
-  instance_class                  = "${var.environment == "prod" ? "db.m5.2xlarge" : "db.t3.small"}"
-  enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
-  username                        = "${random_string.username.result}"
-  password                        = "${random_string.password.result}"
-  name                            = "${var.database_name}"
-  port                            = "${var.port}"
-  backup_window                   = "${var.environment == "prod" ? "00:00-01:00" : "07:00-08:00"}"
-  maintenance_window              = "${var.environment == "prod" ? "mon:01:00-mon:02:00" : "mon:08:00-mon:09:00"}"
-  backup_retention_period         = 14
-  deletion_protection             = true
-  storage_encrypted               = true
-  multi_az                        = false
-  skip_final_snapshot             = true
-  ca_cert_identifier              = "${var.environment == "prod" ? "rds-ca-2019" : "rds-ca-2019"}"
-
+  identifier                            = "ext-tableau-postgres-${local.naming_suffix}"
+  allocated_storage                     = "${var.environment == "prod" ? "500" : "200"}"
+  storage_type                          = "gp2"
+  engine                                = "postgres"
+  engine_version                        = "${var.environment == "prod" ? "10.6" : "10.10"}"
+  instance_class                        = "${var.environment == "prod" ? "db.m5.2xlarge" : "db.t3.small"}"
+  enabled_cloudwatch_logs_exports       = ["postgresql", "upgrade"]
+  username                              = "${random_string.username.result}"
+  password                              = "${random_string.password.result}"
+  name                                  = "${var.database_name}"
+  port                                  = "${var.port}"
+  backup_window                         = "${var.environment == "prod" ? "00:00-01:00" : "07:00-08:00"}"
+  maintenance_window                    = "${var.environment == "prod" ? "mon:01:00-mon:02:00" : "mon:08:00-mon:09:00"}"
+  backup_retention_period               = 14
+  deletion_protection                   = true
+  storage_encrypted                     = true
+  multi_az                              = false
+  skip_final_snapshot                   = true
+  ca_cert_identifier                    = "${var.environment == "prod" ? "rds-ca-2019" : "rds-ca-2019"}"
+  apply_immediately                     = "${var.environment == "prod" ? "false" : "true"}"
   performance_insights_enabled          = true
   performance_insights_retention_period = "7"
-
-  monitoring_interval = "60"
-  monitoring_role_arn = "${var.rds_enhanced_monitoring_role}"
-
-  db_subnet_group_name   = "${aws_db_subnet_group.rds.id}"
-  vpc_security_group_ids = ["${aws_security_group.ext_tableau_db.id}"]
+  monitoring_interval                   = "60"
+  monitoring_role_arn                   = "${var.rds_enhanced_monitoring_role}"
+  db_subnet_group_name                  = "${aws_db_subnet_group.rds.id}"
+  vpc_security_group_ids                = ["${aws_security_group.ext_tableau_db.id}"]
 
   lifecycle {
     prevent_destroy = true

@@ -92,6 +92,12 @@ class TestE2E(unittest.TestCase):
     def test_rds_postgres_tag(self):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["tags.Name"], "postgres-external-tableau-apps-preprod-dq")
 
+    def test_rds_postgres_engine_version(self):
+        self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["engine_version"], "10.6")
+
+    def test_rds_postgres_apply_immediately(self):
+        self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["apply_immediately"], "false")
+
     def test_rds_postgres_stg_snapshot_identifier(self):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["snapshot_identifier"], "rds:postgres-internal-tableau-apps-prod-dq-2020-01-21-00-07")
 
