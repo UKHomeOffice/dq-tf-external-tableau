@@ -33,7 +33,7 @@ resource "aws_iam_role_policy" "ext_tableau" {
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_server_username",
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_server_password",
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_s3_prefix",
-        "arn:aws:ssm:eu-west-2:*:parameter/data_archive_tab_ext_staging_backup_url",
+        "arn:aws:ssm:eu-west-2:*:parameter/data_archive_tab_ext_backup_url",
         "arn:aws:ssm:eu-west-2:*:parameter/tab_ext_repo_protocol",
         "arn:aws:ssm:eu-west-2:*:parameter/tab_ext_repo_user",
         "arn:aws:ssm:eu-west-2:*:parameter/tab_ext_repo_host",
