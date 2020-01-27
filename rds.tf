@@ -109,7 +109,7 @@ resource "aws_db_instance" "postgres" {
   allocated_storage                     = "${var.environment == "prod" ? "500" : "200"}"
   storage_type                          = "gp2"
   engine                                = "postgres"
-  engine_version                        = "${var.environment == "prod" ? "10.6" : "10.10"}"
+  engine_version                        = "${var.environment == "prod" ? "10.10" : "10.10"}"
   instance_class                        = "${var.environment == "prod" ? "db.m5.2xlarge" : "db.t3.small"}"
   enabled_cloudwatch_logs_exports       = ["postgresql", "upgrade"]
   username                              = "${random_string.username.result}"
@@ -117,7 +117,7 @@ resource "aws_db_instance" "postgres" {
   name                                  = "${var.database_name}"
   port                                  = "${var.port}"
   backup_window                         = "${var.environment == "prod" ? "00:00-01:00" : "07:00-08:00"}"
-  maintenance_window                    = "${var.environment == "prod" ? "mon:01:00-mon:02:00" : "mon:08:00-mon:09:00"}"
+  maintenance_window                    = "${var.environment == "prod" ? "tue:01:00-tue:02:00" : "mon:08:00-mon:09:00"}"
   backup_retention_period               = 14
   deletion_protection                   = true
   storage_encrypted                     = true
@@ -149,7 +149,7 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
   allocated_storage                   = "${var.environment == "prod" ? "3300" : "300"}"
   storage_type                        = "gp2"
   engine                              = "postgres"
-  engine_version                      = "10.6"
+  engine_version                      = "${var.environment == "prod" ? "10.10" : "10.10"}"
   instance_class                      = "${var.environment == "prod" ? "db.m5.4xlarge" : "db.m5.2xlarge"}"
   iops                                = "0"
   license_model                       = "postgresql-license"
@@ -159,19 +159,18 @@ resource "aws_db_instance" "external_reporting_snapshot_stg" {
   publicly_accessible                 = "false"
   copy_tags_to_snapshot               = "false"
   backup_window                       = "${var.environment == "prod" ? "00:00-01:00" : "07:00-08:00"}"
-  maintenance_window                  = "${var.environment == "prod" ? "thu:15:30-thu:16:00" : "thu:13:30-thu:14:30"}"
+  maintenance_window                  = "${var.environment == "prod" ? "tue:01:00-tue:02:00" : "thu:13:30-thu:14:30"}"
   backup_retention_period             = "14"
   deletion_protection                 = false
   storage_encrypted                   = true
   multi_az                            = false
   skip_final_snapshot                 = true
   ca_cert_identifier                  = "${var.environment == "prod" ? "rds-ca-2019" : "rds-ca-2019"}"
-
-  monitoring_interval = "60"
-  monitoring_role_arn = "${var.rds_enhanced_monitoring_role}"
-
-  db_subnet_group_name   = "${aws_db_subnet_group.rds.id}"
-  vpc_security_group_ids = ["${aws_security_group.ext_tableau_db.id}"]
+  apply_immediately                   = "${var.environment == "prod" ? "false" : "true"}"
+  monitoring_interval                 = "60"
+  monitoring_role_arn                 = "${var.rds_enhanced_monitoring_role}"
+  db_subnet_group_name                = "${aws_db_subnet_group.rds.id}"
+  vpc_security_group_ids              = ["${aws_security_group.ext_tableau_db.id}"]
 
   lifecycle {
     prevent_destroy = true
