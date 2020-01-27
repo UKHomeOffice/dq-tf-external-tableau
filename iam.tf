@@ -48,16 +48,13 @@ resource "aws_iam_role_policy" "ext_tableau" {
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_openid_client_secret",
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_openid_provider_config_url",
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_openid_tableau_server_external_url",
-        "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_product_key_1",
-        "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_product_key_2",
-        "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_product_key_3",
-        "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_product_key_4",
+        "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_product_key",
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_server_repository_username",
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_server_repository_password",
         "arn:aws:ssm:eu-west-2:*:parameter/data_archive_tab_ext_backup_sub_directory",
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_publish_datasources",
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_publish_workbooks",
-        "arn:aws:ssm:eu-west-2:*:parameter/rds_staging_external_tableau_postgres_endpoint",
+        "arn:aws:ssm:eu-west-2:*:parameter/rds_external_tableau_postgres_endpoint",
         "arn:aws:ssm:eu-west-2:*:parameter/rds_external_tableau_username",
         "arn:aws:ssm:eu-west-2:*:parameter/rds_external_tableau_password"
       ]
