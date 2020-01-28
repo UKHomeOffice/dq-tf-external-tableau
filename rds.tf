@@ -149,28 +149,10 @@ module "rds_alarms" {
   write_latency_threshold      = 2.5          # 2.5 seconds
 }
 
-module "rds_alarms_stg" {
-  source = "github.com/UKHomeOffice/dq-tf-cloudwatch-rds"
-
-  naming_suffix                = "${local.naming_suffix}"
-  environment                  = "${var.naming_suffix}"
-  pipeline_name                = "external-tableau-stg"
-  db_instance_id               = "${aws_db_instance.external_reporting_snapshot_stg.id}"
-  free_storage_space_threshold = 100000000000 # 100GB free space
-  read_latency_threshold       = 0.05         # 50 milliseconds
-  write_latency_threshold      = 2.5          # 2.5 seconds
-}
-
 resource "aws_ssm_parameter" "rds_external_tableau_postgres_endpoint" {
   name  = "rds_external_tableau_postgres_endpoint"
   type  = "SecureString"
   value = "${aws_db_instance.postgres.endpoint}"
-}
-
-resource "aws_ssm_parameter" "rds_external_tableau_postgres_staging_endpoint" {
-  name  = "rds_external_tableau_postgres_staging_endpoint"
-  type  = "SecureString"
-  value = "${aws_db_instance.external_reporting_snapshot_stg.endpoint}"
 }
 
 resource "aws_ssm_parameter" "rds_external_tableau_username" {
