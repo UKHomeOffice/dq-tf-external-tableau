@@ -81,7 +81,7 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["backup_window"], "00:00-01:00")
 
     def test_rds_postgres_maintenance_window(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["maintenance_window"], "mon:01:00-mon:02:00")
+        self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["maintenance_window"], "tue:01:00-tue:02:00")
 
     def test_rds_postgres_ca_cert_identifier(self):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["ca_cert_identifier"], "rds-ca-2019")
@@ -93,7 +93,7 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["tags.Name"], "postgres-external-tableau-apps-preprod-dq")
 
     def test_rds_postgres_engine_version(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["engine_version"], "10.6")
+        self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["engine_version"], "10.10")
 
     def test_rds_postgres_apply_immediately(self):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["apply_immediately"], "false")
@@ -111,7 +111,7 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["backup_window"], "00:00-01:00")
 
     def test_rds_postgres_stg_maintenance_window(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["maintenance_window"], "thu:15:30-thu:16:00")
+        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["maintenance_window"], "tue:01:00-tue:02:00")
 
     def test_rds_postgres_stg_ca_cert_identifier(self):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["ca_cert_identifier"], "rds-ca-2019")
@@ -122,6 +122,11 @@ class TestE2E(unittest.TestCase):
     def test_rds_postgres_stg_tag(self):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["tags.Name"], "stg-external-tableau-apps-preprod-dq")
 
+    def test_rds_postgres_stg_engine_version(self):
+        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["engine_version"], "10.10")
+
+    def test_rds_postgres_stg_apply_immediately(self):
+        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["apply_immediately"], "false")
 
 if __name__ == '__main__':
     unittest.main()
