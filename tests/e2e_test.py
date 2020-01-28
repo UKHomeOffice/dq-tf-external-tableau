@@ -65,12 +65,6 @@ class TestE2E(unittest.TestCase):
     def test_rds_deletion_protection(self):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["deletion_protection"], "true")
 
-    def test_rds_stg_identifier(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["identifier"], "stg-postgres-external-tableau-apps-preprod-dq")
-
-    def test_ssm_service_username(self):
-        self.assertEqual(self.result["root_modules"]["aws_ssm_parameter.rds_external_tableau_postgres_staging_endpoint"]["name"], "rds_external_tableau_postgres_staging_endpoint")
-
     def test_rds_postgres_allocated_storage(self):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["allocated_storage"], "500")
 
@@ -97,36 +91,6 @@ class TestE2E(unittest.TestCase):
 
     def test_rds_postgres_apply_immediately(self):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["apply_immediately"], "false")
-
-    def test_rds_postgres_stg_snapshot_identifier(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["snapshot_identifier"], "rds:postgres-internal-tableau-apps-prod-dq-2020-01-21-00-07")
-
-    def test_rds_postgres_stg_allocated_storage(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["allocated_storage"], "3300")
-
-    def test_rds_postgres_stg_instance_class(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["instance_class"], "db.m5.4xlarge")
-
-    def test_rds_postgres_stg_backup_window(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["backup_window"], "00:00-01:00")
-
-    def test_rds_postgres_stg_maintenance_window(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["maintenance_window"], "tue:01:00-tue:02:00")
-
-    def test_rds_postgres_stg_ca_cert_identifier(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["ca_cert_identifier"], "rds-ca-2019")
-
-    def test_rds_postgres_stg_identifier(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["identifier"], "stg-postgres-external-tableau-apps-preprod-dq")
-
-    def test_rds_postgres_stg_tag(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["tags.Name"], "stg-external-tableau-apps-preprod-dq")
-
-    def test_rds_postgres_stg_engine_version(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["engine_version"], "10.10")
-
-    def test_rds_postgres_stg_apply_immediately(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.external_reporting_snapshot_stg"]["apply_immediately"], "false")
 
 if __name__ == '__main__':
     unittest.main()
