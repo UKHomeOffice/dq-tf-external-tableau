@@ -1,7 +1,3 @@
-locals {
-  external_reporting_stg_count = "${var.environment == "prod" ? "1" : "1"}"
-}
-
 resource "aws_db_subnet_group" "rds" {
   name = "ext_tableau_rds_group"
 
@@ -138,46 +134,6 @@ resource "aws_db_instance" "postgres" {
 
   tags {
     Name = "postgres-${local.naming_suffix}"
-  }
-}
-
-resource "aws_db_instance" "external_reporting_snapshot_stg" {
-  count                               = "${local.external_reporting_stg_count}"
-  identifier                          = "stg-postgres-${local.naming_suffix}"
-  snapshot_identifier                 = "${var.environment == "prod" ? "rds:postgres-internal-tableau-apps-prod-dq-2020-01-21-00-07" : "rds:postgres-internal-tableau-apps-notprod-dq-2019-11-25-12-43"}"
-  auto_minor_version_upgrade          = "true"
-  allocated_storage                   = "${var.environment == "prod" ? "3300" : "300"}"
-  storage_type                        = "gp2"
-  engine                              = "postgres"
-  engine_version                      = "${var.environment == "prod" ? "10.10" : "10.10"}"
-  instance_class                      = "${var.environment == "prod" ? "db.m5.4xlarge" : "db.m5.2xlarge"}"
-  iops                                = "0"
-  license_model                       = "postgresql-license"
-  enabled_cloudwatch_logs_exports     = ["postgresql", "upgrade"]
-  iam_database_authentication_enabled = "false"
-  port                                = "${var.port}"
-  publicly_accessible                 = "false"
-  copy_tags_to_snapshot               = "false"
-  backup_window                       = "${var.environment == "prod" ? "00:00-01:00" : "07:00-08:00"}"
-  maintenance_window                  = "${var.environment == "prod" ? "tue:01:00-tue:02:00" : "thu:13:30-thu:14:30"}"
-  backup_retention_period             = "14"
-  deletion_protection                 = false
-  storage_encrypted                   = true
-  multi_az                            = false
-  skip_final_snapshot                 = true
-  ca_cert_identifier                  = "${var.environment == "prod" ? "rds-ca-2019" : "rds-ca-2019"}"
-  apply_immediately                   = "${var.environment == "prod" ? "false" : "true"}"
-  monitoring_interval                 = "60"
-  monitoring_role_arn                 = "${var.rds_enhanced_monitoring_role}"
-  db_subnet_group_name                = "${aws_db_subnet_group.rds.id}"
-  vpc_security_group_ids              = ["${aws_security_group.ext_tableau_db.id}"]
-
-  lifecycle {
-    prevent_destroy = true
-  }
-
-  tags {
-    Name = "stg-${local.naming_suffix}"
   }
 }
 
