@@ -92,5 +92,8 @@ class TestE2E(unittest.TestCase):
     def test_rds_postgres_apply_immediately(self):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["apply_immediately"], "false")
 
+    def test_staging_instance_tag(self):
+        self.assertEqual(self.result["root_modules"]["aws_instance.ext_tableau_linux_staging"]["tags.Name"], "ec2-staging-external-tableau-apps-preprod-dq")
+
 if __name__ == '__main__':
     unittest.main()
