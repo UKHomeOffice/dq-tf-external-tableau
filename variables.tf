@@ -83,6 +83,16 @@ variable "rds_to_port" {
   description = "To port for Postgres traffic"
 }
 
+variable "rds_wg_from_port" {
+  default     = 8860
+  description = "From port for Postgres Workgroup traffic"
+}
+
+variable "rds_wg_to_port" {
+  default     = 8860
+  description = "To port for Postgres Workgroup traffic"
+}
+
 variable "rds_protocol" {
   default     = "tcp"
   description = "Protocol for Postgres traffic"
