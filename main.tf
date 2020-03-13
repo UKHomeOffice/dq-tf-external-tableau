@@ -4,7 +4,7 @@ locals {
 }
 
 resource "aws_instance" "ext_tableau_linux" {
-  count                       = "${var.environment == "prod" ? "2" : "1"}"                       # Allow different instance count in prod and notprod
+  count                       = "${var.environment == "prod" ? "2" : "1"}" # Allow different instance count in prod and notprod
   key_name                    = "${var.key_name}"
   ami                         = "${data.aws_ami.ext_tableau_linux.id}"
   instance_type               = "${var.environment == "prod" ? "c5.2xlarge" : "c5.2xlarge"}"
@@ -184,7 +184,7 @@ EOF
 }
 
 resource "aws_instance" "ext_tableau_linux_staging" {
-  count                       = "${var.environment == "prod" ? "0" : "1"}"                   # Allow different instance count in prod and notprod
+  count                       = "${var.environment == "prod" ? "0" : "1"}" # Allow different instance count in prod and notprod
   key_name                    = "${var.key_name}"
   ami                         = "${data.aws_ami.ext_tableau_linux.id}"
   instance_type               = "${var.environment == "prod" ? "c5.2xlarge" : "c5.2xlarge"}"
@@ -406,6 +406,16 @@ resource "aws_security_group" "sgrp" {
   ingress {
     from_port = "${var.TSM_from_port}"
     to_port   = "${var.TSM_to_port}"
+    protocol  = "${var.http_protocol}"
+
+    cidr_blocks = [
+      "${var.dq_ops_ingress_cidr}",
+    ]
+  }
+
+  ingress {
+    from_port = "${var.rds_wg_from_port}"
+    to_port   = "${var.rds_wg_to_port}"
     protocol  = "${var.http_protocol}"
 
     cidr_blocks = [
