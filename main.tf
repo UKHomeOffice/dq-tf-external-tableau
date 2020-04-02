@@ -130,15 +130,6 @@ tsm settings import -f /opt/tableau/tableau_server/packages/scripts.*/config.jso
 tsm settings import -f /opt/tableau/tableau_server/packages/scripts.*/config-openid.json
 tsm settings import -f /opt/tableau/tableau_server/packages/scripts.*/config-trusted-auth.json
 
-# DQdashboard Customise
-export DASH_IMAGE="$DATA_ARCHIVE_TAB_BACKUP_URL/DQDashboards/Image/DQDashboards_Image_Home_Office_new-01.png"
-aws s3 cp $DASH_IMAGE /tmp
-tsm customize --server-name "HO External Carrier Portal"
-tsm customize --signin-logo /tmp/Home_Office_new-01.png
-tsm customize --logo /tmp/Home_Office_new-01.png
-tsm customize --header-logo /tmp/Home_Office_new-01.png
-tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD
-
 echo "#TSM apply pending changes"
 tsm pending-changes apply
 
@@ -150,6 +141,15 @@ su -c "tabcmd --accepteula" - tableau_srv
 
 echo "#TSMCMD - initial user"
 tabcmd initialuser --server 'localhost:80' --username "$TAB_ADMIN_USER" --password "$TAB_ADMIN_PASSWORD"
+
+# DQdashboard Customise
+export DASH_IMAGE="$DATA_ARCHIVE_TAB_BACKUP_URL/DQDashboards/Image/DQDashboards_Image_Home_Office_new-01.png"
+aws s3 cp $DASH_IMAGE /tmp
+tsm customize --server-name "HO External Carrier Portal"
+tsm customize --signin-logo /tmp/Home_Office_new-01.png
+tsm customize --logo /tmp/Home_Office_new-01.png
+tsm customize --header-logo /tmp/Home_Office_new-01.png
+tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD --ignore-prompt
 
 # Always restore from green
 export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/green/"
@@ -319,15 +319,6 @@ tsm settings import -f /opt/tableau/tableau_server/packages/scripts.*/config.jso
 tsm settings import -f /opt/tableau/tableau_server/packages/scripts.*/config-openid.json
 tsm settings import -f /opt/tableau/tableau_server/packages/scripts.*/config-trusted-auth.json
 
-# DQdashboard Customise
-export DASH_IMAGE="$DATA_ARCHIVE_TAB_BACKUP_URL/DQDashboards/Image/DQDashboards_Image_Home_Office_new-01.png"
-aws s3 cp $DASH_IMAGE /tmp
-tsm customize --server-name "HO External Carrier Portal"
-tsm customize --signin-logo /tmp/Home_Office_new-01.png
-tsm customize --logo /tmp/Home_Office_new-01.png
-tsm customize --header-logo /tmp/Home_Office_new-01.png
-tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD
-
 echo "#TSM apply pending changes"
 tsm pending-changes apply
 
@@ -339,6 +330,15 @@ su -c "tabcmd --accepteula" - tableau_srv
 
 echo "#TSMCMD - initial user"
 tabcmd initialuser --server 'localhost:80' --username "$TAB_ADMIN_USER" --password "$TAB_ADMIN_PASSWORD"
+
+# DQdashboard Customise
+export DASH_IMAGE="$DATA_ARCHIVE_TAB_BACKUP_URL/DQDashboards/Image/DQDashboards_Image_Home_Office_new-01.png"
+aws s3 cp $DASH_IMAGE /tmp
+tsm customize --server-name "HO External Carrier Portal"
+tsm customize --signin-logo /tmp/Home_Office_new-01.png
+tsm customize --logo /tmp/Home_Office_new-01.png
+tsm customize --header-logo /tmp/Home_Office_new-01.png
+tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD --ignore-prompt
 
 # Always restore from green
 export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/green/"
