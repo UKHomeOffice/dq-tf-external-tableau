@@ -102,7 +102,7 @@ resource "aws_security_group_rule" "allow_db_out" {
 
 resource "aws_db_instance" "postgres" {
   identifier                            = "ext-tableau-postgres-${local.naming_suffix}"
-  allocated_storage                     = "${var.environment == "prod" ? "500" : "220"}"
+  allocated_storage                     = "${var.environment == "prod" ? "600" : "220"}"
   storage_type                          = "gp2"
   engine                                = "postgres"
   engine_version                        = "${var.environment == "prod" ? "10.10" : "10.10"}"
@@ -113,7 +113,7 @@ resource "aws_db_instance" "postgres" {
   name                                  = "${var.database_name}"
   port                                  = "${var.port}"
   backup_window                         = "${var.environment == "prod" ? "00:00-01:00" : "07:00-08:00"}"
-  maintenance_window                    = "${var.environment == "prod" ? "tue:01:00-tue:02:00" : "thu:14:00-thu:15:00"}"
+  maintenance_window                    = "${var.environment == "prod" ? "thu:18:00-thu:19:00" : "thu:14:00-thu:15:00"}"
   backup_retention_period               = 14
   deletion_protection                   = true
   storage_encrypted                     = true
