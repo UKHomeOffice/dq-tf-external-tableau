@@ -102,7 +102,7 @@ resource "aws_security_group_rule" "allow_db_out" {
 
 resource "aws_db_instance" "postgres" {
   identifier                            = "ext-tableau-postgres-${local.naming_suffix}"
-  allocated_storage                     = "${var.environment == "prod" ? "500" : "200"}"
+  allocated_storage                     = "${var.environment == "prod" ? "500" : "210"}"
   storage_type                          = "gp2"
   engine                                = "postgres"
   engine_version                        = "${var.environment == "prod" ? "10.10" : "10.10"}"
@@ -144,9 +144,9 @@ module "rds_alarms" {
   environment                  = "${var.naming_suffix}"
   pipeline_name                = "external-tableau"
   db_instance_id               = "${aws_db_instance.postgres.id}"
-  free_storage_space_threshold = 100000000000 # 100GB free space
-  read_latency_threshold       = 0.05         # 50 milliseconds
-  write_latency_threshold      = 2.5          # 2.5 seconds
+  free_storage_space_threshold = 100000000000                     # 100GB free space
+  read_latency_threshold       = 0.05                             # 50 milliseconds
+  write_latency_threshold      = 2.5                              # 2.5 seconds
 }
 
 resource "aws_ssm_parameter" "rds_external_tableau_postgres_endpoint" {
