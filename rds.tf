@@ -113,7 +113,7 @@ resource "aws_db_instance" "postgres" {
   name                                  = "${var.database_name}"
   port                                  = "${var.port}"
   backup_window                         = "${var.environment == "prod" ? "00:00-01:00" : "07:00-08:00"}"
-  maintenance_window                    = "${var.environment == "prod" ? "tue:01:00-tue:02:00" : "mon:08:00-mon:09:00"}"
+  maintenance_window                    = "${var.environment == "prod" ? "tue:01:00-tue:02:00" : "thu:14:00-thu:15:00"}"
   backup_retention_period               = 14
   deletion_protection                   = true
   storage_encrypted                     = true
@@ -144,9 +144,9 @@ module "rds_alarms" {
   environment                  = "${var.naming_suffix}"
   pipeline_name                = "external-tableau"
   db_instance_id               = "${aws_db_instance.postgres.id}"
-  free_storage_space_threshold = 100000000000 # 100GB free space
-  read_latency_threshold       = 0.05         # 50 milliseconds
-  write_latency_threshold      = 2.5          # 2.5 seconds
+  free_storage_space_threshold = 100000000000                     # 100GB free space
+  read_latency_threshold       = 0.05                             # 50 milliseconds
+  write_latency_threshold      = 2.5                              # 2.5 seconds
 }
 
 resource "aws_ssm_parameter" "rds_external_tableau_postgres_endpoint" {
