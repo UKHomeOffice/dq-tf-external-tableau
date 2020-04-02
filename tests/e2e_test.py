@@ -66,7 +66,7 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["deletion_protection"], "true")
 
     def test_rds_postgres_allocated_storage(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["allocated_storage"], "500")
+        self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["allocated_storage"], "600")
 
     def test_rds_postgres_instance_class(self):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["instance_class"], "db.m5.2xlarge")
@@ -75,7 +75,7 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["backup_window"], "00:00-01:00")
 
     def test_rds_postgres_maintenance_window(self):
-        self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["maintenance_window"], "tue:01:00-tue:02:00")
+        self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["maintenance_window"], "thu:18:00-thu:19:00")
 
     def test_rds_postgres_ca_cert_identifier(self):
         self.assertEqual(self.result["root_modules"]["aws_db_instance.postgres"]["ca_cert_identifier"], "rds-ca-2019")
