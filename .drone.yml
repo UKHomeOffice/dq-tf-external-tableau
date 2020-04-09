@@ -12,7 +12,7 @@ pipeline:
   run-testrunner-tests:
     image: quay.io/ukhomeofficedigital/tf-testrunner
     commands:
-      - echo "access key: ${{ AWS_ACCESS_KEY_ID }} "
+      - echo $${{AWS_ACCESS_KEY_ID}} 
       - python -m unittest tests/*_test.py
     secrets:
       - AWS_ACCESS_KEY_ID
