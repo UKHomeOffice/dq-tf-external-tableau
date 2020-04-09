@@ -162,7 +162,7 @@ echo "#Restore latest backup to Tableau Server"
 tsm stop --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD" && tsm maintenance restore --file $LATEST_BACKUP_NAME --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD" && tsm start --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD"
 
 #WIP: echo "#Publishing required DataSources and WorkBooks"
-#su -c "/home/tableau_srv/scripts/tableau-pub.py /home/tableau_srv/$TAB_EXT_REPO_NAME DQDashboardsE" - tableau_srv
+#su -c "/home/tableau_srv/scripts/tableau_pub.py /home/tableau_srv/$TAB_EXT_REPO_NAME DQDashboardsE" - tableau_srv
 
 echo "#Mount filesystem - /var/log/"
 mkfs.xfs /dev/nvme1n1
@@ -353,7 +353,7 @@ echo "#Restore latest backup to Tableau Server"
 tsm stop --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD" && tsm maintenance restore --file $LATEST_BACKUP_NAME --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD" && tsm start --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD"
 
 #WIP: echo "#Publishing required DataSources and WorkBooks"
-#su -c "/home/tableau_srv/scripts/tableau-pub.py /home/tableau_srv/$TAB_EXT_REPO_NAME DQDashboardsE" - tableau_srv
+#su -c "/home/tableau_srv/scripts/tableau_pub.py /home/tableau_srv/$TAB_EXT_REPO_NAME DQDashboardsE" - tableau_srv
 
 echo "#Mount filesystem - /var/log/"
 mkfs.xfs /dev/nvme1n1
@@ -426,6 +426,16 @@ resource "aws_security_group" "sgrp" {
   ingress {
     from_port = "${var.TSM_from_port}"
     to_port   = "${var.TSM_to_port}"
+    protocol  = "${var.http_protocol}"
+
+    cidr_blocks = [
+      "${var.dq_ops_ingress_cidr}",
+    ]
+  }
+
+  ingress {
+    from_port = "${var.rds_wg_from_port}"
+    to_port   = "${var.rds_wg_to_port}"
     protocol  = "${var.http_protocol}"
 
     cidr_blocks = [
