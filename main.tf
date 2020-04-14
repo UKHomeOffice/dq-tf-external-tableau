@@ -4,7 +4,7 @@ locals {
 }
 
 resource "aws_instance" "ext_tableau_linux" {
-  count                       = "${var.environment == "prod" ? "2" : "1"}"                       # Allow different instance count in prod and notprod
+  count                       = "${var.environment == "prod" ? "2" : "1"}"  # 2 in Prod (Green & Blue), 1 in NotProd (Green only)
   key_name                    = "${var.key_name}"
   ami                         = "${data.aws_ami.ext_tableau_linux.id}"
   instance_type               = "${var.environment == "prod" ? "c5.2xlarge" : "c5.2xlarge"}"
@@ -142,16 +142,17 @@ su -c "tabcmd --accepteula" - tableau_srv
 echo "#TSMCMD - initial user"
 tabcmd initialuser --server 'localhost:80' --username "$TAB_ADMIN_USER" --password "$TAB_ADMIN_PASSWORD"
 
-# DQdashboard Customise
-export LOGO=DQDashboards_Image_Home_Office_new-01.png
-export DASH_IMAGE="$DATA_ARCHIVE_TAB_BACKUP_URL/DQDashboards/Image/$LOGO"
-export TMP_FOLDER=/tmp
-aws s3 cp $DASH_IMAGE $TMP_FOLDER
-tsm customize --server-name "HO External Carrier Portal" --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD"
-tsm customize --signin-logo /$TMP_FOLDER/$LOGO
-tsm customize --logo /$TMP_FOLDER/$LOGO
-tsm customize --header-logo /$TMP_FOLDER/$LOGO
-tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD --ignore-prompt
+#Commented out until Carrier Portal GO-LIVE (soon)
+#echo "#DQDashboard Customise"
+#export LOGO=DQDashboards_Image_Home_Office_new-01.png
+#export DASH_IMAGE="$DATA_ARCHIVE_TAB_BACKUP_URL/DQDashboards/Image/$LOGO"
+#export TMP_FOLDER=/tmp
+#aws s3 cp $DASH_IMAGE $TMP_FOLDER
+#tsm customize --server-name "HO External Carrier Portal" --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD"
+#tsm customize --signin-logo /$TMP_FOLDER/$LOGO
+#tsm customize --logo /$TMP_FOLDER/$LOGO
+#tsm customize --header-logo /$TMP_FOLDER/$LOGO
+#tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD --ignore-prompt
 
 # Always restore from green
 export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/green/"
@@ -195,9 +196,9 @@ EOF
 }
 
 resource "aws_instance" "ext_tableau_linux_staging" {
-  count                       = "${var.environment == "prod" ? "0" : "1"}"                   # Allow different instance count in prod and notprod
+  count                       = "${var.environment == "prod" ? "1" : "0"}" # 1 in Prod, 0 in NotProd
   key_name                    = "${var.key_name}"
-  ami                         = "${data.aws_ami.ext_tableau_linux.id}"
+  ami                         = "${data.aws_ami.ext_tableau_linux_upgrade.id}"
   instance_type               = "${var.environment == "prod" ? "c5.2xlarge" : "c5.2xlarge"}"
   iam_instance_profile        = "${aws_iam_instance_profile.ext_tableau.id}"
   vpc_security_group_ids      = ["${aws_security_group.sgrp.id}"]
@@ -333,7 +334,7 @@ su -c "tabcmd --accepteula" - tableau_srv
 echo "#TSMCMD - initial user"
 tabcmd initialuser --server 'localhost:80' --username "$TAB_ADMIN_USER" --password "$TAB_ADMIN_PASSWORD"
 
-# DQdashboard Customise
+#echo "#DQDashboard Customise"
 export LOGO=DQDashboards_Image_Home_Office_new-01.png
 export DASH_IMAGE="$DATA_ARCHIVE_TAB_BACKUP_URL/DQDashboards/Image/$LOGO"
 export TMP_FOLDER=/tmp
