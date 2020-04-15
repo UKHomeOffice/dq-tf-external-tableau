@@ -334,7 +334,7 @@ su -c "tabcmd --accepteula" - tableau_srv
 echo "#TSMCMD - initial user"
 tabcmd initialuser --server 'localhost:80' --username "$TAB_ADMIN_USER" --password "$TAB_ADMIN_PASSWORD"
 
-#echo "#DQDashboard Customise"
+echo "#DQDashboard Customise"
 export LOGO=DQDashboards_Image_Home_Office_new-01.png
 export DASH_IMAGE="$DATA_ARCHIVE_TAB_BACKUP_URL/DQDashboards/Image/$LOGO"
 export TMP_FOLDER=/tmp
