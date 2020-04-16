@@ -196,7 +196,7 @@ EOF
 }
 
 resource "aws_instance" "ext_tableau_linux_staging" {
-  count                       = "${var.environment == "prod" ? "1" : "0"}" # 1 in Prod, 0 in NotProd
+  count                       = "${var.environment == "prod" ? "1" : "1"}" # 1 in Prod, 0 in NotProd
   key_name                    = "${var.key_name}"
   ami                         = "${data.aws_ami.ext_tableau_linux_upgrade.id}"
   instance_type               = "${var.environment == "prod" ? "c5.2xlarge" : "c5.2xlarge"}"
@@ -224,9 +224,9 @@ echo '/dev/nvme2n1 /var/opt/tableau xfs defaults 0 0' >> /etc/fstab
 echo "#Pull values from Parameter Store and save to profile"
 touch /home/tableau_srv/env_vars.sh
 echo "
-export TABLEAU_ENVIRONMENT=external
+export TABLEAU_ENVIRONMENT=staging
 export S3_HAPROXY_CONFIG_BUCKET=${var.haproxy_config_bucket}
-export DATA_ARCHIVE_TAB_BACKUP_URL=`aws --region eu-west-2 ssm get-parameter --name data_archive_tab_ext_staging_backup_url --query 'Parameter.Value' --output text`
+export DATA_ARCHIVE_TAB_BACKUP_URL=`aws --region eu-west-2 ssm get-parameter --name data_archive_tab_ext_backup_url --query 'Parameter.Value' --output text`
 export TAB_EXT_REPO_PROTOCOL=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_protocol --query 'Parameter.Value' --output text`
 export TAB_EXT_REPO_USER=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_user --query 'Parameter.Value' --output text`
 export TAB_EXT_REPO_HOST=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_host --query 'Parameter.Value' --output text`
