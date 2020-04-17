@@ -52,7 +52,7 @@ resource "aws_iam_role_policy" "ext_tableau" {
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_openid_provider_config_url",
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_staging_openid_provider_config_url",
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_openid_tableau_server_external_url",
-        "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_openid_staging_tableau_server_external_url",
+        "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_staging_openid_tableau_server_external_url",
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_product_key",
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_server_repository_username",
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_server_repository_password",
