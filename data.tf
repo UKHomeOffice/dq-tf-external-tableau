@@ -22,7 +22,7 @@ data "aws_ami" "ext_tableau_linux_upgrade" {
     name = "name"
 
     values = [
-      "dq-tableau-linux-206*",
+      "dq-tableau-linux-207*",
     ]
   }
 
