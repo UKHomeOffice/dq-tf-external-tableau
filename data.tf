@@ -5,26 +5,10 @@ data "aws_ami" "ext_tableau_linux" {
     name = "name"
 
     values = [
-      "dq-tableau-linux-205*",
+      "dq-tableau-linux-207*",
     ]
   }
 
-
-  owners = [
-    "self",
-  ]
-}
-
-data "aws_ami" "ext_tableau_linux_upgrade" {
-  most_recent = true
-
-  filter {
-    name = "name"
-
-    values = [
-      "dq-tableau-linux-207*", 
-    ]
-  }
 
   owners = [
     "self",
