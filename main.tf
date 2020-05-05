@@ -198,7 +198,7 @@ EOF
 }
 
 resource "aws_instance" "ext_tableau_linux_staging" {
-  count                       = "${var.environment == "prod" ? "1" : "1"}"                   # 1 in Prod, 0 in NotProd
+  count                       = "${var.environment == "prod" ? "1" : "0"}"                   # 1 in Prod, 0 in NotProd
   key_name                    = "${var.key_name}"
   ami                         = "${data.aws_ami.ext_tableau_linux.id}"
   instance_type               = "${var.environment == "prod" ? "c5.4xlarge" : "c5.2xlarge"}"
