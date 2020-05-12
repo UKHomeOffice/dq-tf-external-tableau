@@ -3,16 +3,6 @@ variable "naming_suffix" {
   description = "Naming suffix for tags, value passed from dq-tf-apps"
 }
 
-variable "database_name" {
-  default     = "external_tableau"
-  description = "RDS Postgres database name"
-}
-
-variable "port" {
-  default     = "5432"
-  description = "RDS Postgres port access"
-}
-
 variable "environment" {
   default     = "notprod"
   description = "Switch between environments"
@@ -73,16 +63,6 @@ variable "RDP_from_port" {
   description = "From port for RDP traffic"
 }
 
-variable "rds_from_port" {
-  default     = 5432
-  description = "From port for Postgres traffic"
-}
-
-variable "rds_to_port" {
-  default     = 5432
-  description = "To port for Postgres traffic"
-}
-
 variable "rds_wg_from_port" {
   default     = 8060
   description = "From port for Postgres Workgroup traffic"
@@ -91,11 +71,6 @@ variable "rds_wg_from_port" {
 variable "rds_wg_to_port" {
   default     = 8060
   description = "To port for Postgres Workgroup traffic"
-}
-
-variable "rds_protocol" {
-  default     = "tcp"
-  description = "Protocol for Postgres traffic"
 }
 
 variable "dq_lambda_subnet_cidr" {
