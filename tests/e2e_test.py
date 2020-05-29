@@ -18,7 +18,6 @@ class TestE2E(unittest.TestCase):
               source = "./mymodule"
               providers = {aws = aws}
 
-              apps_vpc_id                  = "1234"
               acp_prod_ingress_cidr        = "10.5.0.0/16"
               dq_ops_ingress_cidr          = "10.2.0.0/16"
               dq_external_dashboard_subnet = "10.1.14.0/24"
@@ -36,7 +35,7 @@ class TestE2E(unittest.TestCase):
 
         """
         self.runner = Runner(self.snippet)
-        self.result = self.runner.results
+        self.result = self.runner.result
 
     def test_subnet_vpc(self):
         self.assertEqual(self.runner.get_value("module.root_modules.aws_subnet.subnet", "vpc_id"), "vpc-12345")
