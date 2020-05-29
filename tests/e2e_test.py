@@ -16,7 +16,7 @@ class TestE2E(unittest.TestCase):
 
             module "root_modules" {
               source = "./mymodule"
-              providers = {aws = "aws"}
+              providers = {aws = aws}
 
               apps_vpc_id                  = "1234"
               acp_prod_ingress_cidr        = "10.5.0.0/16"
@@ -35,19 +35,20 @@ class TestE2E(unittest.TestCase):
             }
 
         """
-        self.result = Runner(self.snippet).result
+        self.runner = Runner(self.snippet)
+        self.result = self.runner.results
 
     def test_subnet_vpc(self):
-        self.assertEqual(self.result["root_modules"]["aws_subnet.subnet"]["vpc_id"], "vpc-12345")
+        self.assertEqual(self.runner.get_value("module.root_modules.aws_subnet.subnet", "vpc_id"), "vpc-12345")
 
     def test_subnet_cidr(self):
-        self.assertEqual(self.result["root_modules"]["aws_subnet.subnet"]["cidr_block"], "10.1.14.0/24")
+        self.assertEqual(self.runner.get_value("module.root_modules.aws_subnet.subnet", "cidr_block"), "10.1.14.0/24")
 
     def test_subnet_tags(self):
-        self.assertEqual(self.result["root_modules"]["aws_subnet.subnet"]["tags.Name"], "subnet-external-tableau-apps-preprod-dq")
+        self.assertEqual(self.runner.get_value("module.root_modules.aws_subnet.subnet", "tags"), {"Name": "subnet-external-tableau-apps-preprod-dq"})
 
     def test_security_group_tags(self):
-        self.assertEqual(self.result["root_modules"]["aws_security_group.sgrp"]["tags.Name"], "sg-external-tableau-apps-preprod-dq")
+        self.assertEqual(self.runner.get_value("module.root_modules.aws_security_group.sgrp", "tags"), {"Name": "sg-external-tableau-apps-preprod-dq"})
 
 if __name__ == '__main__':
     unittest.main()

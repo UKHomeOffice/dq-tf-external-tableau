@@ -9,7 +9,6 @@ data "aws_ami" "ext_tableau_linux" {
     ]
   }
 
-
   owners = [
     "self",
   ]

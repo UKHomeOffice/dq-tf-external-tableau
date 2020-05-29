@@ -14,10 +14,11 @@ resource "aws_iam_role" "ext_tableau" {
   ]
 }
 EOF
+
 }
 
 resource "aws_iam_role_policy" "ext_tableau" {
-  role = "${aws_iam_role.ext_tableau.id}"
+  role = aws_iam_role.ext_tableau.id
 
   policy = <<EOF
 {
@@ -71,10 +72,11 @@ resource "aws_iam_role_policy" "ext_tableau" {
   ]
 }
 EOF
+
 }
 
 resource "aws_iam_role_policy" "ext_tableau_s3" {
-  role = "${aws_iam_role.ext_tableau.id}"
+  role = aws_iam_role.ext_tableau.id
 
   policy = <<EOF
 {
@@ -121,8 +123,10 @@ resource "aws_iam_role_policy" "ext_tableau_s3" {
   ]
 }
 EOF
+
 }
 
 resource "aws_iam_instance_profile" "ext_tableau" {
-  role = "${aws_iam_role.ext_tableau.name}"
+  role = aws_iam_role.ext_tableau.name
 }
+
