@@ -120,7 +120,7 @@ variable "dq_external_dashboard_subnet_az2" {
 
 variable "dq_external_dashboard_instance_ip" {
   description = "IP addresses of EC2 instances in Prod"
-  type        = "list"
+  type        = list(string)
 
   default = [
     "10.1.14.111",
@@ -172,3 +172,4 @@ variable "haproxy_config_bucket" {
 variable "haproxy_config_bucket_key" {
   description = "HAPROXY config bucket KMS key"
 }
+
