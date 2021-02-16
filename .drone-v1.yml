@@ -31,6 +31,6 @@ steps:
     event:
     - push
 
-# services:
-#   - name: docker
-#     image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
+services:
+  - name: docker
+    image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
