@@ -336,8 +336,6 @@ tsm settings import -f /opt/tableau/tableau_server/packages/scripts.*/config-tru
 
 echo "#TSM increase extract timeout - to 6 hours (=21600 seconds)"
 tsm configuration set -k backgrounder.querylimit -v 21600
-echo "#TSM Changing default authentication to use username claim instead of email address"
-tsm authentication openid map-claims -un preferred_username
 
 echo "#TSM apply pending changes"
 tsm pending-changes apply
