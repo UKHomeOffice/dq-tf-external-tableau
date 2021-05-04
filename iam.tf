@@ -131,3 +131,8 @@ EOF
 resource "aws_iam_instance_profile" "ext_tableau" {
   role = aws_iam_role.ext_tableau.name
 }
+
+resource "aws_iam_role_policy_attachment" "cloud_watch_agent" {
+  role       = aws_iam_role.ext_tableau.name
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+}
