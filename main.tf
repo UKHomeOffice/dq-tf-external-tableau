@@ -9,8 +9,6 @@ module "ec2_alarms_ext_tableau" {
   environment     = var.environment
   pipeline_name   = "ext-tableau"
   ec2_instance_id = var.environment == "prod" ? [aws_instance.ext_tableau_linux[0].id, aws_instance.ext_tableau_linux[1].id] : aws_instance.ext_tableau_linux[0]
-
-  depends_on = [aws_instance.ext_tableau_linux]
 }
 
 resource "aws_instance" "ext_tableau_linux" {
