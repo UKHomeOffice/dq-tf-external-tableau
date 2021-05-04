@@ -3,5 +3,5 @@ output "iam_roles" {
 }
 
 output "ext_tableau_instance_id" {
-  value = [aws_instance.ext_tableau_linux.[0]id]
+  value = [aws_instance.ext_tableau_linux[0].id]
 }
