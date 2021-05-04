@@ -8,7 +8,7 @@ module "ec2_alarms_ext_tableau" {
   naming_suffix   = local.naming_suffix
   environment     = var.environment
   pipeline_name   = "ext-tableau"
-  ec2_instance_id = aws_instance.ext_tableau_linux[0].id
+  ec2_instance_id = aws_instance.ext_tableau_linux[count.index].id
 }
 
 resource "aws_instance" "ext_tableau_linux" {
