@@ -8,11 +8,11 @@ module "ec2_alarms_ext_tableau" {
   naming_suffix   = local.naming_suffix
   environment     = var.environment
   pipeline_name   = "ext-tableau"
-  ec2_instance_id = aws_instance.ext_tableau_linux[1].id
+  ec2_instance_id = aws_instance.ext_tableau_linux[0].id
 }
 
 resource "aws_instance" "ext_tableau_linux" {
-  count                       = var.environment == "prod" ? "2" : "2" # 2 in Prod (Green & Blue), 1 in NotProd (Green only)
+  count                       = var.environment == "prod" ? "2" : "1" # 2 in Prod (Green & Blue), 1 in NotProd (Green only)
   key_name                    = var.key_name
   ami                         = data.aws_ami.ext_tableau_linux.id
   instance_type               = var.environment == "prod" ? "c5.4xlarge" : "r5d.xlarge"
