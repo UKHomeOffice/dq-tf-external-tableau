@@ -146,6 +146,7 @@ export TABLEAU_CONFIG_SMTP=`aws --region eu-west-2 ssm get-parameter --name tabl
 tsm settings import -f /opt/tableau/tableau_server/packages/scripts.*/config.json
 tsm settings import -f /opt/tableau/tableau_server/packages/scripts.*/config-openid.json
 tsm settings import -f /opt/tableau/tableau_server/packages/scripts.*/config-trusted-auth.json
+tsm settings import -f /opt/tableau/tableau_server/packages/scripts.*/config-smtp.json
 
 echo "#TSM increase extract timeout - to 6 hours (=21600 seconds)"
 tsm configuration set -k backgrounder.querylimit -v 21600
