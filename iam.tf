@@ -61,7 +61,8 @@ resource "aws_iam_role_policy" "ext_tableau" {
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_server_repository_password",
         "arn:aws:ssm:eu-west-2:*:parameter/data_archive_tab_ext_backup_sub_directory",
         "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_publish_datasources",
-        "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_publish_workbooks"
+        "arn:aws:ssm:eu-west-2:*:parameter/tableau_ext_publish_workbooks",
+        "arn:aws:ssm:eu-west-2:*:parameter/tableau_config_smtp"
       ]
     },
     {
