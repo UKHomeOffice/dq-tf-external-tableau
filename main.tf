@@ -152,6 +152,9 @@ tsm configuration set -k backgrounder.querylimit -v 21600
 # echo "#TSM configure alerting emails"
 tsm configuration set -k  storage.monitoring.email_enabled -v true
 
+# echo "#TSM configure session.idle_limit to 30 mins"
+tsm configuration set -k wgserver.session.idle_limit -v 30
+
 echo "#TSM apply pending changes"
 tsm pending-changes apply
 
