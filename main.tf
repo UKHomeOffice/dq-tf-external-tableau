@@ -7,7 +7,7 @@ module "ec2_alarms_ext_tableau_0" {
   source          = "github.com/UKHomeOffice/dq-tf-cloudwatch-ec2"
   naming_suffix   = local.naming_suffix
   environment     = var.environment
-  pipeline_name   = "ext-tableau"
+  pipeline_name   = "external_tableau0"
   ec2_instance_id = aws_instance.ext_tableau_linux[0].id
 }
 
@@ -15,7 +15,7 @@ module "ec2_alarms_ext_tableau_1" {
   source          = "github.com/UKHomeOffice/dq-tf-cloudwatch-ec2"
   naming_suffix   = local.naming_suffix
   environment     = var.environment
-  pipeline_name   = "ext-tableau"
+  pipeline_name   = "external_tableau1"
   ec2_instance_id = aws_instance.ext_tableau_linux[1].id
 }
 
