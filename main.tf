@@ -3,13 +3,21 @@ locals {
   naming_suffix_linux = "ext-tableau-linux-${var.naming_suffix}"
 }
 
-# module "ec2_alarms_ext_tableau" {
-#   source          = "github.com/UKHomeOffice/dq-tf-cloudwatch-ec2"
-#   naming_suffix   = local.naming_suffix
-#   environment     = var.environment
-#   pipeline_name   = "ext-tableau"
-#   ec2_instance_id = aws_instance.ext_tableau_linux[0].id
-# }
+module "ec2_alarms_ext_tableau_0" {
+  source          = "github.com/UKHomeOffice/dq-tf-cloudwatch-ec2"
+  naming_suffix   = local.naming_suffix
+  environment     = var.environment
+  pipeline_name   = "ext-tableau"
+  ec2_instance_id = var.environment == "prod" ? aws_instance.ext_tableau_linux[0].id : aws_instance.ext_tableau_linux[0].id
+}
+
+module "ec2_alarms_ext_tableau_1" {
+  source          = "github.com/UKHomeOffice/dq-tf-cloudwatch-ec2"
+  naming_suffix   = local.naming_suffix
+  environment     = var.environment
+  pipeline_name   = "ext-tableau"
+  ec2_instance_id = var.environment == "prod" ? aws_instance.ext_tableau_linux[1].id : aws_instance.ext_tableau_linux[1].id
+}
 
 resource "aws_instance" "ext_tableau_linux" {
   count                       = var.environment == "prod" ? "2" : "2" # 2 in Prod (Green & Blue), 1 in NotProd (Green only)
