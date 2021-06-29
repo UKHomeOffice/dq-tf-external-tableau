@@ -4,7 +4,7 @@ locals {
 }
 
 module "ec2_alarms_int_tableau" {
-  source          = "./alarms"
+  source          = "./"
   naming_suffix   = local.naming_suffix
   environment     = var.environment
   pipeline_name   = "internal_tableau_alarm"
