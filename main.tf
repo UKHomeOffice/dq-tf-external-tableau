@@ -3,7 +3,7 @@ locals {
   naming_suffix_linux = "ext-tableau-linux-${var.naming_suffix}"
 }
 
-module "ec2_alarms_int_tableau" {
+module "alarms" {
   source          = "./"
   naming_suffix   = local.naming_suffix
   environment     = var.environment
