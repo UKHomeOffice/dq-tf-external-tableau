@@ -24,7 +24,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
   ok_actions          = [aws_sns_topic.ec2.arn]
 
   dimensions = {
-    InstanceId = "${var.ec2_instance_id_0}.id"
+    InstanceId = aws_instance.ext_tableau_linux.id
   }
 
   depends_on = [
