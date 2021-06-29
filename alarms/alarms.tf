@@ -1,5 +1,5 @@
 locals {
-  naming_suffix = "${var.'ec2_instance_id_0}-${var.naming_suffix}"
+  naming_suffix = "${var.ec2_instance_id_0}-${var.naming_suffix}"
   path_module   = var.path_module != "unset" ? var.path_module : path.module
 
   thresholds = {
@@ -24,11 +24,11 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
   ok_actions          = [aws_sns_topic.ec2.arn]
 
   dimensions = {
-    InstanceId = var.'ec2_instance_id_0
+    InstanceId = var.ec2_instance_id_0
   }
 
   depends_on = [
-    var.'ec2_instance_id_0
+    var.ec2_instance_id_0
   ]
 
 }
@@ -47,11 +47,11 @@ resource "aws_cloudwatch_metric_alarm" "available_memory_too_low" {
   ok_actions          = [aws_sns_topic.ec2.arn]
 
   dimensions = {
-    InstanceId = var.'ec2_instance_id_0
+    InstanceId = var.ec2_instance_id_0
   }
 
   depends_on = [
-    var.'ec2_instance_id_0
+    var.ec2_instance_id_0
   ]
 }
 
@@ -69,13 +69,13 @@ resource "aws_cloudwatch_metric_alarm" "Used_storage_space" {
   ok_actions          = [aws_sns_topic.ec2.arn]
 
   dimensions = {
-    InstanceId = var.'ec2_instance_id_0,
+    InstanceId = var.ec2_instance_id_0,
     path       = "/",
     fstype     = "xfs",
   }
 
   depends_on = [
-    var.'ec2_instance_id_0
+    var.ec2_instance_id_0
   ]
 }
 #
@@ -93,10 +93,10 @@ resource "aws_cloudwatch_metric_alarm" "Used_storage_space" {
 #   ok_actions          = [aws_sns_topic.ec2.arn]
 #
 #   dimensions = {
-#     InstanceId = var.'ec2_instance_id_0
+#     InstanceId = var.ec2_instance_id_0
 #   }
 #
 #   depends_on = [
-#     var.'ec2_instance_id_0
+#     var.ec2_instance_id_0
 #   ]
 # }

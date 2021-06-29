@@ -3,22 +3,6 @@ locals {
   naming_suffix_linux = "ext-tableau-linux-${var.naming_suffix}"
 }
 
-# module "ec2_alarms_ext_tableau_0" {
-#   source          = "github.com/UKHomeOffice/dq-tf-cloudwatch-ec2"
-#   naming_suffix   = local.naming_suffix
-#   environment     = var.environment
-#   pipeline_name   = "external_tableau0"
-#   ec2_instance_id = aws_instance.ext_tableau_linux[0].id
-# }
-
-# module "ec2_alarms_ext_tableau_1" {
-#   source          = "github.com/UKHomeOffice/dq-tf-cloudwatch-ec2"
-#   naming_suffix   = local.naming_suffix
-#   environment     = var.environment
-#   pipeline_name   = "external_tableau1"
-#   ec2_instance_id = aws_instance.ext_tableau_linux[1].id
-# }
-
 resource "aws_instance" "ext_tableau_linux" {
   count                       = var.environment == "prod" ? "1" : "1" # 2 in Prod (Green & Blue), 1 in NotProd (Green only)
   key_name                    = var.key_name
@@ -111,6 +95,9 @@ source /etc/profile.d/tableau_server.sh
 
 echo "#TSM active TRIAL license as tableau_srv"
 tsm licenses activate --trial -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD
+
+echo "#TSM active actual licenses as tableau_srv"
+tsm licenses activate --license-key "$TAB_PRODUCT_KEY"   --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD"
 
 echo "#TSM register user details"
 tsm register --file /tmp/install/tab_reg_file.json -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD
