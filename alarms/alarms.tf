@@ -24,7 +24,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
   ok_actions          = [aws_sns_topic.ec2.arn]
 
   dimensions = {
-    InstanceId = var.ec2_instance_id_0
+    InstanceId = "${var.ec2_instance_id_0}.id"
   }
 
   depends_on = [
@@ -47,7 +47,7 @@ resource "aws_cloudwatch_metric_alarm" "available_memory_too_low" {
   ok_actions          = [aws_sns_topic.ec2.arn]
 
   dimensions = {
-    InstanceId = var.ec2_instance_id_0
+    InstanceId = "${var.ec2_instance_id_0}.id"
   }
 
   depends_on = [
@@ -69,7 +69,7 @@ resource "aws_cloudwatch_metric_alarm" "Used_storage_space" {
   ok_actions          = [aws_sns_topic.ec2.arn]
 
   dimensions = {
-    InstanceId = var.ec2_instance_id_0,
+    InstanceId = "${var.ec2_instance_id_0}.id,"
     path       = "/",
     fstype     = "xfs",
   }
@@ -93,7 +93,7 @@ resource "aws_cloudwatch_metric_alarm" "Used_storage_space" {
 #   ok_actions          = [aws_sns_topic.ec2.arn]
 #
 #   dimensions = {
-#     InstanceId = var.ec2_instance_id_0
+#     InstanceId = "${var.ec2_instance_id_0}.id"
 #   }
 #
 #   depends_on = [
