@@ -18,7 +18,7 @@ variable "path_module" {
 }
 
 variable "ec2_instance_id_0" {
-  default     = "aws_instance.instance_cw[0]"
+  default     = "aws_instance.ext_tableau_linux[0]"
   description = "The instance ID of the RDS database instance that you want to monitor."
   type        = string
 }
