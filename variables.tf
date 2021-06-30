@@ -178,12 +178,12 @@ variable "haproxy_config_bucket_key" {
 ############################
 
 variable "alarm_naming_suffix" {
-  default     = false
+  default     = "apps-test-dq"
   description = "Naming suffix for tags, value passed from dq-tf-apps"
 }
 
 variable "pipeline_name" {
-  default = "external_tableau_alarms"
+  default = "external-tableau-alarms"
 }
 
 variable "swap_alarm" {

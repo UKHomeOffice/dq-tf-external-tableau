@@ -1,5 +1,5 @@
 locals {
-  alarm_naming_suffix = "testing_alarm_naming_suffix"
+  alarm_naming_suffix = "${var.pipeline_name}-${var.alarm_naming_suffix}"
   path_module         = var.path_module != "unset" ? var.path_module : path.module
 
   thresholds = {
