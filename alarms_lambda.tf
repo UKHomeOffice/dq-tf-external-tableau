@@ -13,7 +13,7 @@ resource "aws_lambda_permission" "with_sns" {
 }
 
 resource "aws_lambda_function" "lambda_slack" {
-  filename         = "${path.module}/lambda/slack/package/lambda.zip"
+  filename         = "${path.module}/alarms_lambda/slack/package/lambda.zip"
   function_name    = "${var.pipeline_name}-lambda-slack-${var.environment}"
   role             = aws_iam_role.lambda_role_slack.arn
   handler          = "slack.lambda_handler"
