@@ -28,7 +28,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
   }
 
   depends_on = [
-    [aws_instance.ext_tableau_linux[0]]
+    aws_instance.ext_tableau_linux[0]
   ]
 
 }
@@ -51,7 +51,7 @@ resource "aws_cloudwatch_metric_alarm" "available_memory_too_low" {
   }
 
   depends_on = [
-    [aws_instance.ext_tableau_linux[0]]
+    aws_instance.ext_tableau_linux[0]
   ]
 }
 
@@ -75,7 +75,7 @@ resource "aws_cloudwatch_metric_alarm" "Used_storage_space" {
   }
 
   depends_on = [
-    [aws_instance.ext_tableau_linux[0]]
+    aws_instance.ext_tableau_linux[0]
   ]
 }
 #
@@ -97,7 +97,7 @@ resource "aws_cloudwatch_metric_alarm" "Used_storage_space" {
 #   }
 #
 #   depends_on = [
-#     [aws_instance.ext_tableau_linux[0]]
+#     aws_instance.ext_tableau_linux[0]
 #   ]
 # }
 
