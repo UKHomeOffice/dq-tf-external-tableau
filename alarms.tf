@@ -1,6 +1,6 @@
 locals {
-  naming_suffix = "${var.pipeline_name}-${var.naming_suffix}"
-  path_module   = var.path_module != "unset" ? var.path_module : path.module
+  alarm_naming_suffix = "${var.pipeline_name}-${var.naming_suffix}"
+  path_module         = var.path_module != "unset" ? var.path_module : path.module
 
   thresholds = {
     CPUUtilizationThreshold   = min(max(var.cpu_utilization_threshold, 0), 100)
