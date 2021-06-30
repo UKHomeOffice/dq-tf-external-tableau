@@ -183,7 +183,7 @@ variable "alarm_naming_suffix" {
 }
 
 variable "pipeline_name" {
-  default = external_tableau_alarms
+  default = "external_tableau_alarms"
 }
 
 variable "swap_alarm" {
