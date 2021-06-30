@@ -3,14 +3,6 @@ locals {
   naming_suffix_linux = "ext-tableau-linux-${var.naming_suffix}"
 }
 
-# module "alarms" {
-#   source          = "./"
-#   naming_suffix   = local.naming_suffix
-#   environment     = var.environment
-#   pipeline_name   = "internal_tableau_alarm"
-#   ec2_instance_id = aws_instance.int_tableau_linux[0].id
-# }
-
 resource "aws_instance" "ext_tableau_linux" {
   count                       = var.environment == "prod" ? "1" : "1" # 2 in Prod (Green & Blue), 1 in NotProd (Green only)
   key_name                    = var.key_name
