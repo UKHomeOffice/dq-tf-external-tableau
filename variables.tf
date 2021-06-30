@@ -177,11 +177,6 @@ variable "haproxy_config_bucket_key" {
 #Cloudwatch Alarm variables#
 ############################
 
-variable "alarm_naming_suffix" {
-  default     = "apps-test-dq"
-  description = "Naming suffix for tags, value passed from dq-tf-apps"
-}
-
 variable "pipeline_name" {
   default = "external-tableau-alarms"
 }
