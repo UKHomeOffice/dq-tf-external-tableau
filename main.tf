@@ -150,6 +150,9 @@ tsm configuration set -k  storage.monitoring.email_enabled -v true
 # echo "#TSM configure session.idle_limit to 30 mins"
 tsm configuration set -k wgserver.session.idle_limit -v 30
 
+echo "#TSM configure access to peering proxies"
+tsm configuration set -k wgserver.systeminfo.allow_referrer_ips -v 10.3.0.11
+
 echo "#TSM apply pending changes"
 tsm pending-changes apply
 
