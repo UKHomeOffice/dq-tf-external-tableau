@@ -149,7 +149,7 @@ resource "aws_iam_role_policy_attachment" "ext_tableau_s3" {
   policy_arn = aws_iam_policy.ext_tableau_s3.id
 }
 
-resource "aws_iam_role_policy_attachment" "dq_tf_infra_write_to_cw" {
-  role       = aws_iam_role.ext_tableau.id
-  policy_arn = "arn:aws:iam::${var.account_id[var.environment]}:policy/dq-tf-infra-write-to-cw"
-}
+# resource "aws_iam_role_policy_attachment" "dq_tf_infra_write_to_cw" {
+#   role       = aws_iam_role.ext_tableau.id
+#   policy_arn = "arn:aws:iam::${var.account_id[var.environment]}:policy/dq-tf-infra-write-to-cw"
+# }
