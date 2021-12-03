@@ -1,4 +1,5 @@
 resource "aws_iam_role" "ext_tableau" {
+  name               = var.application_name
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -19,8 +20,8 @@ EOF
 
 }
 
-resource "aws_iam_role_policy" "ext_tableau" {
-  role = aws_iam_role.ext_tableau.id
+resource "aws_iam_policy" "ext_tableau" {
+  name = "${var.application_name}-ssm-parameter"
 
   policy = <<EOF
 {
@@ -78,8 +79,8 @@ EOF
 
 }
 
-resource "aws_iam_role_policy" "ext_tableau_s3" {
-  role = aws_iam_role.ext_tableau.id
+resource "aws_iam_policy" "ext_tableau_s3" {
+  name = "${var.application_name}-s3"
 
   policy = <<EOF
 {
@@ -136,4 +137,19 @@ resource "aws_iam_instance_profile" "ext_tableau" {
 resource "aws_iam_role_policy_attachment" "cloud_watch_agent" {
   role       = aws_iam_role.ext_tableau.name
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+}
+
+resource "aws_iam_role_policy_attachment" "ext_tableau" {
+  role       = aws_iam_role.ext_tableau.id
+  policy_arn = aws_iam_policy.ext_tableau.id
+}
+
+resource "aws_iam_role_policy_attachment" "ext_tableau_s3" {
+  role       = aws_iam_role.ext_tableau.id
+  policy_arn = aws_iam_policy.ext_tableau_s3.id
+}
+
+resource "aws_iam_role_policy_attachment" "dq_tf_infra_write_to_cw" {
+  role       = aws_iam_role.ext_tableau.id
+  policy_arn = "arn:aws:iam::${var.account_id[var.environment]}:policy/dq-tf-infra-write-to-cw"
 }
