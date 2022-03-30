@@ -13,3 +13,19 @@ data "aws_ami" "ext_tableau_linux" {
     "self",
   ]
 }
+
+data "aws_ami" "ext_tableau_linux_np" {
+  most_recent = true
+
+  filter {
+    name = "name"
+
+    values = [
+      "dq-tableau-linux-255*",
+    ]
+  }
+
+  owners = [
+    "self",
+  ]
+}
