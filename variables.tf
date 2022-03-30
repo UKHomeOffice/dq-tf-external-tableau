@@ -177,6 +177,10 @@ variable "haproxy_private_ip2" {
   description = "IP of HaProxy 2"
 }
 
+variable "haproxy_private_ip" {
+  description = "IP of HaProxy 1"
+}
+
 variable "haproxy_config_bucket" {
   description = "HAPROXY config bucket ID"
 }
