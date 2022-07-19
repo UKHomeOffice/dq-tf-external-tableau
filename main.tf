@@ -173,14 +173,9 @@ tsm customize --logo /$TMP_FOLDER/$LOGO
 tsm customize --header-logo /$TMP_FOLDER/$LOGO
 tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD --ignore-prompt
 
-echo "#Checking environment: if notprod then move Tableau-Backup cron to daytime"
-if [ ${var.environment} == "notprod" ]; then
-  echo "#Notprod Env: Moving Tableau-backup cronjob to daytime in notprod"
-  echo "0 17 * * * source /home/tableau_srv/.bashrc; /home/tableau_srv/scripts/tableau-backup.sh" > /tmp/backupcron
-  crontab -u tableau_srv /tmp/backupcron
-else
-  echo "#Tableau-Backup cronjob remains at 7pm for environment ${var.environment}"
-fi
+echo "Setting ableau-backup to start at 13:00"
+echo "0 13 * * * source /home/tableau_srv/.bashrc; /home/tableau_srv/scripts/tableau-backup.sh" > /tmp/backupcron
+crontab -u tableau_srv /tmp/backupcron
 
 # Always restore from green
 export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/green/"
@@ -225,10 +220,10 @@ EOF
 }
 
 resource "aws_instance" "ext_tableau_linux_staging" {
-  count                       = var.environment == "prod" ? "0" : "0" # 1 in Prod, 0 in NotProd
+  count                       = var.environment == "prod" ? "1" : "0" # 1 in Prod, 0 in NotProd
   key_name                    = var.key_name
   ami                         = data.aws_ami.ext_tableau_linux.id
-  instance_type               = var.environment == "prod" ? "c5.4xlarge" : "c5.2xlarge"
+  instance_type               = var.environment == "prod" ? "r5.2xlarge" : "r5.2xlarge"
   iam_instance_profile        = aws_iam_instance_profile.ext_tableau.id
   vpc_security_group_ids      = [aws_security_group.sgrp.id]
   associate_public_ip_address = false
@@ -377,14 +372,9 @@ tsm customize --logo /$TMP_FOLDER/$LOGO
 tsm customize --header-logo /$TMP_FOLDER/$LOGO
 tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD --ignore-prompt
 
-echo "#Checking environment: if notprod then move Tableau-Backup cron to daytime"
-if [ ${var.environment} == "notprod" ]; then
-  echo "#Notprod Env: Moving Tableau-backup cronjob to daytime in notprod"
-  echo "0 17 * * * source /home/tableau_srv/.bashrc; /home/tableau_srv/scripts/tableau-backup.sh" > /tmp/backupcron
-  crontab -u tableau_srv /tmp/backupcron
-else
-  echo "#Tableau-Backup cronjob remains at 7pm for environment ${var.environment}"
-fi
+echo "Setting ableau-backup to start at 13:00"
+echo "0 16 * * * source /home/tableau_srv/.bashrc; /home/tableau_srv/scripts/tableau-backup.sh" > /tmp/backupcron
+crontab -u tableau_srv /tmp/backupcron
 
 # Always restore from green
 export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/green/"
