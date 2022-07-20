@@ -337,7 +337,7 @@ cat >/opt/tableau/tableau_server/packages/scripts.$TAB_VERSION_NUMBER/config-tru
   "configEntities": {
     "trustedAuthenticationSettings": {
       "_type": "trustedAuthenticationSettingsType",
-      "trustedHosts": [ "${var.haproxy_private_ip2}" ]
+      "trustedHosts": [ "${var.haproxy_private_ip}","${var.haproxy_private_ip2}" ]
     }
   }
 }
@@ -348,6 +348,15 @@ tsm settings import -f /opt/tableau/tableau_server/packages/scripts.*/config-tru
 
 echo "#TSM increase extract timeout - to 6 hours (=21600 seconds)"
 tsm configuration set -k backgrounder.querylimit -v 21600
+
+# echo "#TSM configure alerting emails"
+tsm configuration set -k  storage.monitoring.email_enabled -v true
+
+# echo "#TSM configure session.idle_limit to 30 mins"
+tsm configuration set -k wgserver.session.idle_limit -v 30
+
+echo "#TSM configure access to peering proxies"
+tsm configuration set -k wgserver.systeminfo.allow_referrer_ips -v ${var.haproxy_private_ip},${var.haproxy_private_ip2}
 
 echo "#TSM apply pending changes"
 tsm pending-changes apply
