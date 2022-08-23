@@ -91,7 +91,8 @@ resource "aws_iam_policy" "ext_tableau_s3" {
       "Action": ["s3:ListBucket"],
       "Resource": [
         "${var.s3_archive_bucket}",
-        "arn:aws:s3:::${var.haproxy_config_bucket}"
+        "arn:aws:s3:::${var.haproxy_config_bucket}",
+        "${var.s3_carrier_portal_docs}"
         ]
     },
     {
@@ -100,15 +101,11 @@ resource "aws_iam_policy" "ext_tableau_s3" {
         "s3:PutObject",
         "s3:GetObject"
       ],
-      "Resource": "${var.s3_archive_bucket}/*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:PutObject",
-        "s3:GetObject"
-      ],
-      "Resource": "arn:aws:s3:::${var.haproxy_config_bucket}/*"
+      "Resource": [
+        "${var.s3_archive_bucket}/*",
+        "arn:aws:s3:::${var.haproxy_config_bucket}",
+        "${var.s3_carrier_portal_docs}"
+        ]
     },
     {
       "Effect": "Allow",
@@ -121,7 +118,8 @@ resource "aws_iam_policy" "ext_tableau_s3" {
         ],
       "Resource": [
         "${var.s3_archive_bucket_key}",
-        "${var.haproxy_config_bucket_key}"
+        "${var.haproxy_config_bucket_key}",
+        "${var.s3_carrier_portal_docs}"
         ]
     }
   ]
