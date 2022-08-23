@@ -165,6 +165,10 @@ variable "s3_archive_bucket" {
   description = "S3 archive bucket name"
 }
 
+variable "s3_carrier_portal_docs" {
+  description = "S3 bucket for carrier portal docs"
+}
+
 variable "s3_archive_bucket_key" {
   description = "S3 archive bucket KMS key"
 }
