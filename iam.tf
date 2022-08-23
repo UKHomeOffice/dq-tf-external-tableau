@@ -103,8 +103,8 @@ resource "aws_iam_policy" "ext_tableau_s3" {
       ],
       "Resource": [
         "${var.s3_archive_bucket}/*",
-        "arn:aws:s3:::${var.haproxy_config_bucket}",
-        "${var.s3_carrier_portal_docs}"
+        "arn:aws:s3:::${var.haproxy_config_bucket}/*",
+        "${var.s3_carrier_portal_docs}/*"
         ]
     },
     {
