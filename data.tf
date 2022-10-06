@@ -7,7 +7,7 @@ data "aws_ami" "ext_tableau_linux" {
     name = "name"
 
     values = [
-      "dq-tableau-linux-288*",
+      "dq-tableau-linux-285*",
     ]
   }
 
