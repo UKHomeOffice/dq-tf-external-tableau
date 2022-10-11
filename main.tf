@@ -61,9 +61,12 @@ echo "#Load the env vars needed for this user_data script"
 source /home/tableau_srv/env_vars.sh
 
 echo "#Load the env vars when tableau_srv logs in"
-echo "
+cat >>/home/tableau_srv/.bashrc <<EOL
+alias la='ls -laF'
+alias atrdiag='echo "Run atrdiag as user tableau, not tableau_srv"'
+alias tll='/home/tableau_srv/scripts/tableau-license-list.sh'
 source /home/tableau_srv/env_vars.sh
-" >> /home/tableau_srv/.bashrc
+EOL
 
 echo "#Set password for tableau_srv"
 echo $TAB_SRV_PASSWORD | passwd tableau_srv --stdin
@@ -85,16 +88,22 @@ echo "#Get latest code from git"
 su -c "git clone $TAB_EXT_REPO_URL" - tableau_srv
 
 echo "#Initialise TSM (finishes off Tableau Server install/config)"
-/opt/tableau/tableau_server/packages/scripts.*/initialize-tsm --accepteula -f -a tableau_srv
+/opt/tableau/tableau_server/packages/scripts.*/initialize-tsm --accepteula --no-activation-service -f -a tableau_srv
 
 echo "#sourcing tableau server envs - because this script is run as root not tableau_srv"
 source /etc/profile.d/tableau_server.sh
 
-echo "#TSM active TRIAL license as tableau_srv"
-tsm licenses activate --trial -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD
-
-echo "#TSM active actual licenses as tableau_srv"
-tsm licenses activate --license-key "$TAB_PRODUCT_KEY"   --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD"
+echo "#License activation - Checking environment..."
+echo "#Environment == '${var.environment}'"
+if [ ${var.environment} == "notprod" ]; then
+  echo "#TSM activate TRIAL license as tableau_srv"
+  tsm licenses activate --trial --username $TAB_SRV_USER --password $TAB_SRV_PASSWORD
+elif [ ${var.environment} == "prod" ]; then
+  echo "#TSM activate actual licenses as tableau_srv"
+  tsm licenses activate --license-key "$TAB_PRODUCT_KEY"   --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD"
+else
+  echo "ERROR: Unexpected Environment"
+fi
 
 echo "#TSM register user details"
 tsm register --file /tmp/install/tab_reg_file.json -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD
@@ -277,9 +286,12 @@ echo "#Load the env vars needed for this user_data script"
 source /home/tableau_srv/env_vars.sh
 
 echo "#Load the env vars when tableau_srv logs in"
-echo "
+cat >>/home/tableau_srv/.bashrc <<EOL
+alias la='ls -laF'
+alias atrdiag='echo "Run atrdiag as user tableau, not tableau_srv"'
+alias tll='/home/tableau_srv/scripts/tableau-license-list.sh'
 source /home/tableau_srv/env_vars.sh
-" >> /home/tableau_srv/.bashrc
+EOL
 
 echo "#Set password for tableau_srv"
 echo $TAB_SRV_PASSWORD | passwd tableau_srv --stdin
@@ -301,13 +313,22 @@ echo "#Get latest code from git"
 su -c "git clone $TAB_EXT_REPO_URL" - tableau_srv
 
 echo "#Initialise TSM (finishes off Tableau Server install/config)"
-/opt/tableau/tableau_server/packages/scripts.*/initialize-tsm --accepteula -f -a tableau_srv
+/opt/tableau/tableau_server/packages/scripts.*/initialize-tsm --accepteula --no-activation-service -f -a tableau_srv
 
 echo "#sourcing tableau server envs - because this script is run as root not tableau_srv"
 source /etc/profile.d/tableau_server.sh
 
-echo "#TSM active TRIAL license as tableau_srv"
-tsm licenses activate --trial -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD
+echo "#License activation - Checking environment..."
+echo "#Environment == '${var.environment}'"
+if [ ${var.environment} == "notprod" ]; then
+  echo "#TSM activate TRIAL license as tableau_srv"
+  tsm licenses activate --trial --username $TAB_SRV_USER --password $TAB_SRV_PASSWORD
+elif [ ${var.environment} == "prod" ]; then
+  echo "#TSM activate actual licenses as tableau_srv"
+  tsm licenses activate --license-key "$TAB_PRODUCT_KEY"   --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD"
+else
+  echo "ERROR: Unexpected Environment"
+fi
 
 echo "#TSM register user details"
 tsm register --file /tmp/install/tab_reg_file.json -u $TAB_SRV_USER -p $TAB_SRV_PASSWORD
