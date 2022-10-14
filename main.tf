@@ -96,8 +96,8 @@ source /etc/profile.d/tableau_server.sh
 echo "#License activation - Checking environment..."
 echo "#Environment == '${var.environment}'"
 if [ ${var.environment} == "notprod" ]; then
-  echo "#TSM activate TRIAL license as tableau_srv"
-  tsm licenses activate --trial --username $TAB_SRV_USER --password $TAB_SRV_PASSWORD
+  echo "#TSM activate actual licenses as tableau_srv"
+  tsm licenses activate --license-key "$TAB_PRODUCT_KEY"   --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD"
 elif [ ${var.environment} == "prod" ]; then
   echo "#TSM activate actual licenses as tableau_srv"
   tsm licenses activate --license-key "$TAB_PRODUCT_KEY"   --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD"
@@ -321,8 +321,8 @@ source /etc/profile.d/tableau_server.sh
 echo "#License activation - Checking environment..."
 echo "#Environment == '${var.environment}'"
 if [ ${var.environment} == "notprod" ]; then
-  echo "#TSM activate TRIAL license as tableau_srv"
-  tsm licenses activate --trial --username $TAB_SRV_USER --password $TAB_SRV_PASSWORD
+  echo "#TSM activate actual licenses as tableau_srv"
+  tsm licenses activate --license-key "$TAB_PRODUCT_KEY"   --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD"
 elif [ ${var.environment} == "prod" ]; then
   echo "#TSM activate actual licenses as tableau_srv"
   tsm licenses activate --license-key "$TAB_PRODUCT_KEY"   --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD"
