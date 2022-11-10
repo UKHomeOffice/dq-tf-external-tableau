@@ -4,7 +4,7 @@ locals {
 }
 
 resource "aws_instance" "ext_tableau_linux" {
-  count                       = var.environment == "prod" ? "1" : "1" # 2 in Prod (Green & Blue), 1 in NotProd (Green only)
+  count                       = var.environment == "prod" ? "2" : "2" # 2 in Prod (Green & Blue), 2 in NotProd (Blue/Green)
   key_name                    = var.key_name
   ami                         = data.aws_ami.ext_tableau_linux.id
   instance_type               = var.environment == "prod" ? "r5ad.2xlarge" : "r5ad.2xlarge"
@@ -96,8 +96,8 @@ source /etc/profile.d/tableau_server.sh
 echo "#License activation - Checking environment..."
 echo "#Environment == '${var.environment}'"
 if [ ${var.environment} == "notprod" ]; then
-  echo "#TSM activate actual licenses as tableau_srv"
-  tsm licenses activate --license-key "$TAB_PRODUCT_KEY"   --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD"
+  echo "#TSM activate trial licenses as tableau_srv"
+  tsm licenses activate --trial --username $TAB_SRV_USER --password $TAB_SRV_PASSWORD
 elif [ ${var.environment} == "prod" ]; then
   echo "#TSM activate actual licenses as tableau_srv"
   tsm licenses activate --license-key "$TAB_PRODUCT_KEY"   --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD"
