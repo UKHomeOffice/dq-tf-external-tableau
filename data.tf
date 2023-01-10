@@ -10,5 +10,7 @@ data "aws_ami" "ext_tableau_linux" {
       "dq-tableau-linux-533",
     ]
   }
-
+owners = [
+    "093401982388",
+  ]
 }
