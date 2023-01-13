@@ -1,5 +1,3 @@
-
-
 data "aws_ami" "ext_tableau_linux" {
   most_recent = true
 
@@ -7,11 +5,11 @@ data "aws_ami" "ext_tableau_linux" {
     name = "name"
 
     values = [
-      "dq-tableau-linux-318*",
+      "dq-tableau-linux-533",
     ]
   }
 
   owners = [
-    "self",
+    "093401982388",
   ]
 }
