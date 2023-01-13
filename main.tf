@@ -4,7 +4,7 @@ locals {
 }
 
 resource "aws_instance" "ext_tableau_linux" {
-  count                       = var.environment == "prod" ? "2" : "2" # 2 in Prod (Green & Blue), 2 in NotProd (Blue/Green)
+  count                       = var.environment == "prod" ? "1" : "2" # 2 in Prod (Green & Blue), 2 in NotProd (Blue/Green)
   key_name                    = var.key_name
   ami                         = data.aws_ami.ext_tableau_linux.id
   instance_type               = var.environment == "prod" ? "r5ad.2xlarge" : "r5ad.2xlarge"
