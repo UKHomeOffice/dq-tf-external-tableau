@@ -4,7 +4,7 @@ locals {
 }
 
 resource "aws_instance" "ext_tableau_linux" {
-  count                       = var.environment == "prod" ? "2" : "2" # 2 in Prod (Green & Blue), 1 in NotProd (Green Only) - BUT TEMPORARILY 2 in NotProd to test latest image
+  count                       = var.environment == "prod" ? "2" : "2" # 2 in Prod (Green & Blue), 1 in NotProd (Green Only) - BUT TEMPORARILY 2 in NotProd to test the latest image
   key_name                    = var.key_name
   ami                         = var.environment == "prod" ? "ami-0e781a36f3c4c452a" : data.aws_ami.ext_tableau_linux.id # TEMP to fix plan-prod and test NotProd
   instance_type               = var.environment == "prod" ? "r5d.2xlarge" : "r5d.2xlarge"
