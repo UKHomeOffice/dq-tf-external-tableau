@@ -4,7 +4,7 @@ locals {
 }
 
 resource "aws_instance" "ext_tableau_linux" {
-  count                       = var.environment == "prod" ? "1" : "2" # 2 in Prod (Green & Blue), 2 in NotProd (Green only)
+  count                       = var.environment == "prod" ? "2" : "1" # 2 in Prod (Green & Blue), 1 in NotProd (Green Only)
   key_name                    = var.key_name
   ami                         = data.aws_ami.ext_tableau_linux.id
   instance_type               = var.environment == "prod" ? "r5d.2xlarge" : "r5d.2xlarge"
@@ -186,8 +186,8 @@ echo "Setting tableau-backup to start at 13:00"
 echo "0 13 * * * source /home/tableau_srv/.bashrc; /home/tableau_srv/scripts/tableau-backup.sh" > /tmp/backupcron
 crontab -u tableau_srv /tmp/backupcron
 
-# Always restore from green
-export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/green/"
+# Always restore from Blue
+export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/blue/"
 
 echo "#Get most recent Tableau backup from S3"
 export LATEST_BACKUP_NAME=`aws s3 ls $BACKUP_LOCATION | tail -1 | awk '{print $4}'`
@@ -406,8 +406,8 @@ echo "Setting tableau-backup to start at 16:00"
 echo "0 16 * * * source /home/tableau_srv/.bashrc; /home/tableau_srv/scripts/tableau-backup.sh" > /tmp/backupcron
 crontab -u tableau_srv /tmp/backupcron
 
-# Always restore from green
-export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/green/"
+# Always restore from Blue
+export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/blue/"
 
 echo "#Get most recent Tableau backup from S3"
 export LATEST_BACKUP_NAME=`aws s3 ls $BACKUP_LOCATION | tail -1 | awk '{print $4}'`
