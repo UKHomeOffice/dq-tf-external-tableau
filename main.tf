@@ -4,7 +4,7 @@ locals {
 }
 
 resource "aws_instance" "ext_tableau_linux" {
-  count                       = var.environment == "prod" ? "2" : "2" # 2 in Prod (Green & Blue), 1 in NotProd (Green Only) - BUT TEMPORARILY 2 in NotProd to test the latest image
+  count                       = var.environment == "prod" ? "2" : "1" # 2 in Prod (Green & Blue), 1 in NotProd (Green Only)
   key_name                    = var.key_name
   ami                         = var.environment == "prod" ? "ami-0e781a36f3c4c452a" : data.aws_ami.ext_tableau_linux.id # TEMP to fix plan-prod and test NotProd
   instance_type               = var.environment == "prod" ? "r5d.2xlarge" : "r5d.2xlarge"
@@ -181,10 +181,6 @@ tsm customize --signin-logo /$TMP_FOLDER/$LOGO
 tsm customize --logo /$TMP_FOLDER/$LOGO
 tsm customize --header-logo /$TMP_FOLDER/$LOGO
 tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD --ignore-prompt
-
-echo "Setting tableau-backup to start at 13:00"
-echo "0 13 * * * source /home/tableau_srv/.bashrc; /home/tableau_srv/scripts/tableau-backup.sh" > /tmp/backupcron
-crontab -u tableau_srv /tmp/backupcron
 
 # Always restore from green
 export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/green/"
@@ -401,10 +397,6 @@ tsm customize --signin-logo /$TMP_FOLDER/$LOGO
 tsm customize --logo /$TMP_FOLDER/$LOGO
 tsm customize --header-logo /$TMP_FOLDER/$LOGO
 tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD --ignore-prompt
-
-echo "Setting tableau-backup to start at 16:00"
-echo "0 16 * * * source /home/tableau_srv/.bashrc; /home/tableau_srv/scripts/tableau-backup.sh" > /tmp/backupcron
-crontab -u tableau_srv /tmp/backupcron
 
 # Always restore from green
 export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/green/"
