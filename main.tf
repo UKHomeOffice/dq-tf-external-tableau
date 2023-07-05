@@ -6,7 +6,7 @@ locals {
 resource "aws_instance" "ext_tableau_linux" {
   count                       = var.environment == "prod" ? "2" : "1" # 2 in Prod (Green & Blue), 1 in NotProd (Green Only)
   key_name                    = var.key_name
-  ami                         = var.environment == "prod" ? "ami-0e781a36f3c4c452a" : data.aws_ami.ext_tableau_linux.id # TEMP to fix plan-prod and test NotProd
+  ami                         = data.aws_ami.ext_tableau_linux.id
   instance_type               = var.environment == "prod" ? "r5d.2xlarge" : "r5d.2xlarge"
   iam_instance_profile        = aws_iam_instance_profile.ext_tableau.id
   vpc_security_group_ids      = [aws_security_group.sgrp.id]
