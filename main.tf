@@ -182,10 +182,6 @@ tsm customize --logo /$TMP_FOLDER/$LOGO
 tsm customize --header-logo /$TMP_FOLDER/$LOGO
 tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD --ignore-prompt
 
-echo "Setting tableau-backup to start at 13:00"
-echo "0 13 * * * source /home/tableau_srv/.bashrc; /home/tableau_srv/scripts/tableau-backup.sh" > /tmp/backupcron
-crontab -u tableau_srv /tmp/backupcron
-
 # Always restore from Blue
 export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/blue/"
 
@@ -401,10 +397,6 @@ tsm customize --signin-logo /$TMP_FOLDER/$LOGO
 tsm customize --logo /$TMP_FOLDER/$LOGO
 tsm customize --header-logo /$TMP_FOLDER/$LOGO
 tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD --ignore-prompt
-
-echo "Setting tableau-backup to start at 16:00"
-echo "0 16 * * * source /home/tableau_srv/.bashrc; /home/tableau_srv/scripts/tableau-backup.sh" > /tmp/backupcron
-crontab -u tableau_srv /tmp/backupcron
 
 # Always restore from Blue
 export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/blue/"
