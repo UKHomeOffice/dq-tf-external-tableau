@@ -182,8 +182,8 @@ tsm customize --logo /$TMP_FOLDER/$LOGO
 tsm customize --header-logo /$TMP_FOLDER/$LOGO
 tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD --ignore-prompt
 
-# Always restore from green
-export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/green/"
+# Always restore from Blue
+export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/blue/"
 
 echo "#Get most recent Tableau backup from S3"
 export LATEST_BACKUP_NAME=`aws s3 ls $BACKUP_LOCATION | tail -1 | awk '{print $4}'`
@@ -398,8 +398,8 @@ tsm customize --logo /$TMP_FOLDER/$LOGO
 tsm customize --header-logo /$TMP_FOLDER/$LOGO
 tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD --ignore-prompt
 
-# Always restore from green
-export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/green/"
+# Always restore from Blue
+export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/blue/"
 
 echo "#Get most recent Tableau backup from S3"
 export LATEST_BACKUP_NAME=`aws s3 ls $BACKUP_LOCATION | tail -1 | awk '{print $4}'`
