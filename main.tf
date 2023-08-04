@@ -165,12 +165,6 @@ tsm pending-changes apply
 echo "#TSM initialise & start server"
 tsm initialize --start-server --request-timeout 1800
 
-echo "#TSMCMD accept EULA - only required for tableau_srv"
-su -c "tabcmd --accepteula" - tableau_srv
-
-echo "#TSMCMD - initial user"
-tabcmd initialuser --server 'localhost:80' --username "$TAB_ADMIN_USER" --password "$TAB_ADMIN_PASSWORD"
-
 echo "#DQDashboard Customise"
 export LOGO=DQDashboards_Image_Home_Office_new-01.png
 export DASH_IMAGE="$DATA_ARCHIVE_TAB_BACKUP_URL/DQDashboards/Image/$LOGO"
@@ -380,12 +374,6 @@ tsm pending-changes apply
 
 echo "#TSM initialise & start server"
 tsm initialize --start-server --request-timeout 1800
-
-echo "#TSMCMD accept EULA - only required for tableau_srv"
-su -c "tabcmd --accepteula" - tableau_srv
-
-echo "#TSMCMD - initial user"
-tabcmd initialuser --server 'localhost:80' --username "$TAB_ADMIN_USER" --password "$TAB_ADMIN_PASSWORD"
 
 echo "#DQDashboard Customise"
 export LOGO=DQDashboards_Image_Home_Office_new-01.png
