@@ -36,6 +36,7 @@ echo "#Pull values from Parameter Store and save to profile"
 touch /home/tableau_srv/env_vars.sh
 echo "
 export TABLEAU_ENVIRONMENT=external
+export TABLEAU_REPO_ENVIRONMENT=external
 export S3_HAPROXY_CONFIG_BUCKET=${var.haproxy_config_bucket}
 export DATA_ARCHIVE_TAB_BACKUP_URL=`aws --region eu-west-2 ssm get-parameter --name data_archive_tab_ext_backup_url --query 'Parameter.Value' --output text`
 export TAB_EXT_REPO_PROTOCOL=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_protocol --query 'Parameter.Value' --output text`
@@ -248,6 +249,7 @@ echo "#Pull values from Parameter Store and save to profile"
 touch /home/tableau_srv/env_vars.sh
 echo "
 export TABLEAU_ENVIRONMENT=staging
+export TABLEAU_REPO_ENVIRONMENT=external_staging
 export S3_HAPROXY_CONFIG_BUCKET=${var.haproxy_config_bucket}
 export DATA_ARCHIVE_TAB_BACKUP_URL=`aws --region eu-west-2 ssm get-parameter --name data_archive_tab_ext_backup_url --query 'Parameter.Value' --output text`
 export TAB_EXT_REPO_PROTOCOL=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_protocol --query 'Parameter.Value' --output text`
