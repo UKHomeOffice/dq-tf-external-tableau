@@ -72,6 +72,13 @@ resource "aws_iam_policy" "ext_tableau" {
         "ssm:PutParameter"
       ],
       "Resource": "arn:aws:ssm:eu-west-2:*:parameter/data_archive_tab_ext_backup_sub_directory"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+          "Action": "ec2:ModifyInstanceMetadataOptions"
+      ],
+      "Resource": "arn:aws:ec2:*:*:instance/*"
     }
   ]
 }
