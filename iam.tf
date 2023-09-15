@@ -76,7 +76,7 @@ resource "aws_iam_policy" "ext_tableau" {
     {
       "Effect": "Allow",
       "Action": [
-          "Action": "ec2:ModifyInstanceMetadataOptions"
+          "ec2:ModifyInstanceMetadataOptions"
       ],
       "Resource": "arn:aws:ec2:*:*:instance/*"
     }
