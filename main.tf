@@ -4,7 +4,7 @@ locals {
 }
 
 resource "aws_instance" "ext_tableau_linux" {
-  count                       = var.environment == "prod" ? "2" : "1" # 2 in Prod (Green & Blue), 1 in NotProd (Green Only)
+  count                       = var.environment == "prod" ? "2" : "2" # 2 in Prod (Green & Blue), 1 in NotProd (Green Only)
   key_name                    = var.key_name
   ami                         = data.aws_ami.ext_tableau_linux.id
   instance_type               = var.environment == "prod" ? "r5d.2xlarge" : "r5d.2xlarge"
@@ -25,6 +25,9 @@ exec > >(tee /var/log/user-data.log|logger -t user-data ) 2>&1
 
 # start the cloud watch agent
 /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -s -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json
+
+echo "Enforcing imdsv2 on ec2 instance"
+curl http://169.254.169.254/latest/meta-data/instance-id | xargs -I {} aws ec2 modify-instance-metadata-options --instance-id {} --http-endpoint enabled --http-tokens required
 
 echo "#Mount filesystem - /var/opt/tableau/"
 mkfs.xfs /dev/nvme2n1
