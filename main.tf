@@ -242,6 +242,9 @@ set -e
 #log output from this user_data script
 exec > >(tee /var/log/user-data.log|logger -t user-data ) 2>&1
 
+echo "Enforcing imdsv2 on ec2 instance"
+curl http://169.254.169.254/latest/meta-data/instance-id | xargs -I {} aws ec2 modify-instance-metadata-options --instance-id {} --http-endpoint enabled --http-tokens required
+
 echo "#Mount filesystem - /var/opt/tableau/"
 mkfs.xfs /dev/nvme2n1
 mkdir -p /var/opt/tableau/
