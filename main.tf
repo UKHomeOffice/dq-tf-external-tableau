@@ -42,13 +42,6 @@ export TABLEAU_ENVIRONMENT=external
 export TABLEAU_REPO_ENVIRONMENT=external
 export S3_HAPROXY_CONFIG_BUCKET=${var.haproxy_config_bucket}
 export DATA_ARCHIVE_TAB_BACKUP_URL=`aws --region eu-west-2 ssm get-parameter --name data_archive_tab_ext_backup_url --query 'Parameter.Value' --output text`
-export TAB_EXT_REPO_PROTOCOL=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_protocol --query 'Parameter.Value' --output text`
-export TAB_EXT_REPO_USER=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_user --query 'Parameter.Value' --output text`
-export TAB_EXT_REPO_HOST=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_host --query 'Parameter.Value' --output text`
-export TAB_EXT_REPO_PORT=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_port --query 'Parameter.Value' --output text`
-export TAB_EXT_REPO_ORG=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_org --query 'Parameter.Value' --output text`
-export TAB_EXT_REPO_NAME=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_name --query 'Parameter.Value' --output text`
-export TAB_EXT_REPO_URL=\$TAB_EXT_REPO_PROTOCOL://\$TAB_EXT_REPO_USER@\$TAB_EXT_REPO_HOST:\$TAB_EXT_REPO_PORT/\$TAB_EXT_REPO_ORG/\$TAB_EXT_REPO_NAME.git
 export TAB_SRV_USER=`aws --region eu-west-2 ssm get-parameter --name tableau_server_username --query 'Parameter.Value' --output text`
 export TAB_SRV_PASSWORD=`aws --region eu-west-2 ssm get-parameter --name tableau_server_password --query 'Parameter.Value' --output text --with-decryption`
 export TAB_ADMIN_USER=`aws --region eu-west-2 ssm get-parameter --name tableau_admin_username --query 'Parameter.Value' --output text`
@@ -81,9 +74,6 @@ export TAB_PRODUCT_KEY_NP_22=`aws --region eu-west-2 ssm get-parameter --name ta
 export TAB_PRODUCT_KEY_NP_23=`aws --region eu-west-2 ssm get-parameter --name tableau_notprod_product_key_23 --query 'Parameter.Value' --output text --with-decryption`
 export TAB_PRODUCT_KEY_NP_24=`aws --region eu-west-2 ssm get-parameter --name tableau_notprod_product_key_24 --query 'Parameter.Value' --output text --with-decryption`
 export TAB_PRODUCT_KEY_NP_25=`aws --region eu-west-2 ssm get-parameter --name tableau_notprod_product_key_25 --query 'Parameter.Value' --output text --with-decryption`
-export DATASOURCES_TO_PUBLISH='`aws --region eu-west-2 ssm get-parameter --name tableau_ext_publish_datasources --query 'Parameter.Value' --output text`'
-export WORKBOOKS_TO_PUBLISH='`aws --region eu-west-2 ssm get-parameter --name tableau_ext_publish_workbooks --query 'Parameter.Value' --output text`'
-
 " > /home/tableau_srv/env_vars.sh
 
 echo "#Load the env vars needed for this user_data script"
@@ -100,14 +90,8 @@ EOL
 echo "#Set password for tableau_srv"
 echo $TAB_SRV_PASSWORD | passwd tableau_srv --stdin
 
-echo "#Download SSH Key pair to allow us to log in to the GitLab repo"
-aws --region eu-west-2 ssm get-parameter --name tableau_linux_ssh_private_key --query 'Parameter.Value' --output text --with-decryption > /home/tableau_srv/.ssh/id_rsa
-aws --region eu-west-2 ssm get-parameter --name tableau_linux_ssh_public_key --query 'Parameter.Value' --output text --with-decryption > /home/tableau_srv/.ssh/id_rsa.pub
-
 echo "#Change ownership and permissions of tableau_srv files"
 chown -R tableau_srv:tableau_srv /home/tableau_srv/
-chmod 0400 /home/tableau_srv/.ssh/id_rsa
-chmod 0444 /home/tableau_srv/.ssh/id_rsa.pub
 chmod 0644 /home/tableau_srv/env_vars.sh
 
 echo "#Initialise TSM (finishes off Tableau Server install/config)"
@@ -301,13 +285,6 @@ export TABLEAU_ENVIRONMENT=staging
 export TABLEAU_REPO_ENVIRONMENT=external_staging
 export S3_HAPROXY_CONFIG_BUCKET=${var.haproxy_config_bucket}
 export DATA_ARCHIVE_TAB_BACKUP_URL=`aws --region eu-west-2 ssm get-parameter --name data_archive_tab_ext_backup_url --query 'Parameter.Value' --output text`
-export TAB_EXT_REPO_PROTOCOL=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_protocol --query 'Parameter.Value' --output text`
-export TAB_EXT_REPO_USER=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_user --query 'Parameter.Value' --output text`
-export TAB_EXT_REPO_HOST=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_host --query 'Parameter.Value' --output text`
-export TAB_EXT_REPO_PORT=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_port --query 'Parameter.Value' --output text`
-export TAB_EXT_REPO_ORG=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_org --query 'Parameter.Value' --output text`
-export TAB_EXT_REPO_NAME=`aws --region eu-west-2 ssm get-parameter --name tab_ext_repo_name --query 'Parameter.Value' --output text`
-export TAB_EXT_REPO_URL=\$TAB_EXT_REPO_PROTOCOL://\$TAB_EXT_REPO_USER@\$TAB_EXT_REPO_HOST:\$TAB_EXT_REPO_PORT/\$TAB_EXT_REPO_ORG/\$TAB_EXT_REPO_NAME.git
 export TAB_SRV_USER=`aws --region eu-west-2 ssm get-parameter --name tableau_server_username --query 'Parameter.Value' --output text`
 export TAB_SRV_PASSWORD=`aws --region eu-west-2 ssm get-parameter --name tableau_server_password --query 'Parameter.Value' --output text --with-decryption`
 export TAB_ADMIN_USER=`aws --region eu-west-2 ssm get-parameter --name tableau_admin_username --query 'Parameter.Value' --output text`
@@ -317,8 +294,6 @@ export TAB_DB_PASSWORD=`aws --region eu-west-2 ssm get-parameter --name rds_exte
 export TAB_TABSVR_REPO_USER=`aws --region eu-west-2 ssm get-parameter --name tableau_server_repository_username --query 'Parameter.Value' --output text`
 export TAB_TABSVR_REPO_PASSWORD=`aws --region eu-west-2 ssm get-parameter --name tableau_server_repository_password --query 'Parameter.Value' --output text --with-decryption`
 export TAB_PRODUCT_KEY=`aws --region eu-west-2 ssm get-parameter --name tableau_ext_product_key --query 'Parameter.Value' --output text --with-decryption`
-export DATASOURCES_TO_PUBLISH='`aws --region eu-west-2 ssm get-parameter --name tableau_ext_publish_datasources --query 'Parameter.Value' --output text`'
-export WORKBOOKS_TO_PUBLISH='`aws --region eu-west-2 ssm get-parameter --name tableau_ext_publish_workbooks --query 'Parameter.Value' --output text`'
 " > /home/tableau_srv/env_vars.sh
 
 echo "#Load the env vars needed for this user_data script"
@@ -335,21 +310,9 @@ EOL
 echo "#Set password for tableau_srv"
 echo $TAB_SRV_PASSWORD | passwd tableau_srv --stdin
 
-echo "#Download SSH Key pair to allow us to log in to the GitLab repo"
-aws --region eu-west-2 ssm get-parameter --name tableau_linux_ssh_private_key --query 'Parameter.Value' --output text --with-decryption > /home/tableau_srv/.ssh/id_rsa
-aws --region eu-west-2 ssm get-parameter --name tableau_linux_ssh_public_key --query 'Parameter.Value' --output text --with-decryption > /home/tableau_srv/.ssh/id_rsa.pub
-
-echo "#Add gitlab host to known_hosts"
-ssh-keyscan -t rsa -p $TAB_EXT_REPO_PORT $TAB_EXT_REPO_HOST >>  /home/tableau_srv/.ssh/known_hosts
-
 echo "#Change ownership and permissions of tableau_srv files"
 chown -R tableau_srv:tableau_srv /home/tableau_srv/
-chmod 0400 /home/tableau_srv/.ssh/id_rsa
-chmod 0444 /home/tableau_srv/.ssh/id_rsa.pub
 chmod 0644 /home/tableau_srv/env_vars.sh
-
-echo "#Get latest code from git"
-su -c "git clone $TAB_EXT_REPO_URL" - tableau_srv
 
 echo "#Initialise TSM (finishes off Tableau Server install/config)"
 /opt/tableau/tableau_server/packages/scripts.*/initialize-tsm --accepteula --no-activation-service -f -a tableau_srv
