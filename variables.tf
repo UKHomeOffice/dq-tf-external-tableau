@@ -1,9 +1,5 @@
 variable "account_id" {
   type = map(string)
-  default = {
-    "notprod" = "483846886818"
-    "prod"    = "337779336338"
-  }
 }
 
 variable "application_name" {
