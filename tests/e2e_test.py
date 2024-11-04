@@ -22,7 +22,7 @@ class TestE2E(unittest.TestCase):
               dq_external_dashboard_subnet = "10.1.14.0/24"
               peering_cidr_block           = "1.1.1.0/24"
               apps_vpc_id                  = "vpc-12345"
-              naming_suffix                = "apps-preprod-dq"
+              naming_suffix                = "apps-notprod-dq"
               s3_archive_bucket            = "bucket-name"
               s3_archive_bucket_key        = "1234567890"
               s3_archive_bucket_name       = "bucket-name"
@@ -45,10 +45,10 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.runner.get_value("module.root_modules.aws_subnet.subnet", "cidr_block"), "10.1.14.0/24")
 
     def test_subnet_tags(self):
-        self.assertEqual(self.runner.get_value("module.root_modules.aws_subnet.subnet", "tags"), {"Name": "subnet-external-tableau-apps-preprod-dq"})
+        self.assertEqual(self.runner.get_value("module.root_modules.aws_subnet.subnet", "tags"), {"Name": "subnet-external-tableau-apps-notprod-dq"})
 
     def test_security_group_tags(self):
-        self.assertEqual(self.runner.get_value("module.root_modules.aws_security_group.sgrp", "tags"), {"Name": "sg-external-tableau-apps-preprod-dq"})
+        self.assertEqual(self.runner.get_value("module.root_modules.aws_security_group.sgrp", "tags"), {"Name": "sg-external-tableau-apps-notprod-dq"})
 
 if __name__ == '__main__':
     unittest.main()
