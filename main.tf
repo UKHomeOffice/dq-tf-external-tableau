@@ -159,6 +159,12 @@ tsm customize --logo /$TMP_FOLDER/$LOGO
 tsm customize --header-logo /$TMP_FOLDER/$LOGO
 tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD --ignore-prompt
 
+echo "#TABCMD accept EULA - only required for tableau_srv"
+su -c "tabcmd --accepteula" - tableau_srv
+
+echo "#TABCMD - initial user"
+su -c "tabcmd initialuser --server 'localhost:80' --username $TAB_ADMIN_USER --password $TAB_ADMIN_PASSWORD" - tableau_srv
+
 # Always restore from Blue
 export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/blue/"
 
@@ -168,9 +174,6 @@ aws s3 cp $BACKUP_LOCATION$LATEST_BACKUP_NAME /var/opt/tableau/tableau_server/da
 
 echo "#Restore latest backup to Tableau Server"
 tsm stop --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD" && tsm maintenance restore --file $LATEST_BACKUP_NAME --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD" && tsm start --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD"
-
-#WIP: echo "#Publishing required DataSources and WorkBooks"
-#su -c "/home/tableau_srv/scripts/tableau_pub.py /home/tableau_srv/$TAB_EXT_REPO_NAME DQDashboardsE" - tableau_srv
 
 echo "#Mount filesystem - /var/log/"
 mkfs.xfs /dev/nvme1n1
@@ -350,6 +353,12 @@ tsm customize --logo /$TMP_FOLDER/$LOGO
 tsm customize --header-logo /$TMP_FOLDER/$LOGO
 tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD --ignore-prompt
 
+echo "#TABCMD accept EULA - only required for tableau_srv"
+su -c "tabcmd --accepteula" - tableau_srv
+
+echo "#TABCMD - initial user"
+su -c "tabcmd initialuser --server 'localhost:80' --username $TAB_ADMIN_USER --password $TAB_ADMIN_PASSWORD" - tableau_srv
+
 # Always restore from Blue
 export BACKUP_LOCATION="$DATA_ARCHIVE_TAB_BACKUP_URL/blue/"
 
@@ -359,9 +368,6 @@ aws s3 cp $BACKUP_LOCATION$LATEST_BACKUP_NAME /var/opt/tableau/tableau_server/da
 
 echo "#Restore latest backup to Tableau Server"
 tsm stop --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD" && tsm maintenance restore --file $LATEST_BACKUP_NAME --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD" && tsm start --username "$TAB_SRV_USER" --password "$TAB_SRV_PASSWORD"
-
-#WIP: echo "#Publishing required DataSources and WorkBooks"
-#su -c "/home/tableau_srv/scripts/tableau_pub.py /home/tableau_srv/$TAB_EXT_REPO_NAME DQDashboardsE" - tableau_srv
 
 echo "#Mount filesystem - /var/log/"
 mkfs.xfs /dev/nvme1n1
