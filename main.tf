@@ -159,9 +159,6 @@ tsm customize --logo /$TMP_FOLDER/$LOGO
 tsm customize --header-logo /$TMP_FOLDER/$LOGO
 tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD --ignore-prompt
 
-echo "#TABCMD accept EULA - only required for tableau_srv"
-su -c "tabcmd --accepteula" - tableau_srv
-
 echo "#TABCMD - initial user"
 su -c "tabcmd initialuser --server 'localhost:80' --username $TAB_ADMIN_USER --password $TAB_ADMIN_PASSWORD" - tableau_srv
 
@@ -352,9 +349,6 @@ tsm customize --signin-logo /$TMP_FOLDER/$LOGO
 tsm customize --logo /$TMP_FOLDER/$LOGO
 tsm customize --header-logo /$TMP_FOLDER/$LOGO
 tsm data-access repository-access enable --repository-username $TAB_TABSVR_REPO_USER --repository-password $TAB_TABSVR_REPO_PASSWORD --ignore-prompt
-
-echo "#TABCMD accept EULA - only required for tableau_srv"
-su -c "tabcmd --accepteula" - tableau_srv
 
 echo "#TABCMD - initial user"
 su -c "tabcmd initialuser --server 'localhost:80' --username $TAB_ADMIN_USER --password $TAB_ADMIN_PASSWORD" - tableau_srv
