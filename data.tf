@@ -7,7 +7,7 @@ data "aws_ami" "ext_tableau_linux" {
     # "dq-tableau-linux-nnn" is used to pull exact image
     # "copied from*" is used to pull copy of nnn image copied to Prod/NotProd
     values = [
-      var.environment == "prod" ? "dq-tableau-linux 1085*" : "dq-tableau-linux 1085*",
+      var.environment == "prod" ? "dq-tableau-linux-1085*" : "dq-tableau-linux 1085*",
     ]
   }
 
