@@ -31,6 +31,7 @@ resource "aws_lambda_function" "lambda_slack" {
     ignore_changes = [
       filename,
       last_modified,
+      runtime
       # source_code_hash,
     ]
   }
