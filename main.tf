@@ -71,7 +71,14 @@ chown -R tableau_srv:tableau_srv /home/tableau_srv/
 chmod 0644 /home/tableau_srv/env_vars.sh
 
 echo "#Initialise TSM (finishes off Tableau Server install/config)"
-/opt/tableau/tableau_server/packages/scripts.*/initialize-tsm --accepteula --no-activation-service -f -a tableau_srv
+/opt/tableau/tableau_server/packages/scripts.*/initialize-tsm --accepteula -f -a tableau_srv
+
+echo "#set aliases for tableau user"
+cat >>/var/opt/tableau/tableau_server/.bashrc <<EOL
+alias la='ls -laF'
+# atrdiag only returns something useful when Full licenses are active, not when Trial license is in use
+alias atrdiag='atrdiag -product "Tableau Server"'
+EOL
 
 echo "#sourcing tableau server envs - because this script is run as root not tableau_srv"
 source /etc/profile.d/tableau_server.sh
